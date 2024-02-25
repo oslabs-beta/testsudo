@@ -6,25 +6,25 @@ module.exports = {
   entry: "./web-app/client/index.js",
 
   output: {
-    path: path.join(__dirname, 'build'),
-    fileName: 'bundle.js',
+    path: path.join(__dirname, '/web-app/build'),
+    filename: 'bundle.js',
     publicPath: '/'
 
   },
   devServer: {
     port: 8080,
+    // proxy: {
+    //   // '/home': 'http://localhost:3000',
+    //   // '/': 'http://localhost:3000',
+    //   changeOrigin: true,
+    // },
     historyApiFallback: true,
-    proxy: {
-      '/': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-      },
-    },
-    static: './build', 
+    static: './web-app/build', 
     hot: true,
   },
   resolve: {
     extensions:[".js", ".jsx", ".json", ".scss"],
+
   },
 
   module: {
@@ -44,7 +44,7 @@ module.exports = {
       },
       {
         test: /(\.css|\.scss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -57,9 +57,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      inject: false,
-      template: './index.html',
+    new HtmlWebpackPlugin({
+      template: './web-app/index.html',
     })
   ],
 };
