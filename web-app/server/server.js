@@ -5,6 +5,7 @@ const app = express();
 require('dotenv').config();
 
 const cookieParser = require('cookie-parser');
+const metricsRouter = require('./routes/metricsRouter')
 
 app.use(express.json());
 app.use(cookieParser());
@@ -48,6 +49,8 @@ app.get('/auth/github/callback', async (req, res) => {
         res.json('Error occured: ', error)
     }
 })
+
+app.use('/api/v2', metricsRouter)
 
 
 app.listen(PORT, () => {
