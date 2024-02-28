@@ -3,6 +3,7 @@ import * as chromeLauncher from 'chrome-launcher';
 const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
 
 const config = {
+  // desktop configuration object
   desktopConfig: {
     extends: 'lighthouse:default',
     settings: {
@@ -36,12 +37,14 @@ const config = {
       ],
     },
   },
+  // affects the output/results of calling the lighthouse function
   options: {
     logLevel: 'info',
     output: 'html', // <-- change output to html/json as needed
     onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
     port: chrome.port,
   },
+  // instance of chrome initiated to kill in test file
   chrome,
 };
 
