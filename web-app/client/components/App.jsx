@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
 import Home from './Home.jsx';
+import Projects from './Projects.jsx';
 
 function App () {
     return (
@@ -13,7 +14,9 @@ function App () {
                 <Route path="/home" element= {
                     <Home />
                 } />
-                
+                <Route path="/projects" element= {
+                    <Projects />
+                } />
             </Routes>
         </div>
     )
