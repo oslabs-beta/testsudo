@@ -1,62 +1,15 @@
-// // import runAudit from '../src/index.js';
-// import { runLighthouseAudit } from '../src/index.js'; // Adjust the path as necessary
-
-// // runAudit('https://www.codesmith.io')
-// // .then(res => console.log('Audit completed'))
-// // .catch(err => console.log('Audit failed: ', err));
-
-// async function testLighthouseAudit() {
-//     const url = 'https://codesmith.io';
-//     try {
-//         const results = await runLighthouseAudit(url);
-//         console.log(`Lighthouse score for ${url}: ${results.categories.performance.score * 100}`);
-//     } catch (error) {
-//         console.error('Error running Lighthouse audit:', error);
-//     }
-// }
-
-// testLighthouseAudit();
-
 import fs from 'fs';
 import lighthouse from 'lighthouse';
-import * as chromeLauncher from 'chrome-launcher'; 
+// imports the desktop-specific parameters for config
+import config from './config.js';
+const { desktopConfig, options, chrome } = config;
 
-const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-// const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-const options = {
-  logLevel: 'info',
-  output: 'json',
-  onlyCategories: ['performance'],
-  // onlyAudits:[
-  //   'first-contentful-paint',
-  //   'speed-index',
-  //   'total-blocking-time',
-  //   'largest-contentful-paint',
-  //   'cumulative-layout-shift'
-  // ],
-  // skipAudits: [
-  //   'envrioment',
-  //   'stackPacks',
-  //   'configSettings',
-  //   'fullPageScreenShot',
-  //   // 'il8n'
-  // ],
-  port: chrome.port
-};
-const runnerResult = await lighthouse('https://www.codesmith.io', options);
+const runnerResult = await lighthouse(
+  'https://www.codesmith.io',
+  options,
+  desktopConfig
+);
 
-const reducer = (json, ...keys) => {
-  const reducedObj = {};
-
-  const obj = JSON.parse(json);
-
-  for(let key of keys){
-    reducedObj[key] = obj[key];
-  }
-
-  const jsonReducedObj = JSON.stringify(reducedObj)
-  return jsonReducedObj;
-}
 // `.report` is the HTML report as a string
 // const reportHtml = runnerResult.report;
 const reportJson = runnerResult.report;
@@ -72,6 +25,24 @@ fs.writeFileSync('performance-skipRules.json', reducedReport);
 // `.lhr` is the Lighthouse Result as a JS object
 // console.log(runnerResult.lhr, '<------runnerResult');
 console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
-console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
+console.log(
+  'Performance score was',
+  runnerResult.lhr.categories.performance.score * 100
+);
+// object containing base metrics, eventually will display these to web app
+const metricsHolder = {
+  'First Contentful Paint':
+    runnerResult.lhr.audits['first-contentful-paint'].displayValue,
+  'Speed Index': runnerResult.lhr.audits['speed-index'].displayValue,
+  'Time To Interactive': runnerResult.lhr.audits['interactive'].displayValue,
+  'Largest Contentful Paint':
+    runnerResult.lhr.audits['largest-contentful-paint'].displayValue,
+  'Total Blocking Time':
+    runnerResult.lhr.audits['total-blocking-time'].displayValue,
+  'Cumulative Layout Shift':
+    runnerResult.lhr.audits['cumulative-layout-shift'].displayValue,
+};
+
+console.log(metricsHolder);
 
 await chrome.kill();

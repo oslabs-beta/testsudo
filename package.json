@@ -1,6 +1,7 @@
 {
   "name": "testudo",
   "version": "1.0.0",
+  "type": "module",
   "description": "comprehensive optimization tool for development",
   "main": "webpack.config.js",
   "type": "module",
@@ -17,6 +18,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2",
+    "@influxdata/influxdb-client-apis": "^1.33.2",
     "bcryptjs": "^2.4.3",
     "chrome-launcher": "^1.1.0",
     "cookie-parser": "^1.4.6",
@@ -27,6 +30,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "node-fetch": "^3.3.2",
+    "node.js": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.21.1",
