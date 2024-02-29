@@ -14,12 +14,18 @@ mongoose.connect(MONGO_URI, {
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  email: {type: String, required: true, unique: true}
+  username: { type: String, required: false, unique: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  projects: [{}]
 });
 
 const User = mongoose.model('User', userSchema);
+
+const projectSchema = new Schema({
+  name: { type: String, required: true },
+  key: { type: String, required: true },
+})
 
 module.exports = {
   User
