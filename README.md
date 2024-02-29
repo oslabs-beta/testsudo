@@ -14,7 +14,7 @@ Lighthouse 10 Aduit Scoring System
 
 |acronym|audit categories| Weight | Brief Discription |
 |----|----|---|----|
-|   FCP | [First Contenful Paint](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint) | 10 %|marks the time at which the first text or image is painted|
+|   FCP | [First Contenful Paint](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint) |10%|marks the time at which the first text or image is painted|
 |   SI |[Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index) |10%|shows how quickly the contents of a page are visibly populated|
 |   TBT | [Total Blocking Time](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time) |25%|sum of all time periods between FCP and Time to Interactive|
 |   LCP | [Largest Contenful Paint](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint) |30%|marks the time at which the largest text or image is painted|
