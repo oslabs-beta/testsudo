@@ -13,11 +13,11 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    // proxy: {
-    //   // '/home': 'http://localhost:3000',
+    proxy: {
+      '/action': 'http://localhost:3000',
     //   // '/': 'http://localhost:3000',
     //   changeOrigin: true,
-    // },
+    },
     historyApiFallback: true,
     static: './web-app/build', 
     hot: true,
