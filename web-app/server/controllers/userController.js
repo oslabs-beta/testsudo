@@ -1,4 +1,4 @@
-const { User } = require('../models/mongodb');
+const { User, Project } = require('../models/mongodb');
 const bcrypt = require('bcryptjs');
 
 
@@ -34,6 +34,7 @@ userController.verifyUser = async (req, res, next) => {
         } else {
             const isMatch = await bcrypt.compare(password, user.password);
             res.locals.authenticate = isMatch;
+            res.locals.userID = user._id.toString();
             return next();
         }
     } catch (error) {
@@ -45,6 +46,42 @@ userController.verifyUser = async (req, res, next) => {
     }
 }
 
+userController.getUser = async (req, res, next) => {
+    console.log('get user running')
+    const userID = req.cookies.ssid;
+    console.log('user id is ', userID);
+    try {
+        const user = await User.findOne({ _id: userID });
+        res.locals.user = user;
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Error in userController.getUser',
+            status: 400,
+            message: { err: 'Error getting user' },
+        })
+    }
+}
+
+userController.addProject = async (req, res, next) => {
+    const { name } = req.body;
+    const userID = req.cookies.ssid;
+    try {
+        const newProject = await Project.create({ name })
+        const user = await User.findOne({ _id: userID });
+        if (!user.projects) user.projects = [];
+        user.projects.push(newProject);
+        res.locals.user = await user.save();
+        res.locals.projectID = newProject._id;
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Error in userController.addProject',
+            status: 400,
+            message: { err: 'Error adding project' },
+        })
+    }
+}
 
 
 module.exports = userController;

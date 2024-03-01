@@ -15,6 +15,7 @@ const userController = require('./controllers/userController');
 const cookieParser = require('cookie-parser');
 const metricsRouter = require('./routes/metricsRouter')
 const authController = require('./controllers/authController');
+const cookieController = require('./controllers/cookieController');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -65,14 +66,21 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
-app.post('/action/login', userController.verifyUser, (req, res) => {
+app.get('/action/getUser', userController.getUser, (req, res) => {
+    res.json(res.locals.user);
+})
+
+app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res) => {
     res.json(res.locals.authenticate);
 });
 
-app.post('/action/signup', userController.createUser, (req, res) => {
+app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
     res.json(res.locals.user);
 });
 
+app.post('/action/addProject', userController.addProject, (req, res) => {
+    res.json(res.locals.projectID);
+})
 
 // app.get('/auth/github',
 //     passport.authenticate('github')
