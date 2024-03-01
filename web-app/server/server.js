@@ -139,14 +139,14 @@ app.use('/api/v2', metricsRouter)
         //     });
         //     const data = await response.json();
         //     if (data.access_token) {
-        res.redirect('http://localhost:8080/home');
+        // res.redirect('http://localhost:8080/home');
         //     } else {
         //         res.json('Authentication failed');
         //     }
         // } catch (error) {
         //     res.json('Error occured: ', error)
         // }
-    });
+    // });
 
 
 app.use('*', (req, res) => {
