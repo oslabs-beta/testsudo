@@ -1,34 +1,39 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const config = {
   mode: process.env.NODE_ENV,
-  entry: "./web-app/client/index.js",
+  entry: './web-app/client/index.js',
 
   output: {
     path: path.join(__dirname, '/web-app/build'),
     filename: 'bundle.js',
-    publicPath: '/'
-
+    publicPath: '/',
   },
   devServer: {
     port: 8080,
     proxy: {
       '/action': 'http://localhost:3000',
-    //   // '/': 'http://localhost:3000',
-    //   changeOrigin: true,
+      //   // '/': 'http://localhost:3000',
+      //   changeOrigin: true,
     },
     historyApiFallback: true,
-    static: './web-app/build', 
+    static: './web-app/build',
     hot: true,
   },
   resolve: {
-    extensions:[".js", ".jsx", ".json", ".scss"],
-
+    extensions: ['.js', '.jsx', '.json', '.scss'],
   },
 
   module: {
-        rules: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -59,6 +64,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './web-app/index.html',
-    })
+    }),
   ],
 };
+
+export default config;

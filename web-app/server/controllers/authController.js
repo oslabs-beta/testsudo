@@ -1,8 +1,7 @@
 const authController = {};
 
-authController.executeGitOAth = (req, res, next) => {
+authController.executeGitOAth = (req, res, next) => {};
 
-}
+// module.exports = authController;
 
-
-module.exports = authController;
+export default authController;
