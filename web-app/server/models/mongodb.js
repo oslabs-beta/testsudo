@@ -1,6 +1,4 @@
-// const mongoose = require('mongoose');
 import mongoose from 'mongoose';
-// require('dotenv').config();
 import 'dotenv/config';
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -30,7 +28,4 @@ const projectSchema = new Schema({
   key: { type: String, required: true },
 });
 
-// module.exports = {
-//   User,
-// };
 export default User;

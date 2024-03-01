@@ -1,5 +1,3 @@
-// const express = require('express');
-// const path = require('path');
 import express from 'express';
 import path from 'path';
 const PORT = 3000;
@@ -10,16 +8,12 @@ dotenv.config();
 // const session = require('express-session');
 // const bcrypt = require('bcryptjs');
 
-// const userController = require('./controllers/userController');
 import userController from './controllers/userController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
-// const cookieParser = require('cookie-parser');
 import cookieParser from 'cookie-parser';
-// const metricsRouter = require('./routes/metricsRouter')
 import metricsRouter from './routes/metricsRouter.js';
-// const authController = require('./controllers/authController');
 import authController from './controllers/authController.js';
 
 app.use(express.json());
@@ -163,5 +157,4 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
 
-// module.exports = app;
 export default app;

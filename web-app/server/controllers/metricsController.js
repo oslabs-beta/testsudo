@@ -1,6 +1,3 @@
-// const {InfluxDB, Point} = require('@influxdata/influxdb-client');
-// require('dotenv').config();
-
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import 'dotenv/config';
 
@@ -79,5 +76,4 @@ metricsController.postData = async (req, res, next) => {
   }
 };
 
-// module.exports = metricsController;
 export default metricsController;

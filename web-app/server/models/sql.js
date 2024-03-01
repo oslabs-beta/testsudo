@@ -1,6 +1,4 @@
-// const { Pool } = require('pg');
 import { Pool } from 'pg';
-// require('dotenv').config();
 import 'dotenv/config';
 
 const PG_URI = process.env.PG_URI;

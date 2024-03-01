@@ -1,6 +1,3 @@
-// const { User } = require('../models/mongodb');
-// const bcrypt = require('bcryptjs');
-
 import User from '../models/mongodb.js';
 import bcrypt from 'bcryptjs';
 
@@ -47,5 +44,4 @@ userController.verifyUser = async (req, res, next) => {
   }
 };
 
-// module.exports = userController;
 export default userController;

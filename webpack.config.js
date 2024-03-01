@@ -1,8 +1,5 @@
-// const path = require('path');
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
