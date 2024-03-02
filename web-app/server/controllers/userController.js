@@ -1,6 +1,5 @@
-const { User } = require('../models/mongodb');
-const bcrypt = require('bcryptjs');
-
+import { User, Project } from '../models/mongodb.js';
+import bcrypt from 'bcryptjs';
 
 const userController = {};
 
@@ -10,7 +9,7 @@ userController.createUser = async (req, res, next) => {
     try {
         const newUser = await User.create({
             email,
-            password: hashedPassword
+            password: hashedPassword,
         });
         res.locals.user = newUser;
         console.log('new user created is: ', newUser);
@@ -22,7 +21,7 @@ userController.createUser = async (req, res, next) => {
             message: { err: 'Create User Error' },
         });
     }
-}
+};
 
 userController.verifyUser = async (req, res, next) => {
     const { email, password } = req.body;
@@ -34,6 +33,7 @@ userController.verifyUser = async (req, res, next) => {
         } else {
             const isMatch = await bcrypt.compare(password, user.password);
             res.locals.authenticate = isMatch;
+            res.locals.userID = user._id.toString();
             return next();
         }
     } catch (error) {
@@ -43,8 +43,44 @@ userController.verifyUser = async (req, res, next) => {
             message: { err: 'Error verifying user' },
         });
     }
+};
+
+userController.getUser = async (req, res, next) => {
+    console.log('get user running')
+    const userID = req.cookies.ssid;
+    console.log('user id is ', userID);
+    try {
+        const user = await User.findOne({ _id: userID });
+        res.locals.user = user;
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Error in userController.getUser',
+            status: 400,
+            message: { err: 'Error getting user' },
+        })
+    }
+}
+
+userController.addProject = async (req, res, next) => {
+    const { name } = req.body;
+    const userID = req.cookies.ssid;
+    try {
+        const newProject = await Project.create({ name })
+        const user = await User.findOne({ _id: userID });
+        if (!user.projects) user.projects = [];
+        user.projects.push(newProject);
+        res.locals.user = await user.save();
+        res.locals.projectID = newProject._id;
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Error in userController.addProject',
+            status: 400,
+            message: { err: 'Error adding project' },
+        })
+    }
 }
 
 
-
-module.exports = userController;
+export default userController;

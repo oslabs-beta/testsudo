@@ -1,6 +1,7 @@
 {
   "name": "testudo",
   "version": "1.0.0",
+  "type": "module",
   "description": "comprehensive optimization tool for development",
   "main": "webpack.config.js",
   "scripts": {
@@ -29,11 +30,12 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "node-fetch": "^3.3.2",
+    "node.js": "^0.0.1-security",
     "passport": "^0.7.0",
     "passport-github": "^1.1.0",
-    "node.js": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router": "^6.21.1",
     "react-router-dom": "^6.21.2"
   },
