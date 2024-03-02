@@ -62,6 +62,26 @@ userController.getUser = async (req, res, next) => {
     }
 }
 
+userController.checkDuplicate = async (req, res, next) => {
+    const { email } = req.params;
+    console.log('check duplicate running: ', email)
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            res.locals.duplicate = true;
+        } else {
+            res.locals.duplicate = false;
+        }
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Error in userController.checkDuplicate',
+            status: 400,
+            message: { err: 'Error checking duplicate ' + error.message },
+        })
+    }
+}
+
 userController.addProject = async (req, res, next) => {
     const { name } = req.body;
     const userID = req.cookies.ssid;

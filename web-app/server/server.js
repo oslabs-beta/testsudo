@@ -76,6 +76,10 @@ app.post('/action/signup', userController.createUser, cookieController.setSSIDCo
     res.json(res.locals.user);
 });
 
+app.get('/action/checkDuplicate/:email', userController.checkDuplicate, (req, res) => {
+  res.json(res.locals.duplicate);
+})
+
 app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(true);
 })

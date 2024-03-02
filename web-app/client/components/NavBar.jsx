@@ -6,9 +6,7 @@ const NavBar = () => {
             <div>
                 <a href="/home">My Projects</a>
             </div>
-            <div>
-                <a href="/dashboard">Dashboard</a>
-            </div>
+
             <div>
                 <a href="/action/logout">Log out</a>
             </div>
