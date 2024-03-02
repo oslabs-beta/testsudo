@@ -9,6 +9,7 @@ dotenv.config();
 // const bcrypt = require('bcryptjs');
 
 import userController from './controllers/userController.js';
+import cookieController from './controllers/cookieController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
@@ -62,13 +63,21 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
-app.post('/action/login', userController.verifyUser, (req, res) => {
-  res.json(res.locals.authenticate);
+app.get('/action/getUser', userController.getUser, (req, res) => {
+    res.json(res.locals.user);
+})
+
+app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res) => {
+    res.json(res.locals.authenticate);
 });
 
-app.post('/action/signup', userController.createUser, (req, res) => {
-  res.json(res.locals.user);
+app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
+    res.json(res.locals.user);
 });
+
+app.post('/action/addProject', userController.addProject, (req, res) => {
+    res.json(res.locals.projectID);
+})
 
 // app.get('/auth/github',
 //     passport.authenticate('github')
