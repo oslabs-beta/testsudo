@@ -10,6 +10,7 @@ dotenv.config();
 
 import userController from './controllers/userController.js';
 import cookieController from './controllers/cookieController.js';
+import sessionController from './controllers/sessionController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
@@ -63,20 +64,25 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
-app.get('/action/getUser', userController.getUser, (req, res) => {
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
     res.json(res.locals.user);
 })
 
-app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res) => {
+app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
     res.json(res.locals.authenticate);
 });
 
-app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
+app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
     res.json(res.locals.user);
 });
 
 app.post('/action/addProject', userController.addProject, (req, res) => {
     res.json(res.locals.projectID);
+})
+
+app.get('/action/logout', sessionController.endSession, (req, res) => {
+    res.clearCookie('ssid');
+    res.redirect('/');
 })
 
 // app.get('/auth/github',
