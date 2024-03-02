@@ -5,6 +5,7 @@ const url = process.env.INFLUX_URL;
 const token = process.env.INFLUX_TOKEN;
 const org = process.env.INFLUX_ORG;
 const bucket = process.env.INFLUX_BUCKET;
+// const projectID = process.env.PROJECT_ID;
 
 const influxDB = new InfluxDB({ url, token });
 
@@ -38,6 +39,7 @@ metricsController.getData = async (req, res, next) => {
 };
 
 metricsController.postData = async (req, res, next) => {
+  console.log('entered metricsController.postData');
   const {
     userID,
     serverID,
@@ -48,18 +50,30 @@ metricsController.postData = async (req, res, next) => {
     cumulativeLayoutShift,
     performance,
   } = req.body;
+  console.log('req.body ', req.body);
+  console.log(
+    userID,
+    serverID,
+    firstContentfulPaint,
+    speedIndex,
+    totalBlockingTime,
+    largestContentfulPaint,
+    cumulativeLayoutShift,
+    performance
+  );
 
   try {
+    console.log('in metricsController');
     // create a point by calling the Point method
     const point = new Point(measurementName)
       .tag('userID', userID)
       .tag('serverID', serverID)
-      .floatField('first-contentful-paint', firstContentfulPaint)
-      .floatField('speed-index', speedIndex)
-      .floatField('total-blocking-time', totalBlockingTime)
-      .floatField('largest-contentful-paint', largestContentfulPaint)
-      .floatField('cumulative-layout-shift', cumulativeLayoutShift)
-      .floatField('performance', performance)
+      .floatField('first-contentful-paint', firstContentfulPaint) // saved in milliseconds but to display in seconds
+      .floatField('speed-index', speedIndex) // saved in milliseconds but to display in seconds
+      .floatField('total-blocking-time', totalBlockingTime) // saved in milliseconds but to display in seconds
+      .floatField('largest-contentful-paint', largestContentfulPaint) // saved in milliseconds; display in milliseconds
+      .floatField('cumulative-layout-shift', cumulativeLayoutShift) // saved in milliseconds but to display in seconds
+      .floatField('performance', performance) // no unit
       .timestamp(new Date());
 
     console.log(` ${point}`);
