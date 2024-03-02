@@ -1,30 +1,27 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
 const PORT = 3000;
 const app = express();
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 // const passport = require('passport');
 // const session = require('express-session');
 // const bcrypt = require('bcryptjs');
-const userController = require('./controllers/userController');
 
+import userController from './controllers/userController.js';
+import cookieController from './controllers/cookieController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
-
-const cookieParser = require('cookie-parser');
-const metricsRouter = require('./routes/metricsRouter')
-const authController = require('./controllers/authController');
-const cookieController = require('./controllers/cookieController');
+import cookieParser from 'cookie-parser';
+import metricsRouter from './routes/metricsRouter.js';
+import authController from './controllers/authController.js';
 
 app.use(express.json());
 app.use(cookieParser());
 // app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
 // app.use(passport.initialize());
 // app.use(passport.session());
-
-
-
 
 // const client_id = process.env.CLIENT_ID;
 // const client_secret = process.env.CLIENT_SECRET;
@@ -63,7 +60,7 @@ app.use(cookieParser());
 // });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../web-app/index.html'));
+  res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
 app.get('/action/getUser', userController.getUser, (req, res) => {
@@ -124,50 +121,49 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
 //     }
 // })
 
-app.use('/api/v2', metricsRouter)
+app.use('/api/v2', metricsRouter);
 
-        // const code = req.query.code;
-        // if (!code) {
-        //     return res.json('Error: log in not successful, no code provided')
-        // }
+// const code = req.query.code;
+// if (!code) {
+//     return res.json('Error: log in not successful, no code provided')
+// }
 
-        // try {
-        //     const response = await fetch('https://github.com/login/oauth/access_token', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Accept': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             client_id,
-        //             client_secret,
-        //             code,
-        //             redirect_uri
-        //         }),
-        //     });
-        //     const data = await response.json();
-        //     if (data.access_token) {
-        // res.redirect('http://localhost:8080/home');
-        //     } else {
-        //         res.json('Authentication failed');
-        //     }
-        // } catch (error) {
-        //     res.json('Error occured: ', error)
-        // }
-    // });
-
+// try {
+//     const response = await fetch('https://github.com/login/oauth/access_token', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             client_id,
+//             client_secret,
+//             code,
+//             redirect_uri
+//         }),
+//     });
+//     const data = await response.json();
+//     if (data.access_token) {
+// res.redirect('http://localhost:8080/home');
+//     } else {
+//         res.json('Authentication failed');
+//     }
+// } catch (error) {
+//     res.json('Error occured: ', error)
+// }
+// });
 
 app.use('*', (req, res) => {
-    res.status(404).send('Page not found.');
+  res.status(404).send('Page not found.');
 });
 
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(500).send({ error: err });
+  console.log(err);
+  res.status(500).send({ error: err });
 });
 
 app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}...`);
+  console.log(`Listening on port ${PORT}...`);
 });
 
-module.exports = app;
+export default app;

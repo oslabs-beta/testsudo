@@ -1,6 +1,5 @@
-const { User, Project } = require('../models/mongodb');
-const bcrypt = require('bcryptjs');
-
+import { User, Project } from '../models/mongodb.js';
+import bcrypt from 'bcryptjs';
 
 const userController = {};
 
@@ -10,7 +9,7 @@ userController.createUser = async (req, res, next) => {
     try {
         const newUser = await User.create({
             email,
-            password: hashedPassword
+            password: hashedPassword,
         });
         res.locals.user = newUser;
         console.log('new user created is: ', newUser);
@@ -22,7 +21,7 @@ userController.createUser = async (req, res, next) => {
             message: { err: 'Create User Error' },
         });
     }
-}
+};
 
 userController.verifyUser = async (req, res, next) => {
     const { email, password } = req.body;
@@ -44,7 +43,7 @@ userController.verifyUser = async (req, res, next) => {
             message: { err: 'Error verifying user' },
         });
     }
-}
+};
 
 userController.getUser = async (req, res, next) => {
     console.log('get user running')
@@ -84,4 +83,4 @@ userController.addProject = async (req, res, next) => {
 }
 
 
-module.exports = userController;
+export default userController;
