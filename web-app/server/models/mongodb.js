@@ -15,7 +15,6 @@ mongoose
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: { type: String, required: false, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   projects: [{}],
@@ -29,4 +28,11 @@ const projectSchema = new Schema({
 
 const Project = mongoose.model('Project', projectSchema);
 
-export { User, Project };
+const sessionSchema = new Schema({
+  cookieID: { type: String, required: true, unique: true },
+  createdAt: { type: Date, expires: 86400, default: Date.now }
+});
+
+const Session = mongoose.model('Session', sessionSchema);
+
+export { User, Project, Session };

@@ -69,9 +69,9 @@ const Login = () => {
             </form>
             {!correctCredential && <div>Incorrect username or password.</div>}
 
-            <div>
+            {/* <div>
                 <a href="https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5">Log in with Github</a>
-            </div>
+            </div> */}
 
             <div>
                 Not a user yet? <a href="/signup">Sign up here</a>
