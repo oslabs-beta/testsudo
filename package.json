@@ -8,7 +8,9 @@
     "start": "NODE_ENV=production node web-app/server/server.js",
     "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon web-app/server/server.js\"",
     "build": "NODE_ENV=production webpack",
-    "test": "node bearerScanner.js",
+    "sec_cli": "node bearerScriptCli.js",
+    "sec_json": "node bearerScriptJson.js",
+    "sec": "npm run sec_json && npm run sec_cli",
     "postinstall": "curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh && export PATH=$PATH:$(pwd)/bin"
   },
   "keywords": [
