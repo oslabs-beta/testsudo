@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [correctCredential, setCorrectCredential] = useState(true);
     const [userData, setUserData] = useState({
         email: '',
@@ -40,7 +43,7 @@ const Login = () => {
     return (
         <div>
             Log in page
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>Email</div>
                 <input
                     type="text"
