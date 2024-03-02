@@ -76,6 +76,10 @@ app.post('/action/signup', userController.createUser, cookieController.setSSIDCo
     res.json(res.locals.user);
 });
 
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(true);
+})
+
 app.post('/action/addProject', userController.addProject, (req, res) => {
     res.json(res.locals.projectID);
 })
