@@ -10,7 +10,7 @@ mongoose
     dbName: 'Testudo',
   })
   .then(() => console.log('Connected to Mongo DB.'))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err, '<----- mongoose error in connect'));
 
 const Schema = mongoose.Schema;
 
@@ -35,4 +35,12 @@ const sessionSchema = new Schema({
 
 const Session = mongoose.model('Session', sessionSchema);
 
-export { User, Project, Session };
+const metricsSchema = new Schema({
+  testedOn: {type: String},
+  audit: {type: Object},
+  // categories: {type: Object},
+});
+
+const Metric = mongoose.model('Metric', metricsSchema);
+
+export { User, Project, Session, Metric };

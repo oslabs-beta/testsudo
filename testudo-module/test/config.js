@@ -60,7 +60,7 @@ const config = {
   // affects the output/results of calling the lighthouse function
   options: {
     logLevel: 'info',
-    output: 'html', // <-- change output to html/json as needed
+    output: 'json', // <-- change output to html/json as needed
     onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
     port: chrome.port,
   },
