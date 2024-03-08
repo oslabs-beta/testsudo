@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
+// testing getting the address dynamically
+import express from 'express';
+const app = express();
+
+
+
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
@@ -13,6 +19,20 @@ mongoose
   .catch((err) => console.log(err, '<----- mongoose error in connect'));
 
 const Schema = mongoose.Schema;
+
+/** dynamic address */
+// const address = app.listen(process.env.PORT, ()=>{
+//   const host = address.address().address; // --> ::
+
+//   console.log(host, '<----- host');
+//   console.log(address.address(), '<----- address.address()');
+
+//   const port = address.address().port;
+
+
+
+//   console.log(`The address is ${host}:${port}`);
+// })
 
 const userSchema = new Schema({
   password: { type: String, required: true },

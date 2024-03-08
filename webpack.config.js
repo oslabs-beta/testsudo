@@ -16,6 +16,7 @@ const config = {
   },
   devServer: {
     port: 8080,
+    // port: process.env.PORT,
     proxy: {
       '/action': 'http://localhost:3000',
       //   // '/': 'http://localhost:3000',
