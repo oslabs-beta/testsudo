@@ -15,7 +15,6 @@ mongoose
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: { type: String, required: false, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   projects: [{}],
@@ -25,7 +24,7 @@ const User = mongoose.model('User', userSchema);
 
 const projectSchema = new Schema({
   name: { type: String, required: true },
-})
+});
 
 const Project = mongoose.model('Project', projectSchema);
 
