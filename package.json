@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "comprehensive optimization tool for development",
-  "main": "webpack.config.js",
+  "main": "./testudo-module/src/index.js",
   "scripts": {
     "start": "NODE_ENV=production node web-app/server/server.js",
     "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon web-app/server/server.js\"",
@@ -33,6 +33,7 @@
     "node.js": "^0.0.1-security",
     "passport": "^0.7.0",
     "passport-github": "^1.1.0",
+    "prom-client": "^15.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
