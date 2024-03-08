@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { clear } from 'console';
+
 import path from 'path';
 
 // Find the absolute path of the current working directory

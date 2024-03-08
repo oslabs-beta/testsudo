@@ -15,10 +15,14 @@ import cookieController from './controllers/cookieController.js';
 
 import cookieParser from 'cookie-parser';
 import metricsRouter from './routes/metricsRouter.js';
+import securityRouter from './routes/securityRouter.js';
 import authController from './controllers/authController.js';
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use('api/security', securityRouter);
+
 // app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -64,20 +68,30 @@ app.get('/', (req, res) => {
 });
 
 app.get('/action/getUser', userController.getUser, (req, res) => {
-    res.json(res.locals.user);
-})
+  res.json(res.locals.user);
+});
 
-app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res) => {
+app.post(
+  '/action/login',
+  userController.verifyUser,
+  cookieController.setSSIDCookie,
+  (req, res) => {
     res.json(res.locals.authenticate);
-});
+  }
+);
 
-app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
+app.post(
+  '/action/signup',
+  userController.createUser,
+  cookieController.setSSIDCookie,
+  (req, res) => {
     res.json(res.locals.user);
-});
+  }
+);
 
 app.post('/action/addProject', userController.addProject, (req, res) => {
-    res.json(res.locals.projectID);
-})
+  res.json(res.locals.projectID);
+});
 
 // app.get('/auth/github',
 //     passport.authenticate('github')
