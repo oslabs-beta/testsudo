@@ -38,7 +38,7 @@ console.log(
 );
 // object containing base metrics, eventually will display these to web app
 const metricsHolder = {
-  userID: 'aarivas793',
+  userID: 'wanting',
   serverID: 'test',
   firstContentfulPaint:
     runnerResult.lhr.audits['first-contentful-paint'].numericValue,
@@ -53,7 +53,7 @@ const metricsHolder = {
 };
 
 console.log(metricsHolder);
-// ?org=$${process.env.INFLUX_ORG}&bucket=${process.env.INFLUX_BUCKET}
+
 postData(
   `http://localhost:3001/api/v2/write?org=${process.env.INFLUX_ORG}&bucket=${process.env.INFLUX_BUCKET}`,
   metricsHolder
