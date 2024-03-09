@@ -25,14 +25,13 @@ const Projects = () => {
     let projects = null;
     if (user && user.projects) {
         projects = user.projects.map((project, i) => (
-            <div key={i}>{project.name}</div> // Use parentheses for implicit return
+            <div key={i}><a href={`/dashboard/${project._id}`}>{project.name}</a></div> 
         ));
     }
 
     const handleAdd = (e) => {
         e.preventDefault();
-        // setProjectID('test');
-        // setProjectAdded(true);
+
         fetch('/action/addProject', {
             method: 'POST',
             headers: {

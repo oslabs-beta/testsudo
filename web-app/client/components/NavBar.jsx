@@ -4,13 +4,11 @@ const NavBar = () => {
     return (
         <div className="nav-bar">
             <div>
-                <a href="/home">Dashboard</a>
+                <a href="/home">My Projects</a>
             </div>
+
             <div>
-                <a href="/projects">My Projects</a>
-            </div>
-            <div>
-                <a href="/logout">Log out</a>
+                <a href="/action/logout">Log out</a>
             </div>
         </div>
 
