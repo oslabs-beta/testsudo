@@ -37,6 +37,7 @@
 import { launch } from 'chrome-launcher';
 import lighthouse from 'lighthouse';
 import { setupMetrics } from './core/setup.js';
+import { handleMeasuredRequest } from './core/measured.js';
 
 
 async function runLighthouseAudit(url, opts = null, config = null) {
@@ -49,4 +50,4 @@ async function runLighthouseAudit(url, opts = null, config = null) {
     return runnerResult.lhr; // Returning Lighthouse results
 }
 
-export { runLighthouseAudit, setupMetrics };
+export { runLighthouseAudit, setupMetrics, handleMeasuredRequest };
