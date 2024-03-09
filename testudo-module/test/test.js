@@ -54,7 +54,7 @@ const metricsHolder = {
 console.log(metricsHolder);
 
 postData(
-  `http://localhost:3001/projects/${PROJECTID}`,
+  `http://localhost:3000/projects/${PROJECTID}`,
   metricsHolder
 );
 
