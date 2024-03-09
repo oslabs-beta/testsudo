@@ -7,7 +7,8 @@ const org = process.env.INFLUX_ORG;
 const bucket = process.env.INFLUX_BUCKET;
 // const projectID = process.env.PROJECT_ID;
 
-const influxDB = new InfluxDB({ url, token });
+const timeoutMs = 10000;
+const influxDB = new InfluxDB({ url, token, timeout: timeoutMs });
 
 const writeApi = influxDB.getWriteApi(org, bucket);
 
