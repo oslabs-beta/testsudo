@@ -121,7 +121,7 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
 //     }
 // })
 
-app.use('/api/v2', metricsRouter);
+app.use('/projects', metricsRouter);
 
 // const code = req.query.code;
 // if (!code) {
