@@ -9,6 +9,7 @@ const SignUp = () => {
         email: '',
         password: ''
     });
+    const [duplicate, setDuplicate] = useState(false);
 
     const handleDataChange = (e) => {
         setUserData({
@@ -39,6 +40,17 @@ const SignUp = () => {
         .catch(err => console.log("App: create user error ", err));
     }
 
+    useEffect(() => {
+        if(userData.email) {
+            fetch(`/action/checkDuplicate/${userData.email}`)
+            .then(res => res.json())
+            .then(bool => setDuplicate(bool))
+            .catch(err => console.log('App: check email duplicate error: ', err))
+        } else {
+            setDuplicate(false);
+        }
+    }, [userData.email]);
+
     return (
         <div>
             Sign up page
@@ -65,9 +77,12 @@ const SignUp = () => {
                     >Sign up</button>
                 </div>
             </form>
-            <div>
+            {/* <div>
                 <a href="http://localhost:3000/auth/github">Sign Up with GitHub</a>
-            </div>
+            </div> */}
+            {duplicate &&
+                <div style={{ color: "red", fontSize: "0.8em" }}>User already exists. Please log in instead.</div>
+            }
             <div>Already a user? <a href="/">Log in here</a></div>
         </div>
     )

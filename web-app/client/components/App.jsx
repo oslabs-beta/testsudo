@@ -2,8 +2,9 @@ import React from 'react';
 import { Route, Routes } from 'react-router';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
-import Home from './Home.jsx';
+import Dashboard from './Dashboard.jsx';
 import Projects from './Projects.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App () {
     return (
@@ -12,10 +13,14 @@ function App () {
                 <Route path="/" element= {<Login />} />
                 <Route path="/signup" element= {<SignUp />} />
                 <Route path="/home" element= {
-                    <Home />
+                    <ProtectedRoute >
+                        <Projects />
+                    </ProtectedRoute>
                 } />
-                <Route path="/projects" element= {
-                    <Projects />
+                <Route path="/dashboard/*" element= {
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
                 } />
             </Routes>
         </div>

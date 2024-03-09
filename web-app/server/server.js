@@ -9,6 +9,8 @@ dotenv.config();
 // const bcrypt = require('bcryptjs');
 
 import userController from './controllers/userController.js';
+import cookieController from './controllers/cookieController.js';
+import sessionController from './controllers/sessionController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
@@ -62,13 +64,34 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
-app.post('/action/login', userController.verifyUser, (req, res) => {
-  res.json(res.locals.authenticate);
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
+    res.json(res.locals.user);
+})
+
+app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+    res.json(res.locals.authenticate);
 });
 
-app.post('/action/signup', userController.createUser, (req, res) => {
-  res.json(res.locals.user);
+app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+    res.json(res.locals.user);
 });
+
+app.get('/action/checkDuplicate/:email', userController.checkDuplicate, (req, res) => {
+  res.json(res.locals.duplicate);
+})
+
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(true);
+})
+
+app.post('/action/addProject', userController.addProject, (req, res) => {
+    res.json(res.locals.projectID);
+})
+
+app.get('/action/logout', sessionController.endSession, (req, res) => {
+    res.clearCookie('ssid');
+    res.redirect('/');
+})
 
 // app.get('/auth/github',
 //     passport.authenticate('github')
