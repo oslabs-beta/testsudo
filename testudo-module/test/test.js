@@ -38,7 +38,7 @@ console.log(
 );
 // object containing base metrics, eventually will display these to web app
 const metricsHolder = {
-  userID: 'wanting',
+  userID: 'robertCodeReview',
   serverID: 'test',
   firstContentfulPaint:
     runnerResult.lhr.audits['first-contentful-paint'].numericValue,
