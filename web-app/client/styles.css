@@ -1,7 +1,149 @@
+/* Variables */
+:root {
+  /* yellow colors and shades */
+  --yellow100: #fff1ce;
+  --yellow200: #ffe39c;
+  --yellow300: #ffd66b;
+  --yellow400: #ffc839;
+  --yellow500: #ffba08;
+  --yellow600: #cc9506;
+  --yellow700: #997005;
+  --yellow800: #664a03;
+  --yellow900: #332502;
+  /* red colors and shades */
+  --red100: #f8d5cc;
+  --red200: #f1ac9a;
+  --red300: #ea8267;
+  --red400: #e35935;
+  --red500: #dc2f02;
+  --red600: #b02602;
+  --red700: #841c01;
+  --red800: #581301;
+  --red900: #2c0900;
+  /* grey colors */
+  --grey-50: #f8fafc;
+  --grey-100: #f1f5f9;
+  --grey-200: #e2e8f0;
+  --grey-300: #cbd5e1;
+  --grey-400: #94a3b8;
+  --grey-500: #64748b;
+  --grey-600: #475569;
+  --grey-700: #334155;
+  --grey-800: #1e293b;
+  --grey-900: #0f172a;
+  /* black and white */
+  --black: #222;
+  --white: #fff;
+  --offWhite: #f1f5f9;
+  /* rest of vars */
+  --transition: all 0.3s linear;
+  --spacing: 0.25rem;
+  --radius: 0.5rem;
+  --max-width: 1170px;
+}
+/* Globals */
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  line-height: 1.5;
+}
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: var(--black);
+}
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+.btn {
+  text-transform: uppercase;
+  background: var(--red300);
+  color: var(--red100);
+  padding: 0.375rem 0.75rem;
+  letter-spacing: var(--spacing);
+  display: inline-block;
+  font-weight: 700;
+  transition: var(--transition);
+  font-size: 0.875rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius);
+}
 .nav-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: 1px solid lightgrey;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgrey;
+}
+.main-app {
+  height: 100vh;
+  background: var(--offWhite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Login/Signup Page */
+.login-center {
+  text-align: center;
+  font-size: 1.5rem;
+  min-width: 430px;
+  width: 40vw;
+  background: var(--yellow300);
+  padding: 5rem 4rem;
+  border-radius: var(--radius);
+  border: 4px solid var(--red500);
+}
+.login-center input {
+  padding: 0.25rem 0.75rem;
+}
+.login-btn {
+  margin: 1rem 0;
+}
+.login-btn:hover {
+  background: var(--red500);
+  color: var(--white);
+}
+.login-form p {
+  margin-bottom: -10px;
+}
+.login-center a {
+  color: var(--white);
+}
+.login-center a:hover {
+  color: var(--grey-400);
+}
+.github-login-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: #24292e;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.35rem 1.25rem;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.github-login-btn:hover {
+  background-color: #2c3138;
+}
+.github-logo {
+  width: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
 }

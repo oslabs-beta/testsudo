@@ -5,21 +5,17 @@ import SignUp from './SignUp.jsx';
 import Dashboard from './Dashboard.jsx';
 import Projects from './Projects.jsx';
 
-function App () {
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element= {<Login />} />
-                <Route path="/signup" element= {<SignUp />} />
-                <Route path="/home" element= {
-                    <Projects />
-                } />
-                <Route path="/dashboard" element= {
-                    <Dashboard />
-                } />
-            </Routes>
-        </div>
-    )
+function App() {
+  return (
+    <div className="main-app">
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/home" element={<Projects />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
