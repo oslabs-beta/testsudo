@@ -1,6 +1,6 @@
 import express from 'express';
-import securityController from '../controllers/securityController';
 const router = express.Router();
+import securityController from '../controllers/securityController.js';
 
 router.get('/scan-report', securityController.runBearerScript);
 

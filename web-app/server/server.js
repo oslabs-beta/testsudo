@@ -21,7 +21,7 @@ import authController from './controllers/authController.js';
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('api/security', securityRouter);
+app.use('/api/security', securityRouter);
 
 // app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
 // app.use(passport.initialize());
