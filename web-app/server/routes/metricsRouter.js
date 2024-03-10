@@ -3,8 +3,8 @@ const router = express.Router();
 
 import metricsController from '../controllers/metricsController.js';
 
-router.post('/write', metricsController.postData);
+router.get('/:projectID', metricsController.getData);
 
-router.post('/query', metricsController.getData);
+router.post('/:projectID', metricsController.postData);
 
 export default router;
