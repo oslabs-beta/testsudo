@@ -10,6 +10,7 @@ dotenv.config();
 
 import userController from './controllers/userController.js';
 import cookieController from './controllers/cookieController.js';
+import sessionController from './controllers/sessionController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
@@ -68,6 +69,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/action/getUser', userController.getUser, (req, res) => {
+  res.json(res.locals.user);
+});
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
   res.json(res.locals.user);
 });
 
@@ -135,7 +139,7 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
 //     }
 // })
 
-app.use('/api/v2', metricsRouter);
+app.use('/projects', metricsRouter);
 
 // const code = req.query.code;
 // if (!code) {
