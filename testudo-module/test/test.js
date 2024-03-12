@@ -5,13 +5,13 @@ import config from './config.js';
 const { desktopConfig, options, chrome } = config;
 import 'dotenv/config';
 
+const PROJECTID = process.env.PROJECTID
+
 const postData = async (url, data) => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      Authorization: `Token ${process.env.INFLUX_TOKEN}`,
-      // 'Content-Type': 'text/plain; charset=utf-8',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -38,8 +38,7 @@ console.log(
 );
 // object containing base metrics, eventually will display these to web app
 const metricsHolder = {
-  userID: 'robertCodeReview',
-  serverID: 'test',
+  projectID: PROJECTID,
   firstContentfulPaint:
     runnerResult.lhr.audits['first-contentful-paint'].numericValue,
   speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
@@ -55,7 +54,7 @@ const metricsHolder = {
 console.log(metricsHolder);
 
 postData(
-  `http://localhost:3001/api/v2/write?org=${process.env.INFLUX_ORG}&bucket=${process.env.INFLUX_BUCKET}`,
+  `http://localhost:3000/projects/${PROJECTID}`,
   metricsHolder
 );
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-const PORT = 3001;
+const PORT = 3000;
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
@@ -10,6 +10,7 @@ dotenv.config();
 
 import userController from './controllers/userController.js';
 import cookieController from './controllers/cookieController.js';
+import sessionController from './controllers/sessionController.js';
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
@@ -63,7 +64,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
-app.get('/action/getUser', userController.getUser, (req, res) => {
+app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
   res.json(res.locals.user);
 });
 
@@ -71,6 +72,7 @@ app.post(
   '/action/login',
   userController.verifyUser,
   cookieController.setSSIDCookie,
+  sessionController.startSession,
   (req, res) => {
     res.json(res.locals.authenticate);
   }
@@ -80,13 +82,31 @@ app.post(
   '/action/signup',
   userController.createUser,
   cookieController.setSSIDCookie,
+  sessionController.startSession,
   (req, res) => {
     res.json(res.locals.user);
   }
 );
 
+app.get(
+  '/action/checkDuplicate/:email',
+  userController.checkDuplicate,
+  (req, res) => {
+    res.json(res.locals.duplicate);
+  }
+);
+
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(true);
+});
+
 app.post('/action/addProject', userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
+});
+
+app.get('/action/logout', sessionController.endSession, (req, res) => {
+  res.clearCookie('ssid');
+  res.redirect('/');
 });
 
 // app.get('/auth/github',
@@ -131,7 +151,7 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
 //     }
 // })
 
-app.use('/api/v2', metricsRouter);
+app.use('/projects', metricsRouter);
 
 // const code = req.query.code;
 // if (!code) {

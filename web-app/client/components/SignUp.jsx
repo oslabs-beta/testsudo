@@ -38,6 +38,17 @@ const SignUp = () => {
       .catch((err) => console.log('App: create user error ', err));
   };
 
+  useEffect(() => {
+    if (userData.email) {
+      fetch(`/action/checkDuplicate/${userData.email}`)
+        .then((res) => res.json())
+        .then((bool) => setDuplicate(bool))
+        .catch((err) => console.log('App: check email duplicate error: ', err));
+    } else {
+      setDuplicate(false);
+    }
+  }, [userData.email]);
+
   return (
     <div className="login-center">
       <h2>Sign up page</h2>
@@ -67,7 +78,7 @@ const SignUp = () => {
           </button>
         </div>
       </form>
-      <div className="github-login-btn">
+      {/* <div className="github-login-btn">
         <a href="http://localhost:3000/auth/github">
           <img
             src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
@@ -76,7 +87,12 @@ const SignUp = () => {
           />
           Sign Up With GitHub
         </a>
-      </div>
+      </div> */}
+      {duplicate && (
+        <div style={{ color: 'red', fontSize: '0.8em' }}>
+          User already exists. Please log in instead.
+        </div>
+      )}
       <p className="signup-footer">
         Already a user? <a href="/">Log in here</a>
       </p>
