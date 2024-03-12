@@ -77,9 +77,9 @@ const SignUp = () => {
           Sign Up With GitHub
         </a>
       </div>
-      <div>
+      <p className="signup-footer">
         Already a user? <a href="/">Log in here</a>
-      </div>
+      </p>
     </div>
   );
 };

@@ -81,9 +81,9 @@ const Login = () => {
           Log in with Github
         </a>
       </div>
-      <div>
+      <p className="signup-footer">
         Not a user yet? <a href="/signup">Sign up here</a>
-      </div>
+      </p>
     </div>
   );
 };
