@@ -8,6 +8,7 @@ const SignUp = () => {
     email: '',
     password: '',
   });
+  const [duplicate, setDuplicate] = useState(false);
 
   const handleDataChange = (e) => {
     setUserData({
@@ -78,7 +79,7 @@ const SignUp = () => {
           </button>
         </div>
       </form>
-      {/* <div className="github-login-btn">
+      <div className="github-login-btn">
         <a href="http://localhost:3000/auth/github">
           <img
             src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
@@ -87,7 +88,7 @@ const SignUp = () => {
           />
           Sign Up With GitHub
         </a>
-      </div> */}
+      </div>
       {duplicate && (
         <div style={{ color: 'red', fontSize: '0.8em' }}>
           User already exists. Please log in instead.
