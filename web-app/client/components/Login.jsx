@@ -41,49 +41,51 @@ const Login = () => {
   };
 
   return (
-    <div className="login-center">
-      <h2>welcome to testudo</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <p>Email</p>
-        <input
-          type="text"
-          name="email"
-          value={userData.email}
-          onChange={handleDataChange}
-        />
-
-        <p>Password</p>
-        <input
-          type="password"
-          name="password"
-          value={userData.password}
-          onChange={handleDataChange}
-        />
-
-        <div>
-          <button
-            type="submit"
-            className="btn login-btn"
-            // disabled={!userData.email || !userData.password}
-          >
-            Sign in
-          </button>
-        </div>
-      </form>
-      {!correctCredential && <div>Incorrect username or password.</div>}
-      <div className="github-login-btn">
-        <a href="https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5">
-          <img
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="github logo"
-            className="github-logo"
+    <div className="page-container">
+      <div className="login-center">
+        <h2>welcome to testudo</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <p>Email</p>
+          <input
+            type="text"
+            name="email"
+            value={userData.email}
+            onChange={handleDataChange}
           />
-          Log in with Github
-        </a>
+
+          <p>Password</p>
+          <input
+            type="password"
+            name="password"
+            value={userData.password}
+            onChange={handleDataChange}
+          />
+
+          <div>
+            <button
+              type="submit"
+              className="btn login-btn"
+              // disabled={!userData.email || !userData.password}
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+        {!correctCredential && <div>Incorrect username or password.</div>}
+        <div className="github-login-btn">
+          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="github logo"
+              className="github-logo"
+            />
+            Log in with Github
+          </a>
+        </div>
+        <p className="signup-footer">
+          Not a user yet? <a href="/signup">Sign up here</a>
+        </p>
       </div>
-      <p className="signup-footer">
-        Not a user yet? <a href="/signup">Sign up here</a>
-      </p>
     </div>
   );
 };

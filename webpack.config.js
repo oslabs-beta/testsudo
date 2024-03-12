@@ -17,7 +17,7 @@ const config = {
   devServer: {
     port: 8080,
     proxy: {
-      '/action': 'http://localhost:3001',
+      '/action': 'http://localhost:3000',
       //   // '/': 'http://localhost:3000',
       //   changeOrigin: true,
     },

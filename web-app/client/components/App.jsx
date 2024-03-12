@@ -8,7 +8,7 @@ import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
   return (
-    <div className="main-app">
+    <div>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

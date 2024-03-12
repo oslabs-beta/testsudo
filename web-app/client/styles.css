@@ -9,7 +9,7 @@
   --secondaryColor: #f25f4c;
   --tertiaryColor: #e53170;
   --black: black;
-  --white: fffffe;
+  --white: #fffffe;
   /* rest of vars */
   --transition: all 0.3s linear;
   --spacing: 0.25rem;
@@ -64,14 +64,21 @@ h4 {
   justify-content: space-between;
   border-bottom: 1px solid lightgrey;
 }
-.main-app {
+/* .main-app {
+  height: 100vh;
+  background: var(--backgroundColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+/* Login/Signup Page */
+.page-container {
   height: 100vh;
   background: var(--backgroundColor);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-/* Login/Signup Page */
 .login-center {
   text-align: center;
   font-size: 1.5rem;
@@ -101,13 +108,13 @@ h4 {
   margin-top: 2rem;
 }
 .login-center a {
-  color: var(--white);
+  color: var(--black);
 }
 .login-footer a {
   color: var(--black);
 }
 .login-center a:hover {
-  color: var(--backgroundColor);
+  color: var(--btnColor);
 }
 .github-login-btn {
   display: inline-flex;
@@ -121,6 +128,9 @@ h4 {
   font-weight: bold;
   transition: background-color 0.3s;
   margin-top: 0.5rem;
+}
+.github-login-btn a {
+  color: white;
 }
 .github-login-btn:hover {
   background-color: #2c3138;

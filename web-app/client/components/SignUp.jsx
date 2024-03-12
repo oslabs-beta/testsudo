@@ -51,52 +51,54 @@ const SignUp = () => {
   }, [userData.email]);
 
   return (
-    <div className="login-center">
-      <h2>Sign up page</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <p>Email</p>
-        <input
-          type="text"
-          name="email"
-          value={userData.email}
-          onChange={handleDataChange}
-        />
-
-        <p>Password</p>
-        <input
-          type="password"
-          name="password"
-          value={userData.password}
-          onChange={handleDataChange}
-        />
-        <div>
-          <button
-            type="submit"
-            className="btn login-btn"
-            disabled={!userData.email || !userData.password}
-          >
-            Sign up
-          </button>
-        </div>
-      </form>
-      <div className="github-login-btn">
-        <a href="http://localhost:3000/auth/github">
-          <img
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="github logo"
-            className="github-logo"
+    <div className="page-container">
+      <div className="login-center">
+        <h2>Sign up page</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <p>Email</p>
+          <input
+            type="text"
+            name="email"
+            value={userData.email}
+            onChange={handleDataChange}
           />
-          Sign Up With GitHub
-        </a>
-      </div>
-      {duplicate && (
-        <div style={{ color: 'red', fontSize: '0.8em' }}>
-          User already exists. Please log in instead.
+
+          <p>Password</p>
+          <input
+            type="password"
+            name="password"
+            value={userData.password}
+            onChange={handleDataChange}
+          />
+          <div>
+            <button
+              type="submit"
+              className="btn login-btn"
+              disabled={!userData.email || !userData.password}
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
+        <div className="github-login-btn">
+          <a href="http://localhost:3000/auth/github">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="github logo"
+              className="github-logo"
+            />
+            Sign Up With GitHub
+          </a>
         </div>
-      )}
-      <p className="signup-footer">
-        Already a user? <a href="/">Log in here</a>
-      </p>
+        {duplicate && (
+          <div style={{ color: 'red', fontSize: '0.8em' }}>
+            User already exists. Please log in instead.
+          </div>
+        )}
+        <p className="signup-footer">
+          Already a user? <a href="/">Log in here</a>
+        </p>
+      </div>
     </div>
   );
 };
