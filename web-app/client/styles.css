@@ -15,6 +15,7 @@
   --spacing: 0.25rem;
   --radius: 0.5rem;
   --max-width: 1170px;
+  --box-shadow: box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 /* Globals */
 *,
@@ -60,17 +61,43 @@ h4 {
 }
 .nav-bar {
   display: flex;
+  height: 3rem;
+  width: 100%;
   flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid lightgrey;
-}
-/* .main-app {
-  height: 100vh;
-  background: var(--backgroundColor);
-  display: flex;
   align-items: center;
   justify-content: center;
-} */
+  border-bottom: 1px solid lightgrey;
+  border: 1px solid var(--btnColor);
+}
+.nav-center{
+  display: flex;
+  justify-content: space-between;
+  width: 95vw;
+  font-size: 1.25rem;
+}
+.nav-center a:hover{
+  color: var(--btnColor);
+}
+.projects-page{
+  display: grid;
+  color: white;
+  place-items: center;
+  background: var(--backgroundColor);
+  height: calc(100vh - 3rem);
+  text-align: center;
+}
+.projects-page p {
+  font-size: 1.75rem;
+  letter-spacing: var(--spacing);
+}
+.projects-btn{
+  margin-top: 2rem;
+  background: var(--secondaryColor);
+}
+.projects-btn:hover{
+  background: var(--tertiaryColor);
+}
+
 /* Login/Signup Page */
 .page-container {
   height: 100vh;
