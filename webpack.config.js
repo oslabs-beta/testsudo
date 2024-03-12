@@ -16,7 +16,7 @@ const config = {
   },
   devServer: {
     port: 8080,
-    publicPath: '/web-app/',
+
     proxy: {
       '/action': 'http://localhost:3000',
       //   // '/': 'http://localhost:3000',
