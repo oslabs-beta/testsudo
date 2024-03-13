@@ -86,13 +86,24 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
   };
 
   return (
-    <div>
+    <div className="frontend-metrics-page">
       <Box>
         <Container
           maxWidth="false"
-          sx={{ mt: 4, mb: 4, justifyContent: 'center' }}
+          sx={{
+            // mt: 4,
+            // mb: 4,
+            justifyContent: 'center',
+            marginTop: '0',
+            marginBottom: '0',
+            background: 'var(--backgroundColor)',
+          }}
         >
-          <button style={{ marginLeft: '0%' }} onClick={runMetricsHandle}>
+          <button
+            style={{ marginLeft: '0%' }}
+            onClick={runMetricsHandle}
+            className="btn"
+          >
             {' '}
             Run{' '}
           </button>
@@ -104,11 +115,11 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 316,
+                  height: 250,
                 }}
               >
                 Front End Metrics <div />
-                <ResponsiveContainer height={300} width="100%">
+                <ResponsiveContainer height={225} width="100%">
                   {fEDataPresent ? (
                     fEMetrics.length > 0 && (
                       <LineChart data={formatData(fEMetrics)}>
@@ -175,7 +186,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 Back End Metrics <div />
-                <ResponsiveContainer height={300} width="100%">
+                <ResponsiveContainer height={225} width="100%">
                   {bEDataPresent ? (
                     bEMetrics.length > 0 && (
                       <LineChart data={formatData(bEMetrics)}>
@@ -275,7 +286,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}
@@ -286,7 +297,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}
@@ -297,7 +308,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}
@@ -311,7 +322,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}
@@ -322,7 +333,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}
@@ -333,7 +344,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 200,
+                  height: 175,
                 }}
               >
                 {' '}

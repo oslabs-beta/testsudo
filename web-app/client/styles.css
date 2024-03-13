@@ -228,6 +228,12 @@ h4 {
 .individual-project:hover a{
   color: var(--white);
 }
+.projects-container-results{
+  display: grid;
+  width: 30rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem 1rem;
+}
 /* Frontend Metrics Page */
 .css-l1jba3-MuiContainer-root{
   margin-top: -32px;
