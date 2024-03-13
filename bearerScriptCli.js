@@ -4,7 +4,9 @@ import path from 'path';
 
 // Find the absolute path of the current working directory
 try {
-  const absolutePath = process.cwd();
+  // const absolutePath = process.cwd();
+  const absolutePath =
+    '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
 
   // Run the bearer scan command
   const command = `bearer scan ${absolutePath}`;

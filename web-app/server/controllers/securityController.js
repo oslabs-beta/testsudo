@@ -8,9 +8,11 @@ securityController.runBearerScript = async (req, res, next) => {
   try {
     console.log('running bearer script');
     await runBearerScript();
-    console.log('Script completed. Sending success response.');
+    res
+      .status(200)
+      .json({ message: 'Script completed. Sending success response.' });
   } catch (error) {
-    res.status(200).json({ message: 'Scan has been completed' });
+    // res.status(200).json({ message: 'Scan has been completed' });
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
     return next();
