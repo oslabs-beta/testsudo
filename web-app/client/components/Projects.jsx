@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar.jsx';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom'; 
 
 
-const Projects = () => {
+const Projects = ({projectIDState, setProjectIDState}) => {
     const [user, setUser] = useState('');
     const [projectID, setProjectID] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [projectAdded, setProjectAdded] = useState(false);
     const [projectName, setProjectName] = useState('');
     const [copied, setCopied] = useState(false);
+    const navigate = useNavigate(); 
 
     const getUser = () => {
         fetch('/action/getUser')
@@ -23,9 +25,25 @@ const Projects = () => {
     useEffect(getUser, []);
 
     let projects = null;
+    // if (user && user.projects) {
+    //     projects = user.projects.map((project, i) => (
+    //         <div key={i}><a href={`/dashboard/${project._id}`}>{project.name}</a></div> 
+    //     ));
+    // }
+
     if (user && user.projects) {
         projects = user.projects.map((project, i) => (
-            <div key={i}><a href={`/dashboard/${project._id}`}>{project.name}</a></div> 
+            <div key={i}>
+                <a onClick={(e) => {
+                    e.preventDefault();
+                    setProjectIDState(project._id);
+                    navigate(`/dashboard/${project._id}`); 
+                }}
+                style={{ cursor: 'pointer' }}
+                >
+                    {project.name}
+                </a>
+            </div>
         ));
     }
 
