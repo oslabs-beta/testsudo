@@ -3,11 +3,66 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+
+// const PROJECTID = process.env.PROJECTID
 
 const FrontEndMetrics = () => {
   const runMetricsHandle = () => {
     console.log('button clicked');
   }
+
+  const [metricsData, setMetricsData] = useState([]);
+  const [dataPresent, setDataPresent] = useState(false)
+
+  const fetchMetrics = () => {
+    const projectID = '65e37bc688228d987bc5eb49'
+
+    fetch(`http://localhost:3000/projects/${projectID}`)
+      .then(res => res.json())
+      .then(data => {
+        setMetricsData(data);
+        setDataPresent(true);
+      }).catch(err => {
+        console.log('error in fetching projects metrics')
+    })
+  }
+
+  useEffect(() => {
+    fetchMetrics()
+  }, [])
+
+  const formatTimestamp = timestamp => {
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+  };
+
+  const processData = (data) => {
+    return data.map(entry => ({
+      ...entry,
+      cumulativelayoutshift: entry.cumulativelayoutshift || 0,
+      firstcontentfulpaint: entry.firstcontentfulpaint || 0,
+      largestcontentfulpaint: entry.largestcontentfulpaint || 0,
+      performance: entry.performance || 0,
+      speedindex: entry.speedindex || 0,
+      totalblockingtime: entry.totalblockingtime || 0,
+    }));
+  };
+
+  const formatData = () => {
+    return metricsData.map(entry => ({
+      ...entry,
+      timestamp: formatTimestamp(entry.timestamp)
+    }));
+  };
+
+// console.log(formatData(), ' test')
 
   return (
     <div>
@@ -22,23 +77,36 @@ const FrontEndMetrics = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 316,
                   }}
                 >
                   Front End Metrics <div/>
-                  <iframe
-                    title="Front End Metrics Dashboard"
-                    width="100%"
-                    height="100%"
-                    src="http://localhost:3030/public-dashboards/28951eca1a3a40408f38b4e63af259de"
-                  />
+                  <ResponsiveContainer height={300} width="100%">
+                  {dataPresent ? (
+                    metricsData.length > 0 && (
+                      <LineChart data={processData(formatData())}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="timestamp" />
+                        <YAxis yAxisId="left" />
+                        <YAxis yAxisId="right" orientation="right" />
+                        <Line type="monotone" dataKey="cumulativelayoutshift" name="Cumulative Layout Shift" stroke="#8884d8" yAxisId="right"/>
+                        <Line type="monotone" dataKey="firstcontentfulpaint" name="First Contentful Paint" stroke="#82ca9d" yAxisId="left"/>
+                        <Line type="monotone" dataKey="largestcontentfulpaint" name="Largest Contentful Paint" stroke="#ffc658" yAxisId="left"/>
+                        <Line type="monotone" dataKey="performance" name="Performance" stroke="#ff7300" yAxisId="left"/>
+                        <Line type="monotone" dataKey="speedindex" name="Speed Index" stroke="#a83232" yAxisId="left"/>
+                        <Line type="monotone" dataKey="totalblockingtime" name="Total Blocking Time" stroke="#003459" yAxisId="left"/>
+                      </LineChart>
+                    )) : (
+                      <div> Run your first front end test!</div>
+                  )}
+                </ResponsiveContainer>
                 </Paper>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 316,
                   }}
                 >
                   Second Dashboard <div/>

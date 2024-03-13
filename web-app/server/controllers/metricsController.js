@@ -2,10 +2,10 @@ import db from '../models/sql.js';
 
 const metricsController = {};
 
-metricsController.getData = (req, res, next) => {
+metricsController.getFEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, userID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, FROM metrics WHERE projectID = $1
+    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
   `
   const value = [projectID]
 
@@ -26,6 +26,45 @@ metricsController.getData = (req, res, next) => {
     })
   }
 }
+
+// metricsController.renderChart = (req, res) => {
+//   const metricsData = res.locals.metricsData;
+
+//   const timestamps = metricsData.map(entry => entry.timestamp);
+//   const firstContentfulPaint = metricsData.map(entry => entry.firstContentfulPaint);
+//   const speedIndex = metricsData.map(entry => entry.speedIndex);
+//   const totalBlockingTime = metricsData.map(entry => entry.totalBlockingTime);
+//   const largestContentfulPaint = metricsData.map(entry => entry.largestContentfulPaint);
+//   const cumulativeLayoutShift = metricsData.map(entry => entry.cumulativeLayoutShift);
+//   const performance = metricsData.map(entry => entry.performance);
+
+//   // Render chart
+//   const ctx = document.getElementById('myChart').getContext('2d');
+//   const chart = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//       labels: timestamps,
+//       datasets: [
+//         { label: 'First Contentful Paint', data: firstContentfulPaint },
+//         { label: 'Speed Index', data: speedIndex },
+//         { label: 'Total Blocking Time', data: totalBlockingTime },
+//         { label: 'Largest Contentful Paint', data: largestContentfulPaint },
+//         { label: 'Cumulative Layout Shift', data: cumulativeLayoutShift },
+//         { label: 'Performance', data: performance }
+//       ]
+//     },
+//     options: {
+//       scales: {
+//         xAxes: [{
+//           type: 'time',
+//           time: {
+//             unit: 'day' // Adjust as needed based on your data granularity
+//           }
+//         }]
+//       }
+//     }
+//   });
+// };
 
 metricsController.postData = (req, res, next) => {
   try{
