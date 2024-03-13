@@ -36,9 +36,12 @@
 
 import { launch } from 'chrome-launcher';
 import lighthouse from 'lighthouse';
+import { setupMetrics } from './core/setup.js';
+import { handleMeasuredRequest } from './core/measured.js';
+
 
 async function runLighthouseAudit(url, opts = null, config = null) {
-    const chrome = await launch({ chromeFlags: ['--headless'], chromePath:'/usr/bin/brave-browser-stable' });
+    const chrome = await launch({ chromeFlags: ['--headless'] });
     opts = { ...opts, port: chrome.port };
 
     const runnerResult = await lighthouse(url, opts, config);
@@ -47,4 +50,4 @@ async function runLighthouseAudit(url, opts = null, config = null) {
     return runnerResult.lhr; // Returning Lighthouse results
 }
 
-export { runLighthouseAudit };
+export { runLighthouseAudit, setupMetrics, handleMeasuredRequest };
