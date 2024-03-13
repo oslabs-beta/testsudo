@@ -4,7 +4,8 @@ import BackEndMetrics from './BackEndMetrics.jsx';
 import SecurityMetrics from './SecurityMetrics.jsx';
 import NavBar from './NavBar.jsx';
 
-const Dashboard = () => {
+const Dashboard = ({ projectIDState, setProjectIDState }) => {
+    console.log('projectIDState is ', projectIDState)
     return (
         <div>
             <NavBar />
