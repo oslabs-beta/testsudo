@@ -97,7 +97,66 @@ h4 {
 .projects-btn:hover{
   background: var(--tertiaryColor);
 }
-
+.project-name{
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: var(--spacing);
+  font-weight: 600;
+}
+.modal-btn{
+  font-size: 0.75rem;
+  padding: 0.38rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.project-input{
+  background: var(--backgroundColor);
+  color: var(--white);
+  border: transparent;
+  padding: 0.41rem 0.1rem 0.52rem 0.1rem;
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  text-indent: 5px;
+}
+.modal-title{
+  margin-bottom: 2rem;
+  background-image: linear-gradient(45deg, var(--black), var(--secondaryColor), var(--tertiaryColor), var(--secondaryColor), var(--black));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+.projects-container a{
+  color: var(--black);
+  transition: var(--transition);
+}
+.underline{
+  margin-bottom: 5rem;
+  height: 0.25rem;
+  width: 10rem;
+  background: var(--btnColor);
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+.projects-container .projects-container-results{
+  background: var(--backgroundColor);
+  border: none;
+}
+.individual-project{
+  background: var(--white);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  border: 2px solid var(--btnColor);
+  transition: var(--transition);
+}
+.individual-project:hover{
+  background: var(--secondaryColor);
+}
+.individual-project:hover a{
+  color: var(--white);
+}
 /* Login/Signup Page */
 .page-container {
   height: 100vh;

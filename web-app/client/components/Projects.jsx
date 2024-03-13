@@ -24,7 +24,7 @@ const Projects = () => {
   let projects = null;
   if (user && user.projects) {
     projects = user.projects.map((project, i) => (
-      <div key={i}>
+      <div key={i} className="individual-project">
         <a href={`/dashboard/${project._id}`}>{project.name}</a>
       </div>
     ));
@@ -61,7 +61,8 @@ const Projects = () => {
       <div className="projects-page">
         <div className="projects-container">
           <p>My Projects</p>
-          {projects}
+          <div className="underline"></div>
+          <div className="projects-container-results">{projects}</div>
 
           <button
             onClick={() => {
@@ -85,23 +86,26 @@ const Projects = () => {
                 marginRight: '-50%',
                 transform: 'translate(-50%, -50%)',
                 width: '30vw',
-                height: '10rem',
+                height: '15rem',
                 display: 'grid',
                 placeItems: 'center',
+                textAlign: 'center',
               },
             }}
           >
             {!projectAdded && (
-              <div>
-                <h2>Add New Project</h2>
+              <div className="modal-container">
+                <h2 className="modal-title">Add New Project</h2>
                 <form onSubmit={handleAdd}>
-                  <div>Project name</div>
+                  <div className="project-name">Project Name</div>
                   <input
                     type="text"
+                    placeholder="Nestorfy..."
+                    className="project-input"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                   />
-                  <button type="submit" className="btn">
+                  <button type="submit" className="btn modal-btn">
                     Add project
                   </button>
                 </form>
