@@ -12,6 +12,7 @@ userController.createUser = async (req, res, next) => {
             password: hashedPassword,
         });
         res.locals.user = newUser;
+        res.locals.userID = newUser._id;
         console.log('new user created is: ', newUser);
         return next();
     } catch (error) {

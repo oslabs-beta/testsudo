@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
+
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
@@ -15,6 +16,7 @@ mongoose
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  username: { type: String, required: false, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   projects: [{}],
@@ -24,7 +26,8 @@ const User = mongoose.model('User', userSchema);
 
 const projectSchema = new Schema({
   name: { type: String, required: true },
-})
+  key: { type: String, required: true },
+});
 
 const Project = mongoose.model('Project', projectSchema);
 

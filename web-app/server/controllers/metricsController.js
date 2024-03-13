@@ -12,8 +12,18 @@ metricsController.getFEData = (req, res, next) => {
   try {
     db.query(metricsQuery, value)
       .then(data => {
-        console.log('data from metricsController.getData ',data.rows);
-        res.locals.project = data.rows;
+        const filteredData = data.rows.filter(entry => {
+          return (
+            entry.firstContentfulPaint !== null &&
+            entry.speedIndex !== null &&
+            entry.totalBlockingTime !== null &&
+            entry.largestContentfulPaint !== null &&
+            entry.cumulativeLayoutShift !== null &&
+            entry.performance !== null
+          );
+        });
+        console.log('data from metricsController.getData ', filteredData);
+        res.locals.FEmetrics = filteredData;
         return next();
       })
   }
