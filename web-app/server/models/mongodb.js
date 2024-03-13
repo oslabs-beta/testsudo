@@ -26,7 +26,6 @@ const User = mongoose.model('User', userSchema);
 
 const projectSchema = new Schema({
   name: { type: String, required: true },
-  key: { type: String, required: true },
 });
 
 const Project = mongoose.model('Project', projectSchema);
