@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
@@ -7,6 +7,8 @@ import Projects from './Projects.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
+  const [projectIDState, setProjectIDState] = useState('');
+
   return (
     <div>
       <Routes>
@@ -16,7 +18,7 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute>
-              <Projects />
+              <Projects setProjectIDState={setProjectIDState} />
             </ProtectedRoute>
           }
         />
@@ -24,7 +26,7 @@ function App() {
           path="/dashboard/*"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Dashboard projectIDState={projectIDState} />
             </ProtectedRoute>
           }
         />
