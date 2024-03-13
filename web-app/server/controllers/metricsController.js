@@ -22,59 +22,96 @@ metricsController.getFEData = (req, res, next) => {
             entry.performance !== null
           );
         });
-        console.log('data from metricsController.getData ', filteredData);
+        console.log('data from metricsController.getFEData ', filteredData);
         res.locals.FEmetrics = filteredData;
         return next();
       })
   }
   catch (err) {
     return next({
-      log: 'metricsController.getData - error getting project data',
+      log: 'metricsController.getData - error getting FE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting project data'
+      message: { err: 'metricsController.getData - error getting FE data'
       }
     })
   }
 }
 
-// metricsController.renderChart = (req, res) => {
-//   const metricsData = res.locals.metricsData;
+metricsController.getFEData = (req, res, next) => {
+  const projectID = req.params.projectID;
+  const metricsQuery = `
+    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
+  `
+  const value = [projectID]
 
-//   const timestamps = metricsData.map(entry => entry.timestamp);
-//   const firstContentfulPaint = metricsData.map(entry => entry.firstContentfulPaint);
-//   const speedIndex = metricsData.map(entry => entry.speedIndex);
-//   const totalBlockingTime = metricsData.map(entry => entry.totalBlockingTime);
-//   const largestContentfulPaint = metricsData.map(entry => entry.largestContentfulPaint);
-//   const cumulativeLayoutShift = metricsData.map(entry => entry.cumulativeLayoutShift);
-//   const performance = metricsData.map(entry => entry.performance);
+  try {
+    db.query(metricsQuery, value)
+      .then(data => {
+        const filteredData = data.rows.filter(entry => {
+          return (
+            entry.firstContentfulPaint !== null &&
+            entry.speedIndex !== null &&
+            entry.totalBlockingTime !== null &&
+            entry.largestContentfulPaint !== null &&
+            entry.cumulativeLayoutShift !== null &&
+            entry.performance !== null
+          );
+        });
+        console.log('data from metricsController.getFEData ', filteredData);
+        res.locals.FEmetrics = filteredData;
+        return next();
+      })
+  }
+  catch (err) {
+    return next({
+      log: 'metricsController.getData - error getting FE data',
+      status: 500,
+      message: { err: 'metricsController.getData - error getting FE data'
+      }
+    })
+  }
+}
 
-//   // Render chart
-//   const ctx = document.getElementById('myChart').getContext('2d');
-//   const chart = new Chart(ctx, {
-//     type: 'line',
-//     data: {
-//       labels: timestamps,
-//       datasets: [
-//         { label: 'First Contentful Paint', data: firstContentfulPaint },
-//         { label: 'Speed Index', data: speedIndex },
-//         { label: 'Total Blocking Time', data: totalBlockingTime },
-//         { label: 'Largest Contentful Paint', data: largestContentfulPaint },
-//         { label: 'Cumulative Layout Shift', data: cumulativeLayoutShift },
-//         { label: 'Performance', data: performance }
-//       ]
-//     },
-//     options: {
-//       scales: {
-//         xAxes: [{
-//           type: 'time',
-//           time: {
-//             unit: 'day' // Adjust as needed based on your data granularity
-//           }
-//         }]
-//       }
-//     }
-//   });
-// };
+metricsController.getBEData = (req, res, next) => {
+  const projectID = req.params.projectID;
+  const metricsQuery = `
+    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests FROM metrics WHERE projectID = $1
+  `
+  const value = [projectID]
+
+  try {
+    db.query(metricsQuery, value)
+      .then(data => {
+        const filteredData = data.rows.filter(entry => {
+          return (
+            entry.duration !== null &&
+            entry.request_body_size !== null &&
+            entry.errors !== null &&
+            entry.rss !== null &&
+            entry.heap_total !== null &&
+            entry.heap_used !== null &&
+            entry.external !== null &&
+            entry.average_response_time !== null &&
+            entry.average_payload_size !== null &&
+            entry.total_requests !== null &&
+            entry.concurrent_requests !== null
+          );
+        });
+        console.log('data from metricsController.getBEData ', filteredData);
+        res.locals.BEmetrics = filteredData;
+        return next();
+      })
+  }
+  catch (err) {
+    return next({
+      log: 'metricsController.getData - error getting FE data',
+      status: 500,
+      message: { err: 'metricsController.getData - error getting FE data'
+      }
+    })
+  }
+}
+
 
 metricsController.postData = (req, res, next) => {
   try{

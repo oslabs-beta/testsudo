@@ -3,8 +3,8 @@ const router = express.Router();
 
 import metricsController from '../controllers/metricsController.js';
 
-router.get('/:projectID', metricsController.getFEData, (req, res, next) => {
-    return res.status(200).json(res.locals.FEmetrics)
+router.get('/:projectID', metricsController.getFEData, metricsController.getBEData, (req, res, next) => {
+    return res.status(200).json({FEmetrics: res.locals.FEmetrics, BEmetrics: res.locals.BEmetrics})
 });
 
 router.post('/:projectID', metricsController.postData,  (req, res, next) => {

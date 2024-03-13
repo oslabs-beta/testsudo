@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Legend, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 // const PROJECTID = process.env.PROJECTID
 
@@ -18,10 +18,10 @@ const FrontEndMetrics = () => {
   const fetchMetrics = () => {
     const projectID = '65e37bc688228d987bc5eb49'
 
-    fetch(`http://localhost:3000/projects/${projectID}`)
+    fetch(`http://localhost:3001/projects/${projectID}`)
       .then(res => res.json())
       .then(data => {
-        setMetricsData(data);
+        setMetricsData(data.FEmetrics);
         setDataPresent(true);
       }).catch(err => {
         console.log('error in fetching projects metrics')
@@ -86,9 +86,10 @@ const FrontEndMetrics = () => {
                     metricsData.length > 0 && (
                       <LineChart data={processData(formatData())}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="timestamp" />
+                        <XAxis dataKey="timestamp" tick={{fontSize: 12}} />
                         <YAxis yAxisId="left" />
                         <YAxis yAxisId="right" orientation="right" />
+                        <Legend />
                         <Line type="monotone" dataKey="cumulativelayoutshift" name="Cumulative Layout Shift" stroke="#8884d8" yAxisId="right"/>
                         <Line type="monotone" dataKey="firstcontentfulpaint" name="First Contentful Paint" stroke="#82ca9d" yAxisId="left"/>
                         <Line type="monotone" dataKey="largestcontentfulpaint" name="Largest Contentful Paint" stroke="#ffc658" yAxisId="left"/>

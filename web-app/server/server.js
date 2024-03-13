@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();

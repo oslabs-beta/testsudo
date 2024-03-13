@@ -4,7 +4,7 @@ import BackEndMetrics from './BackEndMetrics.jsx';
 import SecurityMetrics from './SecurityMetrics.jsx';
 import NavBar from './NavBar.jsx';
 
-const Home = () => {
+const Dashboard = () => {
     return (
         <div>
             <NavBar />
@@ -16,4 +16,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Dashboard;
