@@ -228,3 +228,12 @@ h4 {
 .individual-project:hover a{
   color: var(--white);
 }
+/* Frontend Metrics Page */
+.css-l1jba3-MuiContainer-root{
+  margin-top: -32px;
+  margin-bottom: -32px;
+}
+.frontend-metrics-page{
+  background: var(--backgroundColor);
+  height: calc(100vh - 3rem);
+}

@@ -5,15 +5,14 @@ import SecurityMetrics from './SecurityMetrics.jsx';
 import NavBar from './NavBar.jsx';
 
 const Home = () => {
-    return (
-        <div>
-            <NavBar />
-            
-            <FrontEndMetrics />
-            <BackEndMetrics />
-            <SecurityMetrics />
-        </div>
-    )
-}
+  return (
+    <div>
+      <NavBar />
+      <FrontEndMetrics />
+      <BackEndMetrics />
+      <SecurityMetrics />
+    </div>
+  );
+};
 
 export default Home;
