@@ -8,6 +8,9 @@ dotenv.config();
 // const session = require('express-session');
 // const bcrypt = require('bcryptjs');
 
+import { register } from './prometheus.js';
+import prometheusController from './controllers/prometheusController.js';
+
 import userController from './controllers/userController.js';
 import cookieController from './controllers/cookieController.js';
 import sessionController from './controllers/sessionController.js';
@@ -166,6 +169,14 @@ app.use('/projects', metricsRouter);
 //     res.json('Error occured: ', error)
 // }
 // });
+
+app.use(prometheusController.requestDuration);
+
+app.get('/metrics', async (req, res) => {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+})
+
 
 app.use('*', (req, res) => {
   res.status(404).send('Page not found.');
