@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 const PORT = 3001;
 const app = express();
 import dotenv from 'dotenv';
@@ -23,6 +24,7 @@ import authController from './controllers/authController.js';
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors())
 // app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
 // app.use(passport.initialize());
 // app.use(passport.session());
