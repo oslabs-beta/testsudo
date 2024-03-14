@@ -24,7 +24,7 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 
 const projectSchema = new Schema({
-  name: { type: String, required: true }
+  name: { type: String, required: true },
 });
 
 const Project = mongoose.model('Project', projectSchema);
