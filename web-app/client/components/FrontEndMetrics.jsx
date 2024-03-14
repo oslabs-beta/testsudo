@@ -99,15 +99,16 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
             background: 'var(--backgroundColor)',
           }}
         >
-          <button
-            style={{ marginLeft: '0%' }}
-            onClick={runMetricsHandle}
-            className="btn"
-          >
-            {' '}
-            Run{' '}
-          </button>
-          <div />
+          <div className="btn-container">
+            <button
+              style={{ marginLeft: '0%' }}
+              onClick={runMetricsHandle}
+              className="btn dashboard-btn"
+            >
+              {' '}
+              Run{' '}
+            </button>
+          </div>
           <Grid container spacing={1}>
             <Grid item xs={12} md={8} lg={6}>
               <Paper
@@ -115,10 +116,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 250,
+                  height: 275,
                 }}
               >
-                Front End Metrics <div />
+                <div className="header">Front End Metrics </div>
                 <ResponsiveContainer height={225} width="100%">
                   {fEDataPresent ? (
                     fEMetrics.length > 0 && (
@@ -182,10 +183,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 316,
+                  height: 275,
                 }}
               >
-                Back End Metrics <div />
+                <div className="header">Back End Metrics</div>
                 <ResponsiveContainer height={225} width="100%">
                   {bEDataPresent ? (
                     bEMetrics.length > 0 && (
@@ -286,7 +287,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}
@@ -297,7 +301,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}
@@ -308,7 +315,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}
@@ -322,7 +332,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}
@@ -333,7 +346,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}
@@ -344,7 +360,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
+                  marginBottom: '1.1rem',
                   height: 175,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
                 }}
               >
                 {' '}

@@ -235,11 +235,33 @@ h4 {
   gap: 0.5rem 1rem;
 }
 /* Frontend Metrics Page */
-.css-l1jba3-MuiContainer-root{
-  margin-top: -32px;
-  margin-bottom: -32px;
+.MuiContainer-root{
+  margin-top: -2rem;
+  margin-bottom: -2rem;
+}
+.MuiPaper-root{
+  margin-bottom: 0.625rem;
+  border: 2px solid var(--btnColor);
 }
 .frontend-metrics-page{
   background: var(--backgroundColor);
   height: calc(100vh - 3rem);
+}
+.dashboard-btn{
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  padding: 0.75rem 2rem;
+}
+.dashboard-btn:hover{
+  background: var(--btnColor);
+}
+.header{
+  margin: 0 auto;
+  font-size: 1.25rem;
+}
+.btn-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
