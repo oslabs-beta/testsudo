@@ -6,6 +6,7 @@ const { desktopConfig, options, chrome } = config;
 import 'dotenv/config';
 
 const PROJECTID = process.env.PROJECTID
+const URL = process.env.URL
 
 const postData = async (url, data) => {
   const response = await fetch(url, {
@@ -21,7 +22,7 @@ const postData = async (url, data) => {
 };
 
 const runnerResult = await lighthouse(
-  'https://www.codesmith.io',
+  URL,
   options,
   desktopConfig
 );
@@ -54,7 +55,7 @@ const metricsHolder = {
 console.log(metricsHolder);
 
 postData(
-  `http://localhost:3000/projects/${PROJECTID}`,
+  `http://localhost:3001/projects/${PROJECTID}`,
   metricsHolder
 );
 
