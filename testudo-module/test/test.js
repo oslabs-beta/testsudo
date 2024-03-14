@@ -9,6 +9,7 @@ const PROJECTID = process.env.PROJECTID
 
 const runLighthouse = async (address, projectID) => {
 
+  console.log('address is ', address);
   const postData = async (url, data) => {
     const response = await fetch(url, {
       method: 'POST',
