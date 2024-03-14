@@ -7,6 +7,8 @@ import 'dotenv/config';
 
 const PROJECTID = process.env.PROJECTID
 
+const URL = process.env.URL
+
 const runLighthouse = async (address, projectID) => {
 
   console.log('address is ', address);
