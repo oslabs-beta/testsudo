@@ -6,29 +6,35 @@ import Dashboard from './Dashboard.jsx';
 import Projects from './Projects.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 
-function App () {
-    const [projectIDState, setProjectIDState] = useState(() => {
-        return localStorage.getItem('projectID') || '';
-    });
+function App() {
+  const [projectIDState, setProjectIDState] = useState(() => {
+    return localStorage.getItem('projectID') || '';
+  });
 
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element= {<Login />} />
-                <Route path="/signup" element= {<SignUp />} />
-                <Route path="/home" element= {
-                    <ProtectedRoute >
-                        <Projects setProjectIDState={setProjectIDState}/>
-                    </ProtectedRoute>
-                } />
-                <Route path="/dashboard/*" element= {
-                    <ProtectedRoute>
-                        <Dashboard projectIDState={projectIDState} />
-                    </ProtectedRoute>
-                } />
-            </Routes>
-        </div>
-    )
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Projects setProjectIDState={setProjectIDState} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute>
+              <Dashboard projectIDState={projectIDState} />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
