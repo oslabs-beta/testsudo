@@ -234,6 +234,18 @@ h4 {
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem 1rem;
 }
+.project-added-btn{
+  margin-bottom: 0.375rem;
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  background-color: var(--backgroundColor);
+}
+.project-added-btn:hover{
+  background: var(--btnColor);
+}
+.project-added-container p{
+  font-weight: 700;
+}
 /* Frontend Metrics Page */
 .MuiContainer-root{
   margin-top: -2rem;

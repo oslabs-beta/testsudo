@@ -129,15 +129,18 @@ const Projects = ({ projectIDState, setProjectIDState }) => {
               </div>
             )}
             {projectAdded && (
-              <div>
-                <h2>Project added!</h2>
+              <div className="project-added-container">
+                <h2 className="modal-title">Project added!</h2>
                 <p>
                   Please save your Project ID to your .env file:
                   <br />
                   {projectID}
                 </p>
                 <div>
-                  <button onClick={copyToClipBoard}>
+                  <button
+                    onClick={copyToClipBoard}
+                    className="btn project-added-btn"
+                  >
                     Copy Project ID to Clipboard
                   </button>
                 </div>
@@ -148,6 +151,7 @@ const Projects = ({ projectIDState, setProjectIDState }) => {
                       setModalIsOpen(false);
                       getUser();
                     }}
+                    className="btn project-added-btn"
                   >
                     Done
                   </button>
