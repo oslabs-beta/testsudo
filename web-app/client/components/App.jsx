@@ -7,7 +7,9 @@ import Projects from './Projects.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App () {
-    const [projectIDState, setProjectIDState] = useState('');
+    const [projectIDState, setProjectIDState] = useState(() => {
+        return localStorage.getItem('projectID') || '';
+    });
 
     return (
         <div>
