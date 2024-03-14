@@ -37,6 +37,8 @@ const Projects = ({projectIDState, setProjectIDState}) => {
                 <a onClick={(e) => {
                     e.preventDefault();
                     setProjectIDState(project._id);
+                    localStorage.setItem('projectID', project._id);
+                    console.log(projectIDState);
                     navigate(`/dashboard/${project._id}`); 
                 }}
                 style={{ cursor: 'pointer' }}

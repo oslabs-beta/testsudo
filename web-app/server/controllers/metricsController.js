@@ -24,41 +24,7 @@ metricsController.getFEData = (req, res, next) => {
         });
         console.log('data from metricsController.getFEData ', filteredData);
         res.locals.FEmetrics = filteredData;
-        return next();
-      })
-  }
-  catch (err) {
-    return next({
-      log: 'metricsController.getData - error getting FE data',
-      status: 500,
-      message: { err: 'metricsController.getData - error getting FE data'
-      }
-    })
-  }
-}
-
-metricsController.getFEData = (req, res, next) => {
-  const projectID = req.params.projectID;
-  const metricsQuery = `
-    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
-  `
-  const value = [projectID]
-
-  try {
-    db.query(metricsQuery, value)
-      .then(data => {
-        const filteredData = data.rows.filter(entry => {
-          return (
-            entry.firstContentfulPaint !== null &&
-            entry.speedIndex !== null &&
-            entry.totalBlockingTime !== null &&
-            entry.largestContentfulPaint !== null &&
-            entry.cumulativeLayoutShift !== null &&
-            entry.performance !== null
-          );
-        });
-        console.log('data from metricsController.getFEData ', filteredData);
-        res.locals.FEmetrics = filteredData;
+        res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
         return next();
       })
   }
