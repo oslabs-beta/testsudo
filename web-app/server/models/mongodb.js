@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
-
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
@@ -25,14 +24,14 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 
 const projectSchema = new Schema({
-  name: { type: String, required: true }
+  name: { type: String, required: true },
 });
 
 const Project = mongoose.model('Project', projectSchema);
 
 const sessionSchema = new Schema({
   cookieID: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 86400, default: Date.now }
+  createdAt: { type: Date, expires: 86400, default: Date.now },
 });
 
 const Session = mongoose.model('Session', sessionSchema);

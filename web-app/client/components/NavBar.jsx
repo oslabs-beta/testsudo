@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 const NavBar = () => {
-    return (
-        <div className="nav-bar">
-            <div>
-                <a href="/home">My Projects</a>
-            </div>
+  return (
+    <div className="nav-bar">
+      <div className="nav-center">
+        <a href="/home" className="projects-link">
+          My Projects
+        </a>
 
-            <div>
-                <a href="/action/logout">Log out</a>
-            </div>
-        </div>
-
-    )
-}
+        <a href="/action/logout" className="logout">
+          Log out
+        </a>
+      </div>
+    </div>
+  );
+};
 
 export default NavBar;
