@@ -70,33 +70,49 @@ app.get('/', (req, res) => {
 });
 
 app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
-    res.json(res.locals.user);
-})
+  res.json(res.locals.user);
+});
 
-app.post('/action/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+app.post(
+  '/action/login',
+  userController.verifyUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
     res.json(res.locals.authenticate);
-});
+  }
+);
 
-app.post('/action/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+app.post(
+  '/action/signup',
+  userController.createUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
     res.json(res.locals.user);
-});
+  }
+);
 
-app.get('/action/checkDuplicate/:email', userController.checkDuplicate, (req, res) => {
-  res.json(res.locals.duplicate);
-})
+app.get(
+  '/action/checkDuplicate/:email',
+  userController.checkDuplicate,
+  (req, res) => {
+    res.json(res.locals.duplicate);
+  }
+);
 
 app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(true);
-})
+});
 
 app.post('/action/addProject', userController.addProject, (req, res) => {
-    res.json(res.locals.projectID);
-})
+  res.json(res.locals.projectID);
+});
 
 app.get('/action/logout', sessionController.endSession, (req, res) => {
-    res.clearCookie('ssid');
-    res.redirect('/');
-})
+  res.clearCookie('ssid');
+  res.redirect('/');
+});
 
 // app.get('/auth/github',
 //     passport.authenticate('github')

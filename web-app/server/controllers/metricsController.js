@@ -6,8 +6,8 @@ metricsController.getFEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
     SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
-  `
-  const value = [projectID]
+  `;
+  const value = [projectID];
 
   try {
     db.query(metricsQuery, value)
@@ -42,67 +42,77 @@ metricsController.getBEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
     SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests FROM metrics WHERE projectID = $1
-  `
-  const value = [projectID]
+  `;
+  const value = [projectID];
 
   try {
-    db.query(metricsQuery, value)
-      .then(data => {
-        const filteredData = data.rows.filter(entry => {
-          return (
-            entry.duration !== null &&
-            entry.request_body_size !== null &&
-            entry.errors !== null &&
-            entry.rss !== null &&
-            entry.heap_total !== null &&
-            entry.heap_used !== null &&
-            entry.external !== null &&
-            entry.average_response_time !== null &&
-            entry.average_payload_size !== null &&
-            entry.total_requests !== null &&
-            entry.concurrent_requests !== null
-          );
-        });
-        console.log('data from metricsController.getBEData ', filteredData);
-        res.locals.BEmetrics = filteredData;
-        return next();
-      })
-  }
-  catch (err) {
+    db.query(metricsQuery, value).then((data) => {
+      const filteredData = data.rows.filter((entry) => {
+        return (
+          entry.duration !== null &&
+          entry.request_body_size !== null &&
+          entry.errors !== null &&
+          entry.rss !== null &&
+          entry.heap_total !== null &&
+          entry.heap_used !== null &&
+          entry.external !== null &&
+          entry.average_response_time !== null &&
+          entry.average_payload_size !== null &&
+          entry.total_requests !== null &&
+          entry.concurrent_requests !== null
+        );
+      });
+      console.log('data from metricsController.getBEData ', filteredData);
+      res.locals.BEmetrics = filteredData;
+      return next();
+    });
+  } catch (err) {
     return next({
       log: 'metricsController.getData - error getting FE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting FE data'
-      }
-    })
+      message: { err: 'metricsController.getData - error getting FE data' },
+    });
   }
-}
-
+};
 
 metricsController.postData = (req, res, next) => {
-  try{
-    const projectID = req.params.projectID
-    const { firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance } = req.body;
-    const value = [projectID, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance];
-    const postQuery = 
-    `INSERT INTO metrics
+  try {
+    const projectID = req.params.projectID;
+    const {
+      firstContentfulPaint,
+      speedIndex,
+      totalBlockingTime,
+      largestContentfulPaint,
+      cumulativeLayoutShift,
+      performance,
+    } = req.body;
+    const value = [
+      projectID,
+      firstContentfulPaint,
+      speedIndex,
+      totalBlockingTime,
+      largestContentfulPaint,
+      cumulativeLayoutShift,
+      performance,
+    ];
+    const postQuery = `INSERT INTO metrics
     (projectID, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance)
     VALUES 
     ($1, $2, $3, $4, $5, $6, $7)`;
-    
-    db.query(postQuery, value)
-    .then(data => {
+
+    db.query(postQuery, value).then((data) => {
       return next();
-    })
-  }
-  catch(err){
+    });
+  } catch (err) {
     return next({
       log: 'metricsController.postData - error adding project data: ' + err,
       status: 500,
-      message: { err: 'metricsController.postData - error adding project data:'}
-    })
+      message: {
+        err: 'metricsController.postData - error adding project data:',
+      },
+    });
   }
-}
+};
 
 // INFLUX //
 // import { InfluxDB, Point } from '@influxdata/influxdb-client';
