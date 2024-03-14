@@ -1,19 +1,20 @@
-import { exec } from 'child_process';
-import path from 'path';
-import { promisify } from 'util';
+// import { exec } from 'child_process';
+// import path from 'path';
+// import { promisify } from 'util';
 
-try {
-  // Find the absolute path of the current working directory
-  // const absolutePath = process.cwd();
-  const absolutePath =
-    '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
-  // Run the bearer scan command and output to a JSON file
-  const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json`;
-  exec(command, { stdio: 'inherit' });
-} catch (error) {
-  console.error(error.message);
-}
+// try {
+//   // Find the absolute path of the current working directory
+//   // const absolutePath = process.cwd();
+//   const absolutePath =
+//     '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
+//   // Run the bearer scan command and output to a JSON file
+//   const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json`;
+//   exec(command, { stdio: 'inherit' });
+// } catch (error) {
+//   console.error(error.message);
+// }
 
+//**********
 // const runBearerScript = async () => {
 //   try {
 //     // Find the absolute path of the current working directory
@@ -41,3 +42,28 @@ try {
 // };
 
 // export default runBearerScript;
+
+import { execSync } from 'child_process';
+import path from 'path';
+
+const runBearerScript = () => {
+  // console.log(process.cwd());
+
+  try {
+    // Find the absolute path of the current working directory
+    // const absolutePath = process.cwd();
+    const absolutePath =
+      '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
+
+    // Run the bearer scan command and output to a JSON file
+    const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json`;
+    execSync(command, { stdio: 'inherit' });
+  } catch (error) {
+    console.error(error.message);
+  } finally {
+    // Always exit with success status code
+    process.exit(0);
+  }
+};
+
+export default runBearerScript;
