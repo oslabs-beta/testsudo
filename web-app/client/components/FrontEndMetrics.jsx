@@ -25,30 +25,30 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
         };
       }).catch(err => {
         console.log('error in fetching FE metrics')
-    })
+      })
   }
 
-// to copy to BackEndMetrics.jsx
-const [bEMetrics, setBEMetrics] = useState([]);
-const [bEDataPresent, setBEDataPresent] = useState(false)
+  // to copy to BackEndMetrics.jsx
+  const [bEMetrics, setBEMetrics] = useState([]);
+  const [bEDataPresent, setBEDataPresent] = useState(false)
 
-const fetchBEMetrics = () => {
-  fetch(`http://localhost:3001/projects/${projectIDState}`)
-    .then(res => res.json())
-    .then(data => {
-      setBEMetrics(data.BEmetrics);
-      if (data.BEmetrics.length > 0) {
-        setBEDataPresent(true)
-      };
-    }).catch(err => {
-      console.log('error in fetching BE metrics')
-  })
-}
+  const fetchBEMetrics = () => {
+    fetch(`http://localhost:3001/projects/${projectIDState}`)
+      .then(res => res.json())
+      .then(data => {
+        setBEMetrics(data.BEmetrics);
+        if (data.BEmetrics.length > 0) {
+          setBEDataPresent(true)
+        };
+      }).catch(err => {
+        console.log('error in fetching BE metrics')
+      })
+  }
 
-useEffect(() => {
-  fetchFEMetrics(),
-  fetchBEMetrics()
-}, [])
+  useEffect(() => {
+    fetchFEMetrics(),
+      fetchBEMetrics()
+  }, [])
 
   return (
     <div className="frontend-metrics-page">
@@ -84,7 +84,7 @@ useEffect(() => {
                   height: 275,
                 }}
               >
-              <div className="header">Front End Metrics </div>
+                <div className="header">Front End Metrics </div>
                 <ResponsiveContainer height={225} width="100%">
                   {fEDataPresent && fEMetrics.length > 0 ? (
                     <LineChart data={formatData(fEMetrics)}>
@@ -114,13 +114,13 @@ useEffect(() => {
                         stroke="#ffc658"
                         yAxisId="left"
                       />
-                      <Line
+                      {/* <Line
                         type="monotone"
                         dataKey="performance"
                         name="Performance"
                         stroke="#ff7300"
                         yAxisId="left"
-                      />
+                      /> */}
                       <Line
                         type="monotone"
                         dataKey="speedindex"
@@ -149,44 +149,46 @@ useEffect(() => {
                   height: 275,
                 }}
               >
-                <div className="header">Back End Metrics</div>
+                <div className="header">Request Duration and Response Time (ms)</div>
                 <ResponsiveContainer height={225} width="100%">
                   {bEDataPresent && bEMetrics.length > 0 ? (
-                      <LineChart data={formatData(bEMetrics)}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                        <YAxis yAxisId="left" />
-                        <YAxis yAxisId="right" orientation="right" />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey="duration"
-                          name="Duration"
-                          stroke="#8884d8"
-                          yAxisId="right"
-                        />
-                        <Line
+                    <LineChart data={formatData(bEMetrics)}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
+                      <YAxis yAxisId="left" />
+                      <YAxis yAxisId="right" orientation="right" />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="duration"
+                        name="Duration"
+                        stroke="#8884d8"
+                        yAxisId="right"
+                        dot={false} // Add this line
+
+                      />
+                      {/* <Line
                           type="monotone"
                           dataKey="request_body_size"
                           name="Request Body Size"
                           stroke="#82ca9d"
                           yAxisId="left"
-                        />
-                        <Line
+                        /> */}
+                      {/* <Line
                           type="monotone"
                           dataKey="errors"
                           name="Errors"
                           stroke="#ffc658"
                           yAxisId="right"
-                        />
-                        <Line
+                        /> */}
+                      {/* <Line
                           type="monotone"
                           dataKey="rss"
                           name="RSS"
                           stroke="#ff7300"
                           yAxisId="right"
-                        />
-                        <Line
+                        /> */}
+                      {/* <Line
                           type="monotone"
                           dataKey="heap_total"
                           name="Heap Total"
@@ -199,29 +201,31 @@ useEffect(() => {
                           name="Heap Used"
                           stroke="#003459"
                           yAxisId="right"
-                        />
-                        <Line
+                        /> */}
+                      {/* <Line
                           type="monotone"
                           dataKey="external"
                           name="External"
                           stroke="#A436D4"
                           yAxisId="right"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="average_response_time"
-                          name="Average Response Time"
-                          stroke="#3951C8"
-                          yAxisId="right"
-                        />
-                        <Line
+                        /> */}
+                      <Line
+                        type="monotone"
+                        dataKey="average_response_time"
+                        name="Average Response Time"
+                        stroke="#3951C8"
+                        yAxisId="right"
+                        dot={false} // Add this line
+
+                      />
+                      {/* <Line
                           type="monotone"
                           dataKey="average_payload_size"
                           name="Average Payload Size"
                           stroke="#31E5BB"
                           yAxisId="left"
-                        />
-                        <Line
+                        /> */}
+                      {/* <Line
                           type="monotone"
                           dataKey="total_requests"
                           name="Total Requests"
@@ -234,13 +238,223 @@ useEffect(() => {
                           name="Concurrent Requests"
                           stroke="#804721"
                           yAxisId="right"
-                        />
-                      </LineChart>
+                        /> */}
+                    </LineChart>
                   ) : (
                     <div> Run your first back end test!</div>
                   )}
                 </ResponsiveContainer>
               </Paper>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 275,
+                }}
+              >
+                <div className="header">Request and Payload Size (bytes)</div>
+                <ResponsiveContainer height={225} width="100%">
+                  {bEDataPresent && bEMetrics.length > 0 ? (
+                    <LineChart data={formatData(bEMetrics)}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
+                      <YAxis yAxisId="left" />
+                      <YAxis yAxisId="right" orientation="right" />
+                      <Legend />
+                      {/* <Line
+                          type="monotone"
+                          dataKey="duration"
+                          name="Duration"
+                          stroke="#8884d8"
+                          yAxisId="right"
+                        /> */}
+                      <Line
+                        type="monotone"
+                        dataKey="request_body_size"
+                        name="Request Body Size"
+                        stroke="#82ca9d"
+                        yAxisId="left"
+                        dot={false} // Add this line
+
+                      />
+                      {/* <Line
+                          type="monotone"
+                          dataKey="errors"
+                          name="Errors"
+                          stroke="#ffc658"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="rss"
+                          name="Resident Set Size"
+                          stroke="#ff7300"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="heap_total"
+                          name="Heap Total"
+                          stroke="#a83232"
+                          yAxisId="right"
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="heap_used"
+                          name="Heap Used"
+                          stroke="#003459"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="external"
+                          name="External"
+                          stroke="#A436D4"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="average_response_time"
+                          name="Average Response Time"
+                          stroke="#3951C8"
+                          yAxisId="right"
+                        /> */}
+                      <Line
+                        type="monotone"
+                        dataKey="average_payload_size"
+                        name="Average Payload Size"
+                        stroke="#31E5BB"
+                        yAxisId="left"
+                        dot={false} // Add this line
+
+                      />
+                      {/* <Line
+                          type="monotone"
+                          dataKey="total_requests"
+                          name="Total Requests"
+                          stroke="#9BCD13"
+                          yAxisId="right"
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="concurrent_requests"
+                          name="Concurrent Requests"
+                          stroke="#804721"
+                          yAxisId="right"
+                        /> */}
+                    </LineChart>
+                  ) : (
+                    <div> Run your first back end test!</div>
+                  )}
+                </ResponsiveContainer>
+              </Paper>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 275,
+                }}
+              >
+                <div className="header">Space Usage (MB)</div>
+                <ResponsiveContainer height={225} width="100%">
+                  {bEDataPresent && bEMetrics.length > 0 ? (
+                    <LineChart data={formatData(bEMetrics)}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
+                      <YAxis yAxisId="left" />
+                      <YAxis yAxisId="right" orientation="right" />
+                      <Legend />
+                      {/* <Line
+                          type="monotone"
+                          dataKey="duration"
+                          name="Duration"
+                          stroke="#8884d8"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="request_body_size"
+                          name="Request Body Size"
+                          stroke="#82ca9d"
+                          yAxisId="left"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="errors"
+                          name="Errors"
+                          stroke="#ffc658"
+                          yAxisId="right"
+                        /> */}
+                      <Line
+                        type="monotone"
+                        dataKey="rss"
+                        name="Resident Set Size"
+                        stroke="#ff7300"
+                        yAxisId="right"
+                        dot={false}
+
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="heap_total"
+                        name="Heap Total"
+                        stroke="#a83232"
+                        yAxisId="right"
+                        dot={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="heap_used"
+                        name="Heap Used"
+                        stroke="#003459"
+                        yAxisId="right"
+                        dot={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="external"
+                        name="Memory used by external resources"
+                        stroke="#A436D4"
+                        yAxisId="right"
+                        dot={false}
+                      />
+                      {/* <Line
+                          type="monotone"
+                          dataKey="average_response_time"
+                          name="Average Response Time"
+                          stroke="#3951C8"
+                          yAxisId="right"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="average_payload_size"
+                          name="Average Payload Size"
+                          stroke="#31E5BB"
+                          yAxisId="left"
+                        /> */}
+                      {/* <Line
+                          type="monotone"
+                          dataKey="total_requests"
+                          name="Total Requests"
+                          stroke="#9BCD13"
+                          yAxisId="right"
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="concurrent_requests"
+                          name="Concurrent Requests"
+                          stroke="#804721"
+                          yAxisId="right"
+                        /> */}
+                    </LineChart>
+                  ) : (
+                    <div> Run your first back end test!</div>
+                  )}
+                </ResponsiveContainer>
+              </Paper>
+
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
               <Paper
@@ -260,9 +474,9 @@ useEffect(() => {
                   {fEPerformance}
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                <Pie data={[{ name: 'Front End Performance', value: fEPerformance, fill: '#8884d8' }, { name: '', value: 100 -fEPerformance, fill: "#ffffff" }]} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={80} />
-                </PieChart>
+                  <PieChart>
+                    <Pie data={[{ name: 'Front End Performance', value: fEPerformance, fill: '#8884d8' }, { name: '', value: 100 - fEPerformance, fill: "#ffffff" }]} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={80} />
+                  </PieChart>
                 </ResponsiveContainer>
               </Paper>
               <Paper
@@ -308,7 +522,9 @@ useEffect(() => {
                 }}
               >
                 {' '}
-                FE
+                Number of errors
+                <div>{bEDataPresent && bEMetrics.length > 0 ? (
+                  bEMetrics[bEMetrics.length - 1].errors) : '0'}</div>
               </Paper>
               <Paper
                 sx={{
@@ -337,6 +553,7 @@ useEffect(() => {
               >
                 {' '}
                 Alerts
+                <div>None at this time</div>
               </Paper>
             </Grid>
           </Grid>
