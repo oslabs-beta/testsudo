@@ -16,6 +16,9 @@
   --radius: 0.5rem;
   --max-width: 1170px;
   --box-shadow: box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --font-family: "Roboto", sans-serif;
+  --font-weight: 80;
+  --font-style: normal;
 }
 /* Globals */
 *,
@@ -27,6 +30,9 @@
 }
 body {
   line-height: 1.5;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
 }
 ul {
   list-style-type: none;
@@ -270,7 +276,16 @@ h4 {
 .header{
   margin: 0 auto;
   font-size: 1.25rem;
+  color: #1c2130;
+  font-weight: 700
 }
+.score{
+  margin: 0 auto;
+  font-size: 1.5rem;
+  color: var(--secondaryColor);
+  font-weight: 1000
+}
+
 .btn-container{
   width: 100%;
   display: flex;
