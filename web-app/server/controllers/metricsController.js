@@ -24,7 +24,21 @@ metricsController.getFEData = (req, res, next) => {
         });
         console.log('data from metricsController.getFEData ', filteredData);
         res.locals.FEmetrics = filteredData;
-        res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
+        // res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
+        // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance);
+        
+        const entries = Object.entries(filteredData);
+
+        // Check if there are any entries
+        if (entries.length > 0) {
+            // Access the last entry and its 'performance' property
+            const lastEntry = entries[entries.length - 1][1];
+            res.locals.performance = lastEntry.performance || undefined;
+        } else {
+            // Handle the case where there are no entries (e.g., filteredData is empty)
+            res.locals.performance = undefined;
+        }        
+
         return next();
       })
   }
@@ -63,7 +77,23 @@ metricsController.getBEData = (req, res, next) => {
         );
       });
       console.log('data from metricsController.getBEData ', filteredData);
+      res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
+      console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
       res.locals.BEmetrics = filteredData;
+
+      // const entries = Object.entries(filteredData);
+
+      // // Check if there are any entries
+      // if (entries.length > 0) {
+      //     // Access the last entry and its 'performance' property
+      //     const lastEntry = entries[entries.length - 1][1];
+      //     res.locals.response = lastEntry.response || undefined;
+      // } else {
+      //     // Handle the case where there are no entries (e.g., filteredData is empty)
+      //     res.locals.response = undefined;
+      // }        
+
+
       return next();
     });
   } catch (err) {
