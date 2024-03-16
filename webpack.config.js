@@ -19,7 +19,8 @@ const config = {
 
     proxy: {
       '/action': 'http://localhost:3000',
-      //   // '/': 'http://localhost:3000',
+      '/security': 'http://localhost:3000',
+      // '/': 'http://localhost:3000',
       //   changeOrigin: true,
     },
     historyApiFallback: true,

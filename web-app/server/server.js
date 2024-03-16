@@ -177,10 +177,9 @@ app.use('/projects', metricsRouter);
 app.use(prometheusController.requestDuration);
 
 app.get('/metrics', async (req, res) => {
-    res.set('Content-Type', register.contentType);
-    res.end(await register.metrics());
-})
-
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
 
 app.use('*', (req, res) => {
   res.status(404).send('Page not found.');
