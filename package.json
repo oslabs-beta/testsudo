@@ -7,9 +7,7 @@
   "scripts": {
     "start": "NODE_ENV=production node web-app/server/server.js",
     "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon web-app/server/server.js\"",
-    "build": "NODE_ENV=production webpack",
-    "test": "node bearerScanner.js",
-    "postinstall": "curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh && export PATH=$PATH:$(pwd)/bin"
+    "build": "NODE_ENV=production webpack"
   },
   "keywords": [
     "development",
