@@ -7,55 +7,63 @@ import 'dotenv/config';
 
 const PROJECTID = process.env.PROJECTID
 
-const postData = async (url, data) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  // return response.json();
-  return;
-};
+const URL = process.env.URL
 
-const runnerResult = await lighthouse(
-  'https://www.codesmith.io',
-  options,
-  desktopConfig
-);
+const runLighthouse = async (address, projectID) => {
 
-// `.report` is the HTML report as a string
-// const reportHtml = runnerResult.report;
-// fs.writeFileSync('lhreport.html', reportHtml);
+  console.log('address is ', address);
+  const postData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    // return response.json();
+    return;
+  };
 
-// `.lhr` is the Lighthouse Result as a JS object
-console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
-console.log(
-  'Performance score was',
-  runnerResult.lhr.categories.performance.score * 100
-);
-// object containing base metrics, eventually will display these to web app
-const metricsHolder = {
-  projectID: PROJECTID,
-  firstContentfulPaint:
-    runnerResult.lhr.audits['first-contentful-paint'].numericValue,
-  speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
-  largestContentfulPaint:
-    runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
-  totalBlockingTime:
-    runnerResult.lhr.audits['total-blocking-time'].numericValue,
-  cumulativeLayoutShift:
-    runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
-  performance: runnerResult.lhr.categories.performance.score * 100,
-};
+  const runnerResult = await lighthouse(
+    address,
+    options,
+    desktopConfig
+  );
 
-console.log(metricsHolder);
+  // `.report` is the HTML report as a string
+  // const reportHtml = runnerResult.report;
+  // fs.writeFileSync('lhreport.html', reportHtml);
 
-postData(
-  `http://localhost:3000/projects/${PROJECTID}`,
-  metricsHolder
-);
+  // `.lhr` is the Lighthouse Result as a JS object
+  console.log('Report is done for', address);
+  console.log(
+    'Performance score was',
+    runnerResult.lhr.categories.performance.score * 100
+  );
+  // object containing base metrics, eventually will display these to web app
+  const metricsHolder = {
+    projectID: PROJECTID,
+    firstContentfulPaint:
+      runnerResult.lhr.audits['first-contentful-paint'].numericValue,
+    speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
+    largestContentfulPaint:
+      runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
+    totalBlockingTime:
+      runnerResult.lhr.audits['total-blocking-time'].numericValue,
+    cumulativeLayoutShift:
+      runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
+    performance: runnerResult.lhr.categories.performance.score * 100,
+  };
 
-await chrome.kill();
+  console.log(metricsHolder);
+
+  postData(
+    `http://localhost:3001/projects/${projectID}`,
+    metricsHolder
+  );
+
+  await chrome.kill();
+}
+
+export default runLighthouse;

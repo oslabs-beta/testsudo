@@ -2,55 +2,147 @@ import db from '../models/sql.js';
 
 const metricsController = {};
 
-metricsController.getData = (req, res, next) => {
+metricsController.getFEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, userID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, FROM metrics WHERE projectID = $1
-  `
-  const value = [projectID]
+    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
+  `;
+  const value = [projectID];
 
   try {
     db.query(metricsQuery, value)
       .then(data => {
-        console.log('data from metricsController.getData ',data.rows);
-        res.locals.project = data.rows;
+        const filteredData = data.rows.filter(entry => {
+          return (
+            entry.firstContentfulPaint !== null &&
+            entry.speedIndex !== null &&
+            entry.totalBlockingTime !== null &&
+            entry.largestContentfulPaint !== null &&
+            entry.cumulativeLayoutShift !== null &&
+            entry.performance !== null
+          );
+        });
+        console.log('data from metricsController.getFEData ', filteredData);
+        res.locals.FEmetrics = filteredData;
+        // res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
+        // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance);
+        
+        const entries = Object.entries(filteredData);
+
+        // Check if there are any entries
+        if (entries.length > 0) {
+            // Access the last entry and its 'performance' property
+            const lastEntry = entries[entries.length - 1][1];
+            res.locals.performance = lastEntry.performance || undefined;
+        } else {
+            // Handle the case where there are no entries (e.g., filteredData is empty)
+            res.locals.performance = undefined;
+        }        
+
         return next();
       })
   }
   catch (err) {
     return next({
-      log: 'metricsController.getData - error getting project data',
+      log: 'metricsController.getData - error getting FE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting project data'
+      message: { err: 'metricsController.getData - error getting FE data'
       }
     })
   }
 }
 
+metricsController.getBEData = (req, res, next) => {
+  const projectID = req.params.projectID;
+  const metricsQuery = `
+    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests FROM metrics WHERE projectID = $1
+  `;
+  const value = [projectID];
+
+  try {
+    db.query(metricsQuery, value).then((data) => {
+      const filteredData = data.rows.filter((entry) => {
+        return (
+          entry.duration !== null &&
+          entry.request_body_size !== null &&
+          entry.errors !== null &&
+          entry.rss !== null &&
+          entry.heap_total !== null &&
+          entry.heap_used !== null &&
+          entry.external !== null &&
+          entry.average_response_time !== null &&
+          entry.average_payload_size !== null &&
+          entry.total_requests !== null &&
+          entry.concurrent_requests !== null
+        );
+      });
+      console.log('data from metricsController.getBEData ', filteredData);
+      res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
+      console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
+      res.locals.BEmetrics = filteredData;
+
+      // const entries = Object.entries(filteredData);
+
+      // // Check if there are any entries
+      // if (entries.length > 0) {
+      //     // Access the last entry and its 'performance' property
+      //     const lastEntry = entries[entries.length - 1][1];
+      //     res.locals.response = lastEntry.response || undefined;
+      // } else {
+      //     // Handle the case where there are no entries (e.g., filteredData is empty)
+      //     res.locals.response = undefined;
+      // }        
+
+
+      return next();
+    });
+  } catch (err) {
+    return next({
+      log: 'metricsController.getData - error getting FE data',
+      status: 500,
+      message: { err: 'metricsController.getData - error getting FE data' },
+    });
+  }
+};
+
 metricsController.postData = (req, res, next) => {
-  try{
-    const projectID = req.params.projectID
-    const { firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance } = req.body;
-    const value = [projectID, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance];
-    const postQuery = 
-    `INSERT INTO metrics
+  try {
+    const projectID = req.params.projectID;
+    const {
+      firstContentfulPaint,
+      speedIndex,
+      totalBlockingTime,
+      largestContentfulPaint,
+      cumulativeLayoutShift,
+      performance,
+    } = req.body;
+    const value = [
+      projectID,
+      firstContentfulPaint,
+      speedIndex,
+      totalBlockingTime,
+      largestContentfulPaint,
+      cumulativeLayoutShift,
+      performance,
+    ];
+    const postQuery = `INSERT INTO metrics
     (projectID, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance)
     VALUES 
     ($1, $2, $3, $4, $5, $6, $7)`;
-    
-    db.query(postQuery, value)
-    .then(data => {
+
+    db.query(postQuery, value).then((data) => {
       return next();
-    })
-  }
-  catch(err){
+    });
+  } catch (err) {
     return next({
       log: 'metricsController.postData - error adding project data: ' + err,
       status: 500,
-      message: { err: 'metricsController.postData - error adding project data:'}
-    })
+      message: {
+        err: 'metricsController.postData - error adding project data:',
+      },
+    });
   }
-}
+};
 
 // INFLUX //
 // import { InfluxDB, Point } from '@influxdata/influxdb-client';

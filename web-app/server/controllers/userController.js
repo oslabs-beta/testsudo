@@ -86,9 +86,12 @@ userController.checkDuplicate = async (req, res, next) => {
 userController.addProject = async (req, res, next) => {
   const { name } = req.body;
   const userID = req.cookies.ssid;
+
   try {
     const newProject = await Project.create({ name });
+    console.log(newProject)
     const user = await User.findOne({ _id: userID });
+    console.log(user);
     if (!user.projects) user.projects = [];
     user.projects.push(newProject);
     res.locals.user = await user.save();

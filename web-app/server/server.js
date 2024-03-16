@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
-const PORT = 3000;
+import cors from 'cors';
+const PORT = 3001;
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
@@ -24,6 +25,7 @@ import authController from './controllers/authController.js';
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use('/api/security', securityRouter);
 
@@ -82,6 +84,7 @@ app.post(
   '/action/login',
   userController.verifyUser,
   cookieController.setSSIDCookie,
+  sessionController.startSession,
   (req, res) => {
     res.json(res.locals.authenticate);
   }
@@ -91,13 +94,31 @@ app.post(
   '/action/signup',
   userController.createUser,
   cookieController.setSSIDCookie,
+  sessionController.startSession,
   (req, res) => {
     res.json(res.locals.user);
   }
 );
 
+app.get(
+  '/action/checkDuplicate/:email',
+  userController.checkDuplicate,
+  (req, res) => {
+    res.json(res.locals.duplicate);
+  }
+);
+
+app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(true);
+});
+
 app.post('/action/addProject', userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
+});
+
+app.get('/action/logout', sessionController.endSession, (req, res) => {
+  res.clearCookie('ssid');
+  res.redirect('/');
 });
 
 // app.get('/auth/github',

@@ -38,16 +38,16 @@ import { launch } from 'chrome-launcher';
 import lighthouse from 'lighthouse';
 import { setupMetrics } from './core/setup.js';
 import { handleMeasuredRequest } from './core/measured.js';
+import runLighthouse from '../test/test.js';
 
+// async function runLighthouseAudit(url, opts = null, config = null) {
+//     const chrome = await launch({ chromeFlags: ['--headless'] });
+//     opts = { ...opts, port: chrome.port };
 
-async function runLighthouseAudit(url, opts = null, config = null) {
-    const chrome = await launch({ chromeFlags: ['--headless'] });
-    opts = { ...opts, port: chrome.port };
+//     const runnerResult = await lighthouse(url, opts, config);
+//     await chrome.kill();
 
-    const runnerResult = await lighthouse(url, opts, config);
-    await chrome.kill();
+//     return runnerResult.lhr; // Returning Lighthouse results
+// }
 
-    return runnerResult.lhr; // Returning Lighthouse results
-}
-
-export { runLighthouseAudit, setupMetrics, handleMeasuredRequest };
+export { runLighthouse, setupMetrics, handleMeasuredRequest };
