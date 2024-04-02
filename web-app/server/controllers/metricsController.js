@@ -77,21 +77,22 @@ metricsController.getBEData = (req, res, next) => {
         );
       });
       console.log('data from metricsController.getBEData ', filteredData);
-      res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
-      console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
+      // res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
+      // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
       res.locals.BEmetrics = filteredData;
 
-      // const entries = Object.entries(filteredData);
+      const entries = Object.entries(filteredData);
 
-      // // Check if there are any entries
-      // if (entries.length > 0) {
-      //     // Access the last entry and its 'performance' property
-      //     const lastEntry = entries[entries.length - 1][1];
-      //     res.locals.response = lastEntry.response || undefined;
-      // } else {
-      //     // Handle the case where there are no entries (e.g., filteredData is empty)
-      //     res.locals.response = undefined;
-      // }        
+      // Check if there are any entries
+      if (entries.length > 0) {
+          // Access the last entry and its 'performance' property
+          const lastEntry = entries[entries.length - 1][1];
+          res.locals.response = lastEntry.average_response_time || undefined;
+          console.log('res.locals.response is ', res.locals.response)
+      } else {
+          // Handle the case where there are no entries (e.g., filteredData is empty)
+          res.locals.response = undefined;
+      }        
 
 
       return next();
