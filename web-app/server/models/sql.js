@@ -1,5 +1,5 @@
 import pg from 'pg';
-const { Pool } = pg
+const { Pool } = pg;
 import 'dotenv/config';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -13,7 +13,6 @@ const pool = new Pool({
 
 const db = {
   query: (text, params, callback) => {
-    console.log('executed query', text);
     return pool.query(text, params, callback);
   },
 };
