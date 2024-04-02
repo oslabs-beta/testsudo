@@ -1,57 +1,66 @@
 import React, { useState, useEffect } from 'react';
+import DashNav from './DashNav.jsx';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, PieChart, Pie, CartesianGrid, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Legend,
+  Tooltip,
+  PieChart,
+  Pie,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts';
 import contructionIcon from '../assets/contructionIcon.png';
 
 const FrontEndMetrics = ({ projectIDState, formatData }) => {
-  const runMetricsHandle = () => {
-    console.log('button clicked');
-  };
-
   const [fEMetrics, setFEMetrics] = useState([]);
-  const [fEDataPresent, setFEDataPresent] = useState(false)
-  const [fEPerformance, setFEPerformance] = useState('')
-  const [bEResponse, setBEResponse] = useState('')
+  const [fEDataPresent, setFEDataPresent] = useState(false);
+  const [fEPerformance, setFEPerformance] = useState('');
+  const [bEResponse, setBEResponse] = useState('');
 
   const fetchFEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setFEMetrics(data.FEmetrics);
         setFEPerformance(data.performance);
         if (data.FEmetrics.length > 0) {
-          setFEDataPresent(true)
-        };
-      }).catch(err => {
-        console.log('error in fetching FE metrics')
+          setFEDataPresent(true);
+        }
       })
-  }
+      .catch((err) => {
+        console.log('error in fetching FE metrics');
+      });
+  };
 
   // to copy to BackEndMetrics.jsx
   const [bEMetrics, setBEMetrics] = useState([]);
-  const [bEDataPresent, setBEDataPresent] = useState(false)
+  const [bEDataPresent, setBEDataPresent] = useState(false);
 
   const fetchBEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setBEMetrics(data.BEmetrics);
         setBEResponse(data.response);
         if (data.BEmetrics.length > 0) {
-          setBEDataPresent(true)
-        };
-      }).catch(err => {
-        console.log('error in fetching BE metrics')
+          setBEDataPresent(true);
+        }
       })
-  }
+      .catch((err) => {
+        console.log('error in fetching BE metrics');
+      });
+  };
 
   useEffect(() => {
-    fetchFEMetrics(),
-      fetchBEMetrics()
-  }, [])
+    fetchFEMetrics(), fetchBEMetrics();
+  }, []);
 
   return (
     <div className="frontend-metrics-page">
@@ -65,16 +74,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
             background: 'var(--backgroundColor)',
           }}
         >
-          <div className="btn-container">
-            <button
-              style={{ marginLeft: '0%' }}
-              onClick={runMetricsHandle}
-              className="btn dashboard-btn"
-            >
-              {' '}
-              Run{' '}
-            </button>
-          </div>
+          {/* <DashNav /> */}
           <Grid container spacing={1}>
             <Grid item xs={12} md={8} lg={6}>
               <Paper
@@ -151,7 +151,9 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   height: 275,
                 }}
               >
-                <div className="header">Request Duration and Response Time (ms)</div>
+                <div className="header">
+                  Request Duration and Response Time (ms)
+                </div>
                 <ResponsiveContainer height={225} width="100%">
                   {bEDataPresent && bEMetrics.length > 0 ? (
                     <LineChart data={formatData(bEMetrics)}>
@@ -167,7 +169,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         stroke="#8884d8"
                         yAxisId="left"
                         dot={false}
-
                       />
 
                       <Line
@@ -177,9 +178,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         stroke="#3951C8"
                         yAxisId="left"
                         dot={false}
-
                       />
-
                     </LineChart>
                   ) : (
                     <div> Run your first back end test!</div>
@@ -221,7 +220,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         yAxisId="left"
                         dot={false}
                       />
-
                     </LineChart>
                   ) : (
                     <div> </div>
@@ -246,7 +244,25 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                 <div className="score"> {fEPerformance}</div>
                 <ResponsiveContainer width="100%" height="120%">
                   <PieChart>
-                    <Pie data={[{ name: 'Front End Performance', value: fEPerformance, fill: '#d14334' }, { name: '', value: 100 - fEPerformance, fill: "#ffffff" }]} dataKey="value" cx="50%" cy="50%" innerRadius={40} outerRadius={80} />
+                    <Pie
+                      data={[
+                        {
+                          name: 'Front End Performance',
+                          value: fEPerformance,
+                          fill: '#d14334',
+                        },
+                        {
+                          name: '',
+                          value: 100 - fEPerformance,
+                          fill: '#ffffff',
+                        },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={40}
+                      outerRadius={80}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -265,7 +281,21 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                 <div className="score">{Math.round(bEResponse)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
-                    <Pie data={[{ name: 'Front End Performance', value: bEResponse, fill: '#ffeaad' }, { name: '', value: 100 - bEResponse, fill: "#ffffff" }]} dataKey="value" cx="50%" cy="50%" innerRadius={50} outerRadius={70} />
+                    <Pie
+                      data={[
+                        {
+                          name: 'Front End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -275,7 +305,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   display: 'flex',
                   flexDirection: 'column',
                   height: 275,
-                  width: '202%'
+                  width: '202%',
                 }}
               >
                 <div className="header">Space Usage (MB)</div>
@@ -295,7 +325,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         stroke="#ff7300"
                         yAxisId="left"
                         dot={false}
-
                       />
                       <Line
                         type="monotone"
@@ -321,7 +350,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         yAxisId="left"
                         dot={false}
                       />
-
                     </LineChart>
                   ) : (
                     <div> </div>
@@ -343,15 +371,31 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Security Metrics<br /></div>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                Coming Soon! <br />
-                <img className='PUC-icon' src={contructionIcon} alt="" style={{ width: '60%', height: 'auto', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} />
+                <div className="header">
+                  Security Metrics
+                  <br />
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Coming Soon! <br />
+                  <img
+                    className="PUC-icon"
+                    src={contructionIcon}
+                    alt=""
+                    style={{
+                      width: '60%',
+                      height: 'auto',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                    }}
+                  />
                 </div>
               </Paper>
             </Grid>
