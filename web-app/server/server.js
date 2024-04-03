@@ -7,11 +7,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 import passport from 'passport';
 import session from 'express-session';
+import { ObjectId } from 'mongodb';
 // const bcrypt = require('bcryptjs');
 
 import { register } from './prometheus.js';
 import prometheusController from './controllers/prometheusController.js';
 
+import { User } from './models/mongodb.js'
 import userController from './controllers/userController.js';
 import cookieController from './controllers/cookieController.js';
 import sessionController from './controllers/sessionController.js';
@@ -59,15 +61,21 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 //         }
 //     }
 // ));
+
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-    // User.findById(id, (err, user) => {
-        done(err, id);
-    // });
-});
+  const objectId = new ObjectId("4eb6e7e7e9b7f4194e000001");
+  User.findById(objectId)
+    .then(user => {
+        done(null, user); 
+    })
+    .catch(err => {
+        done(err, null);
+    });
+})
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
@@ -120,6 +128,8 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 
+let userProfile;
+
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
@@ -136,10 +146,16 @@ app.get('/auth/google',
  
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res, next) {
+    res.locals.userID = req.user.id;
+    next()
+  },
+  cookieController.setSSIDCookie,
+  sessionController.startSession, 
   function(req, res) {
-    // Successful authentication, redirect success.
-    res.redirect('/success');
-  });
+    // Successful authentication, redirect to home
+    res.redirect('http://localhost:8081/home');
+});
 
 // app.get('/auth/github',
 //     passport.authenticate('github')

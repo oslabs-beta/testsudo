@@ -32,7 +32,7 @@ sessionController.startSession = async (req, res, next) => {
         return next({
             log: 'Error in sessionController.startSession',
             status: 400,
-            message: { err: 'Error when finding session' + error.message }
+            message: { err: 'Error when finding session ' + error.message }
         });
     }
 }
