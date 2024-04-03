@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 import {
   LineChart,
@@ -7,6 +8,8 @@ import {
   XAxis,
   YAxis,
   Legend,
+  PieChart,
+  Pie,
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
@@ -174,6 +177,41 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
           )}
         </ResponsiveContainer>
       </Paper>
+      <Grid item xs={12} md={4} lg={3}>
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            height: 240,
+            textAlign: 'center',
+            fontSize: '1.25rem',
+          }}
+        >
+          {' '}
+          <div className="header">Average Response Time (ms):</div>
+          <div className="score">{Math.round(bEResponse)}</div>
+          <ResponsiveContainer height="120%">
+            <PieChart>
+              <Pie
+                data={[
+                  {
+                    name: 'Front End Performance',
+                    value: bEResponse,
+                    fill: '#ffeaad',
+                  },
+                  { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                ]}
+                dataKey="value"
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={70}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </Paper>
+      </Grid>
     </div>
   );
 };

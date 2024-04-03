@@ -180,39 +180,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 240,
-                  textAlign: 'center',
-                  fontSize: '1.25rem',
-                }}
-              >
-                {' '}
-                <div className="header">Average Response Time (ms):</div>
-                <div className="score">{Math.round(bEResponse)}</div>
-                <ResponsiveContainer height="120%">
-                  <PieChart>
-                    <Pie
-                      data={[
-                        {
-                          name: 'Front End Performance',
-                          value: bEResponse,
-                          fill: '#ffeaad',
-                        },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
-                      ]}
-                      dataKey="value"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={70}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </Paper>
             </Grid>
           </Grid>
         </Container>
