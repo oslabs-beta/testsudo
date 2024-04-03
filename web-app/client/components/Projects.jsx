@@ -17,7 +17,6 @@ const Projects = ({ projectIDState, setProjectIDState }) => {
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
-        console.log(data);
       })
       .catch((err) => console.log('Error getting user: ', err));
   };
