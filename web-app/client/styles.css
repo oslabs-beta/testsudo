@@ -113,6 +113,7 @@ h4 {
 .github-login-btn {
   display: inline-flex;
   align-items: center;
+  border: transparent;
   background-color: #24292e;
   font-size: 1rem;
   color: white;

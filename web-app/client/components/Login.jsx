@@ -16,6 +16,28 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const generateRandomString = (length) => {
+    let result = '';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
+  const loginWithGithub = () => {
+    const clientId = '3ec978f6189f3f53cf18';
+    const redirectUri = 'http://localhost:8081/home';
+    const scope = 'read:user'; // Adjust the scope according to your needs
+    const state = generateRandomString(16); // Generate a random string for CSRF protection
+
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=${encodeURIComponent(scope)}&state=${state}`;
+
+    window.location.href = githubAuthUrl;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,16 +94,14 @@ const Login = () => {
           </div>
         </form>
         {!correctCredential && <div>Incorrect username or password.</div>}
-        <div className="github-login-btn">
-          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5">
-            <img
-              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              alt="github logo"
-              className="github-logo"
-            />
-            Log in with Github
-          </a>
-        </div>
+        <button className="github-login-btn" onClick={loginWithGithub}>
+          <img
+            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="github logo"
+            className="github-logo"
+          />
+          Log in with Github
+        </button>
         <p className="signup-footer">
           Not a user yet? <a href="/signup">Sign up here</a>
         </p>
