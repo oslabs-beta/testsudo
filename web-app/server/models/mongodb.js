@@ -16,9 +16,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true },
-  password: { type: String, required: true },
+  password: { type: String },
   email: { type: String, required: true, unique: true },
   projects: [{}],
+  tokens: [{}]
 });
 
 const User = mongoose.model('User', userSchema);

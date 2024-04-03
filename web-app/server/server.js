@@ -15,26 +15,13 @@ const metricsRouter = require('./routes/metricsRouter.js');
 
 const PORT = 3001;
 const app = express();
-import dotenv from 'dotenv';
-dotenv.config();
-import passport from 'passport';
-import session from 'express-session';
-import { ObjectId } from 'mongodb';
+const passport = require('passport');
+const session = require('express-session');
+const { ObjectId } = require('mongodb');
 // const bcrypt = require('bcryptjs');
-
-import { register } from './prometheus.js';
-import prometheusController from './controllers/prometheusController.js';
-
-import { User } from './models/mongodb.js'
-import userController from './controllers/userController.js';
-import cookieController from './controllers/cookieController.js';
-import sessionController from './controllers/sessionController.js';
+const { User } = require('./models/mongodb.js');
 
 // const GitHubStrategy = require('passport-github').Strategy;
-
-import cookieParser from 'cookie-parser';
-import metricsRouter from './routes/metricsRouter.js';
-import authController from './controllers/authController.js';
 
 app.use(express.json());
 app.use(cookieParser());
@@ -79,7 +66,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  const objectId = new ObjectId("4eb6e7e7e9b7f4194e000001");
+  const objectId = new ObjectId(id);
   User.findById(objectId)
     .then(user => {
         done(null, user); 
@@ -138,19 +125,24 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.redirect('/');
 });
 
-import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
-
-let userProfile;
+const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3001/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, done) {
-      userProfile=profile;
-      return done(null, userProfile);
+  async function (accessToken, refreshToken, profile, done) {
+    try {
+      let user = await User.findOne({ email: profile.emails[0].value });
+      if (!user) {
+          user = await User.create({email: profile.emails[0].value, tokens: {googleID: profile.id, accessToken, refreshToken}});
+      }
+      return done(null, user);
+  } catch (error) {
+      return done(error);
   }
+}
 ));
 
 app.get('/auth/google', 
@@ -163,7 +155,7 @@ app.get('/auth/google/callback',
     next()
   },
   cookieController.setSSIDCookie,
-  sessionController.startSession, 
+  sessionController.startSession,
   function(req, res) {
     // Successful authentication, redirect to home
     res.redirect('http://localhost:8081/home');
