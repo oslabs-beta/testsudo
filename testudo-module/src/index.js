@@ -69,9 +69,6 @@ function initializeTestudo (expressApp, options = {}) {
     }
     if (expressApp) {
         const handleMeasuredRequest = handleMeasuredRequestFactory(options.projectID);
-        if (typeof handleMeasuredRequest !== 'function') {
-            throw new Error('handleMeasuredRequest must be a function');
-          }
         expressApp.use(handleMeasuredRequest);
     }
 }
