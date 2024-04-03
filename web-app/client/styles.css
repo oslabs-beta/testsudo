@@ -305,7 +305,7 @@ h4 {
   background: var(--btnColor);
   color: var(--white);
 }
-.backend-container{
+.component-container{
   background: var(--backgroundColor);
   height: calc(100vh - 9.25rem);
 }

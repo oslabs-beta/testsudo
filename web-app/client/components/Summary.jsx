@@ -17,7 +17,7 @@ import {
 } from 'recharts';
 import contructionIcon from '../assets/contructionIcon.png';
 
-const FrontEndMetrics = ({ projectIDState, formatData }) => {
+const Summary = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
   const [fEDataPresent, setFEDataPresent] = useState(false);
   const [fEPerformance, setFEPerformance] = useState('');
@@ -73,6 +73,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
             background: 'var(--backgroundColor)',
           }}
         >
+          {/* <DashNav /> */}
           <Grid container spacing={1}>
             <Grid item xs={12} md={8} lg={6}>
               <Paper
@@ -403,5 +404,4 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
     </div>
   );
 };
-
-export default FrontEndMetrics;
+export default Summary;

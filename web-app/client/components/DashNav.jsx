@@ -11,6 +11,14 @@ const DashNav = ({ setActiveComponent }) => {
         <li>
           <button
             className="btn dashboard-btn"
+            onClick={() => setActiveComponent('summary')}
+          >
+            Summary
+          </button>
+        </li>
+        <li>
+          <button
+            className="btn dashboard-btn"
             onClick={() => setActiveComponent('frontend')}
           >
             Frontend
@@ -25,7 +33,12 @@ const DashNav = ({ setActiveComponent }) => {
           </button>
         </li>
         <li>
-          <button className="btn dashboard-btn">Security</button>
+          <button
+            className="btn dashboard-btn"
+            onClick={() => setActiveComponent('security')}
+          >
+            Security
+          </button>
         </li>
         <li>
           <button
