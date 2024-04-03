@@ -5,4 +5,4 @@ cookieController.setSSIDCookie = (req, res, next) => {
   return next();
 };
 
-export default cookieController;
+module.exports = cookieController;

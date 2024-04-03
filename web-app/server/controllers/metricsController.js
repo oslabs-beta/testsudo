@@ -1,4 +1,5 @@
-import db from '../models/sql.js';
+
+const db = require('../models/sql.js');
 
 const metricsController = {};
 
@@ -231,4 +232,4 @@ metricsController.postData = (req, res, next) => {
 //   }
 // };
 
-export default metricsController;
+module.exports = metricsController;

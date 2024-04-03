@@ -1,5 +1,5 @@
-import { User, Project } from '../models/mongodb.js';
-import bcrypt from 'bcryptjs';
+const { User, Project } = require('../models/mongodb.js');
+const bcrypt = require('bcryptjs');
 
 const userController = {};
 
@@ -102,4 +102,4 @@ userController.addProject = async (req, res, next) => {
   }
 };
 
-export default userController;
+module.exports = userController;
