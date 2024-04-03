@@ -5,8 +5,8 @@ const PORT = 3001;
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
-// const passport = require('passport');
-// const session = require('express-session');
+import passport from 'passport';
+import session from 'express-session';
 // const bcrypt = require('bcryptjs');
 
 import { register } from './prometheus.js';
@@ -25,9 +25,12 @@ import authController from './controllers/authController.js';
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
-// app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 // const client_id = process.env.CLIENT_ID;
 // const client_secret = process.env.CLIENT_SECRET;
@@ -56,14 +59,15 @@ app.use(cors())
 //         }
 //     }
 // ));
-// passport.serializeUser(function (user, done) {
-//     done(null, user.id);
-// });
-// passport.deserializeUser(function (id, done) {
-//     User.findById(id, (err, user) => {
-//         done(err, user);
-//     });
-// });
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    // User.findById(id, (err, user) => {
+        done(err, id);
+    // });
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
@@ -113,6 +117,29 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
   res.redirect('/');
 });
+
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    // Successful authentication, redirect success.
+    res.redirect('/success');
+  });
 
 // app.get('/auth/github',
 //     passport.authenticate('github')

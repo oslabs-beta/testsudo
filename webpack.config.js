@@ -18,7 +18,7 @@ const config = {
     port: 8081,
     proxy: {
       '/action': 'http://localhost:3001',
-      //   // '/': 'http://localhost:3000',
+      '/auth': 'http://localhost:3001',
       //   changeOrigin: true,
     },
     historyApiFallback: true,

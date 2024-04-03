@@ -18,7 +18,7 @@ const runLighthouse = async (address, projectID) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-      },
+      }, 
       body: JSON.stringify(data),
     });
     // return response.json();

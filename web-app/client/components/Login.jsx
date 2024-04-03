@@ -81,6 +81,14 @@ const Login = () => {
             />
             Log in with Github
           </a>
+          <a href="#" onClick={() => { window.location.href = '/auth/google'; }}>
+            <img
+              src=""
+              alt="google logo"
+              className="google-logo"
+            />
+            Log in with Google
+          </a>
         </div>
         <p className="signup-footer">
           Not a user yet? <a href="/signup">Sign up here</a>
