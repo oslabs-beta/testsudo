@@ -1,7 +1,6 @@
 {
   "name": "testudo",
   "version": "1.0.0",
-  "type": "module",
   "description": "comprehensive optimization tool for development",
   "main": "./testudo-module/src/index.js",
   "scripts": {

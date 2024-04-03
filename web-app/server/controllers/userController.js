@@ -1,5 +1,5 @@
-import { User, Project } from '../models/mongodb.js';
-import bcrypt from 'bcryptjs';
+const { User, Project } = require('../models/mongodb.js');
+const bcrypt = require('bcryptjs');
 
 const userController = {};
 
@@ -59,7 +59,7 @@ userController.getUser = async (req, res, next) => {
             log: 'Error in userController.getUser',
             status: 400,
             message: { err: 'Error getting user' },
-        })
+        });
     }
 }
 
@@ -79,7 +79,7 @@ userController.checkDuplicate = async (req, res, next) => {
             log: 'Error in userController.checkDuplicate',
             status: 400,
             message: { err: 'Error checking duplicate ' + error.message },
-        })
+        });
     }
 }
 
@@ -89,7 +89,7 @@ userController.addProject = async (req, res, next) => {
 
   try {
     const newProject = await Project.create({ name });
-    console.log(newProject)
+    console.log(newProject);
     const user = await User.findOne({ _id: userID });
     console.log(user);
     if (!user.projects) user.projects = [];
@@ -106,4 +106,4 @@ userController.addProject = async (req, res, next) => {
   }
 };
 
-export default userController;
+module.exports = userController;

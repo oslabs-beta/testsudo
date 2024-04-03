@@ -1,9 +1,8 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Assuming __dirname is defined elsewhere in your configuration or environment
+// If not, you can directly specify the paths as needed without relying on __dirname
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -18,8 +17,8 @@ const config = {
     port: 8081,
     proxy: {
       '/action': 'http://localhost:3001',
-      //   // '/': 'http://localhost:3000',
-      //   changeOrigin: true,
+      // '/': 'http://localhost:3000',
+      // changeOrigin: true,
     },
     historyApiFallback: true,
     static: './web-app/build',
@@ -65,4 +64,4 @@ const config = {
   ],
 };
 
-export default config;
+module.exports = config;
