@@ -23,22 +23,22 @@ metricsController.getFEData = (req, res, next) => {
             entry.performance !== null
           );
         });
-        console.log('data from metricsController.getFEData ', filteredData);
+        // console.log('data from metricsController.getFEData ', filteredData);
         res.locals.FEmetrics = filteredData;
         // res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
         // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance);
-        
+
         const entries = Object.entries(filteredData);
 
         // Check if there are any entries
         if (entries.length > 0) {
-            // Access the last entry and its 'performance' property
-            const lastEntry = entries[entries.length - 1][1];
-            res.locals.performance = lastEntry.performance || undefined;
+          // Access the last entry and its 'performance' property
+          const lastEntry = entries[entries.length - 1][1];
+          res.locals.performance = lastEntry.performance || undefined;
         } else {
-            // Handle the case where there are no entries (e.g., filteredData is empty)
-            res.locals.performance = undefined;
-        }        
+          // Handle the case where there are no entries (e.g., filteredData is empty)
+          res.locals.performance = undefined;
+        }
 
         return next();
       })
@@ -47,7 +47,8 @@ metricsController.getFEData = (req, res, next) => {
     return next({
       log: 'metricsController.getData - error getting FE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting FE data'
+      message: {
+        err: 'metricsController.getData - error getting FE data'
       }
     })
   }
@@ -77,7 +78,7 @@ metricsController.getBEData = (req, res, next) => {
           entry.concurrent_requests !== null
         );
       });
-      console.log('data from metricsController.getBEData ', filteredData);
+      // console.log('data from metricsController.getBEData ', filteredData);
       // res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
       // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
       res.locals.BEmetrics = filteredData;
@@ -86,14 +87,14 @@ metricsController.getBEData = (req, res, next) => {
 
       // Check if there are any entries
       if (entries.length > 0) {
-          // Access the last entry and its 'performance' property
-          const lastEntry = entries[entries.length - 1][1];
-          res.locals.response = lastEntry.average_response_time || undefined;
-          console.log('res.locals.response is ', res.locals.response)
+        // Access the last entry and its 'performance' property
+        const lastEntry = entries[entries.length - 1][1];
+        res.locals.response = lastEntry.average_response_time || undefined;
+        console.log('res.locals.response is ', res.locals.response)
       } else {
-          // Handle the case where there are no entries (e.g., filteredData is empty)
-          res.locals.response = undefined;
-      }        
+        // Handle the case where there are no entries (e.g., filteredData is empty)
+        res.locals.response = undefined;
+      }
 
 
       return next();
@@ -107,7 +108,7 @@ metricsController.getBEData = (req, res, next) => {
   }
 };
 
-metricsController.postData = (req, res, next) => {
+metricsController.postFEData = (req, res, next) => {
   try {
     const projectID = req.params.projectID;
     const {
@@ -145,6 +146,61 @@ metricsController.postData = (req, res, next) => {
     });
   }
 };
+
+metricsController.postBEData = async (req, res, next) => {
+  const projectID = req.params.projectID;
+  console.log('project ID is ', projectID);
+  const {
+    path,
+    duration,
+    requestBodySize,
+    totalRequests,
+    concurrentRequests,
+    errors,
+    rss,
+    heapTotal,
+    heapUsed,
+    external,
+    averageResponseTime,
+    averagePayloadSize 
+  } = req.body;
+  console.log('ave payload size is ', averagePayloadSize);
+  try {
+    const queryText = `
+                INSERT INTO metrics 
+                (timestamp, path, duration, request_body_size, total_requests, concurrent_requests, errors, 
+                rss, heap_total, heap_used, external, average_response_time, average_payload_size, projectid)
+                VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                `;
+    await db.query(queryText, [
+      // metricsData.path, metricsData.duration, metricsData.requestBodySize,
+      // metricsData.totalRequests, metricsData.concurrentRequests, metricsData.errors,
+      // metricsData.rss, metricsData.heapTotal, metricsData.heapUsed,
+      // metricsData.external, metricsData.averageResponseTime, metricsData.averagePayloadSize, projectID
+      path,
+      duration,
+      requestBodySize,
+      totalRequests,
+      concurrentRequests,
+      errors,
+      rss,
+      heapTotal,
+      heapUsed,
+      external,
+      averageResponseTime,
+      averagePayloadSize, 
+      projectID
+    
+    ]);
+    // console.log(`Request to ${req.path} took ${duration} ms. Concurrent requests: ${metrics.concurrentRequests}`);
+    console.log('Metrics saved to database');
+    return next();
+  } catch (err) {
+    console.error('Error saving metrics to database:', err.message);
+    return next(err);
+  }
+};
+
 
 // INFLUX //
 // import { InfluxDB, Point } from '@influxdata/influxdb-client';

@@ -58,7 +58,22 @@
 // const { launch } = require('chrome-launcher');
 // const lighthouse = require('lighthouse');
 // const { setupMetrics } = require('./core/setup.js');
-const { handleMeasuredRequest } = require('./core/measured.js');
-const runLighthouse = require('../test/test.js');
+const dotenv = require('dotenv');
+const { handleMeasuredRequestFactory } = require('./core/measured.js');
+const runLighthouse = require('./core/lighthouse.js');
 
-module.exports = { runLighthouse, handleMeasuredRequest };
+function initializeTestudo (expressApp, options = {}) {
+    dotenv.config();
+    if (options.lighthouseUrl) {
+        runLighthouse(options.lighthouseUrl, options.projectID);
+    }
+    if (expressApp) {
+        const handleMeasuredRequest = handleMeasuredRequestFactory(options.projectID);
+        if (typeof handleMeasuredRequest !== 'function') {
+            throw new Error('handleMeasuredRequest must be a function');
+          }
+        expressApp.use(handleMeasuredRequest);
+    }
+}
+
+module.exports = { initializeTestudo, runLighthouse, handleMeasuredRequestFactory };
