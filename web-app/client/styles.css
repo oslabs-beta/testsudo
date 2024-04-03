@@ -285,10 +285,27 @@ h4 {
   color: var(--secondaryColor);
   font-weight: 1000
 }
-
 .btn-container{
   width: 100%;
+  height: 6.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--backgroundColor);
+}
+.metric-btns{
+  display: flex;
+  gap: 1rem;
+}
+.run-btn{
+  background: var(--white);
+  color: var(--black);
+}
+.run-btn:hover{
+  background: var(--btnColor);
+  color: var(--white);
+}
+.component-container{
+  background: var(--backgroundColor);
+  height: calc(100vh - 9.25rem);
 }

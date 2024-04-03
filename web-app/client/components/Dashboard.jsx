@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import DashNav from './DashNav.jsx';
+import Summary from './Summary.jsx';
 import FrontEndMetrics from './FrontEndMetrics.jsx';
 import BackEndMetrics from './BackEndMetrics.jsx';
 import SecurityMetrics from './SecurityMetrics.jsx';
 import NavBar from './NavBar.jsx';
 
 const Dashboard = ({ projectIDState, setProjectIDState }) => {
-  console.log('projectIDState is ', projectIDState);
-
+  const [activeComponent, setActiveComponent] = useState('summary');
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleString('en-US', {
@@ -28,11 +29,29 @@ const Dashboard = ({ projectIDState, setProjectIDState }) => {
   return (
     <div>
       <NavBar />
+      <DashNav setActiveComponent={setActiveComponent} />
 
-      <FrontEndMetrics
-        projectIDState={projectIDState}
-        formatData={formatData}
-      />
+      {activeComponent === 'summary' && (
+        <Summary projectIDState={projectIDState} formatData={formatData} />
+      )}
+      {activeComponent === 'frontend' && (
+        <FrontEndMetrics
+          projectIDState={projectIDState}
+          formatData={formatData}
+        />
+      )}
+      {activeComponent === 'backend' && (
+        <BackEndMetrics
+          projectIDState={projectIDState}
+          formatData={formatData}
+        />
+      )}
+      {activeComponent === 'security' && (
+        <SecurityMetrics
+          projectIDState={projectIDState}
+          formatData={formatData}
+        />
+      )}
       {/* <BackEndMetrics projectIDState={projectIDState} formatData={formatData} /> */}
       {/* <SecurityMetrics projectIDState={projectIDState} formatData={formatData}  /> */}
     </div>
