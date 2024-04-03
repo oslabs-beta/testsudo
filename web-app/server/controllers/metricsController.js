@@ -162,7 +162,7 @@ metricsController.postBEData = async (req, res, next) => {
     heapUsed,
     external,
     averageResponseTime,
-    averagePayloadSize 
+    averagePayloadSize
   } = req.body;
   console.log('ave payload size is ', averagePayloadSize);
   try {
@@ -173,10 +173,6 @@ metricsController.postBEData = async (req, res, next) => {
                 VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                 `;
     await db.query(queryText, [
-      // metricsData.path, metricsData.duration, metricsData.requestBodySize,
-      // metricsData.totalRequests, metricsData.concurrentRequests, metricsData.errors,
-      // metricsData.rss, metricsData.heapTotal, metricsData.heapUsed,
-      // metricsData.external, metricsData.averageResponseTime, metricsData.averagePayloadSize, projectID
       path,
       duration,
       requestBodySize,
@@ -188,11 +184,10 @@ metricsController.postBEData = async (req, res, next) => {
       heapUsed,
       external,
       averageResponseTime,
-      averagePayloadSize, 
+      averagePayloadSize,
       projectID
-    
+
     ]);
-    // console.log(`Request to ${req.path} took ${duration} ms. Concurrent requests: ${metrics.concurrentRequests}`);
     console.log('Metrics saved to database');
     return next();
   } catch (err) {

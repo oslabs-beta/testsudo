@@ -131,7 +131,7 @@ const handleMeasuredRequestFactory = (projectID) => {
                 .catch(err => console.error('Error sending metrics data to the server:', err));
 
             console.log(`Request to ${req.path} took ${duration} ms. Concurrent requests: ${metrics.concurrentRequests}`);
-            console.log('Back end metrics data is', metricsData)
+            console.log('Back end metrics data is ' + metricsData)
         });
 
         res.on('error', () => {
