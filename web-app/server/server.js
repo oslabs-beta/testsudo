@@ -1,6 +1,18 @@
-import express from 'express';
-import path from 'path';
-import cors from 'cors';
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
+const cookieParser = require('cookie-parser');
+
+const { register } = require('./prometheus.js');
+// const prometheusController = require('./controllers/prometheusController.js');
+const userController = require('./controllers/userController.js');
+const cookieController = require('./controllers/cookieController.js');
+const sessionController = require('./controllers/sessionController.js');
+const metricsRouter = require('./routes/metricsRouter.js');
+// const authController = require('./controllers/authController.js');
+
 const PORT = 3001;
 const app = express();
 import dotenv from 'dotenv';
@@ -157,94 +169,21 @@ app.get('/auth/google/callback',
     res.redirect('http://localhost:8081/home');
 });
 
-// app.get('/auth/github',
-//     passport.authenticate('github')
-// );
-
-// app.get('/auth/github/callback',
-//     passport.authenticate('github', { failureRedirect: 'http://localhost:8080/signup' }),
-//     async (req, res) => {
-//         // const fetch = (await import('node-fetch')).default;
-
-//     const code = req.query.code;
-//     if (!code) {
-//         return res.json('Error: log in not successful, no code provided')
-//     }
-//     const client_id = process.env.CLIENT_ID;
-//     const client_secret = process.env.CLIENT_SECRET;
-//     const redirect_uri = process.env.REDIRECT_URI;
-
-//     try {
-//         const response = await fetch('https://github.com/login/oauth/access_token', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accept': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 client_id,
-//                 client_secret,
-//                 code,
-//                 redirect_uri
-//             }),
-//         });
-//         const data = await response.json();
-//         if (data.access_token) {
-//             res.redirect('http://localhost:8080/home');
-//         } else {
-//             res.json('Authentication failed');
-//         }
-//     } catch (error) {
-//         res.json('Error occured: ', error)
-//     }
-// })
-
 app.use('/projects', metricsRouter);
 
-// const code = req.query.code;
-// if (!code) {
-//     return res.json('Error: log in not successful, no code provided')
-// }
-
-// try {
-//     const response = await fetch('https://github.com/login/oauth/access_token', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             client_id,
-//             client_secret,
-//             code,
-//             redirect_uri
-//         }),
-//     });
-//     const data = await response.json();
-//     if (data.access_token) {
-// res.redirect('http://localhost:8080/home');
-//     } else {
-//         res.json('Authentication failed');
-//     }
-// } catch (error) {
-//     res.json('Error occured: ', error)
-// }
-// });
-
-app.use(prometheusController.requestDuration);
+// app.use(prometheusController.requestDuration);
 
 app.get('/metrics', async (req, res) => {
     res.set('Content-Type', register.contentType);
     res.end(await register.metrics());
-})
-
+});
 
 app.use('*', (req, res) => {
   res.status(404).send('Page not found.');
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
+  console.error(err);
   res.status(500).send({ error: err });
 });
 
@@ -252,4 +191,4 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
 
-export default app;
+module.exports = app;

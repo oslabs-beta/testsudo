@@ -1,4 +1,5 @@
-import db from '../models/sql.js';
+
+const db = require('../models/sql.js');
 
 const metricsController = {};
 
@@ -10,47 +11,43 @@ metricsController.getFEData = (req, res, next) => {
   const value = [projectID];
 
   try {
-    db.query(metricsQuery, value)
-      .then(data => {
-        const filteredData = data.rows.filter(entry => {
-          return (
-            entry.firstContentfulPaint !== null &&
-            entry.speedIndex !== null &&
-            entry.totalBlockingTime !== null &&
-            entry.largestContentfulPaint !== null &&
-            entry.cumulativeLayoutShift !== null &&
-            entry.performance !== null
-          );
-        });
-        console.log('data from metricsController.getFEData ', filteredData);
-        res.locals.FEmetrics = filteredData;
-        // res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
-        // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance);
-        
-        const entries = Object.entries(filteredData);
+    db.query(metricsQuery, value).then((data) => {
+      const filteredData = data.rows.filter((entry) => {
+        return (
+          entry.firstContentfulPaint !== null &&
+          entry.speedIndex !== null &&
+          entry.totalBlockingTime !== null &&
+          entry.largestContentfulPaint !== null &&
+          entry.cumulativeLayoutShift !== null &&
+          entry.performance !== null
+        );
+      });
+      res.locals.FEmetrics = filteredData;
+      // res.locals.performance = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance;
+      // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].performance);
 
-        // Check if there are any entries
-        if (entries.length > 0) {
-            // Access the last entry and its 'performance' property
-            const lastEntry = entries[entries.length - 1][1];
-            res.locals.performance = lastEntry.performance || undefined;
-        } else {
-            // Handle the case where there are no entries (e.g., filteredData is empty)
-            res.locals.performance = undefined;
-        }        
+      const entries = Object.entries(filteredData);
 
-        return next();
-      })
-  }
-  catch (err) {
+      // Check if there are any entries
+      if (entries.length > 0) {
+        // Access the last entry and its 'performance' property
+        const lastEntry = entries[entries.length - 1][1];
+        res.locals.performance = lastEntry.performance || undefined;
+      } else {
+        // Handle the case where there are no entries (e.g., filteredData is empty)
+        res.locals.performance = undefined;
+      }
+
+      return next();
+    });
+  } catch (err) {
     return next({
       log: 'metricsController.getData - error getting FE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting FE data'
-      }
-    })
+      message: { err: 'metricsController.getData - error getting FE data' },
+    });
   }
-}
+};
 
 metricsController.getBEData = (req, res, next) => {
   const projectID = req.params.projectID;
@@ -76,7 +73,6 @@ metricsController.getBEData = (req, res, next) => {
           entry.concurrent_requests !== null
         );
       });
-      console.log('data from metricsController.getBEData ', filteredData);
       // res.locals.response = Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time;
       // console.log(Object.entries(filteredData)[Object.entries(filteredData).length -1][1].average_response_time);
       res.locals.BEmetrics = filteredData;
@@ -85,15 +81,13 @@ metricsController.getBEData = (req, res, next) => {
 
       // Check if there are any entries
       if (entries.length > 0) {
-          // Access the last entry and its 'performance' property
-          const lastEntry = entries[entries.length - 1][1];
-          res.locals.response = lastEntry.average_response_time || undefined;
-          console.log('res.locals.response is ', res.locals.response)
+        // Access the last entry and its 'performance' property
+        const lastEntry = entries[entries.length - 1][1];
+        res.locals.response = lastEntry.average_response_time || undefined;
       } else {
-          // Handle the case where there are no entries (e.g., filteredData is empty)
-          res.locals.response = undefined;
-      }        
-
+        // Handle the case where there are no entries (e.g., filteredData is empty)
+        res.locals.response = undefined;
+      }
 
       return next();
     });
@@ -238,4 +232,4 @@ metricsController.postData = (req, res, next) => {
 //   }
 // };
 
-export default metricsController;
+module.exports = metricsController;

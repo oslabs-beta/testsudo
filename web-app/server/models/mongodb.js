@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import 'dotenv/config';
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -36,4 +36,4 @@ const sessionSchema = new Schema({
 
 const Session = mongoose.model('Session', sessionSchema);
 
-export { User, Project, Session };
+module.exports = { User, Project, Session };

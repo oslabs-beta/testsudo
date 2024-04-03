@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import Login from './Login.jsx';
 import SignUp from './SignUp.jsx';
+import Summary from './Summary.jsx';
+import BackEndMetrics from './BackEndMetrics.jsx';
 import Dashboard from './Dashboard.jsx';
 import Projects from './Projects.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
@@ -16,6 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/backendMetrics"
+          element={<BackEndMetrics projectIDState={projectIDState} />}
+        />
         <Route
           path="/home"
           element={
