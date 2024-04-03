@@ -15,7 +15,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-import contructionIcon from '../assets/contructionIcon.png';
 
 const FrontEndMetrics = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
@@ -141,89 +140,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                   )}
                 </ResponsiveContainer>
               </Paper>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 275,
-                }}
-              >
-                <div className="header">
-                  Request Duration and Response Time (ms)
-                </div>
-                <ResponsiveContainer height={225} width="100%">
-                  {bEDataPresent && bEMetrics.length > 0 ? (
-                    <LineChart data={formatData(bEMetrics)}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                      <YAxis yAxisId="left" />
-                      <Tooltip />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="duration"
-                        name="Duration"
-                        stroke="#8884d8"
-                        yAxisId="left"
-                        dot={false}
-                      />
-
-                      <Line
-                        type="monotone"
-                        dataKey="average_response_time"
-                        name="Average Response Time"
-                        stroke="#3951C8"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                    </LineChart>
-                  ) : (
-                    <div> Run your first back end test!</div>
-                  )}
-                </ResponsiveContainer>
-              </Paper>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 275,
-                }}
-              >
-                <div className="header">Request and Payload Size (bytes)</div>
-                <ResponsiveContainer height={225} width="100%">
-                  {bEDataPresent && bEMetrics.length > 0 ? (
-                    <LineChart data={formatData(bEMetrics)}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                      <YAxis yAxisId="left" />
-                      <Tooltip />
-                      <Legend />
-
-                      <Line
-                        type="monotone"
-                        dataKey="request_body_size"
-                        name="Request Body Size"
-                        stroke="#82ca9d"
-                        yAxisId="left"
-                        dot={false} // Add this line
-                      />
-
-                      <Line
-                        type="monotone"
-                        dataKey="average_payload_size"
-                        name="Average Payload Size"
-                        stroke="#31E5BB"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                    </LineChart>
-                  ) : (
-                    <div> </div>
-                  )}
-                </ResponsiveContainer>
-              </Paper>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
               <Paper
@@ -296,105 +212,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     />
                   </PieChart>
                 </ResponsiveContainer>
-              </Paper>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 275,
-                  width: '202%',
-                }}
-              >
-                <div className="header">Space Usage (MB)</div>
-                <ResponsiveContainer height="100%" width="100%">
-                  {bEDataPresent && bEMetrics.length > 0 ? (
-                    <LineChart data={formatData(bEMetrics)}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                      <YAxis yAxisId="left" />
-                      <Tooltip />
-                      <Legend />
-
-                      <Line
-                        type="monotone"
-                        dataKey="rss"
-                        name="Resident Set Size"
-                        stroke="#ff7300"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="heap_total"
-                        name="Heap Total"
-                        stroke="#a83232"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="heap_used"
-                        name="Heap Used"
-                        stroke="#003459"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="external"
-                        name="Memory used by external resources"
-                        stroke="#A436D4"
-                        yAxisId="left"
-                        dot={false}
-                      />
-                    </LineChart>
-                  ) : (
-                    <div> </div>
-                  )}
-                </ResponsiveContainer>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginBottom: '1.1rem',
-                  height: 560,
-                  textAlign: 'center',
-                  fontSize: '1.25rem',
-                }}
-              >
-                {' '}
-                <div className="header">
-                  Security Metrics
-                  <br />
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  Coming Soon! <br />
-                  <img
-                    className="PUC-icon"
-                    src={contructionIcon}
-                    alt=""
-                    style={{
-                      width: '60%',
-                      height: 'auto',
-                      display: 'block',
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                    }}
-                  />
-                </div>
               </Paper>
             </Grid>
           </Grid>

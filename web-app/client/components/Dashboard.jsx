@@ -7,7 +7,7 @@ import SecurityMetrics from './SecurityMetrics.jsx';
 import NavBar from './NavBar.jsx';
 
 const Dashboard = ({ projectIDState, setProjectIDState }) => {
-  const [activeComponent, setActiveComponent] = useState('frontend');
+  const [activeComponent, setActiveComponent] = useState('summary');
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleString('en-US', {
