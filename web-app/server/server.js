@@ -136,7 +136,7 @@ passport.use(new GoogleStrategy({
     try {
       let user = await User.findOne({ email: profile.emails[0].value });
       if (!user) {
-          user = await User.create({email: profile.emails[0].value, tokens: {googleID: profile.id, accessToken, refreshToken}});
+          user = await User.create({email: profile.emails[0].value, tokens: {provider: 'Google', profileID: profile.id, accessToken, refreshToken}});
       }
       return done(null, user);
   } catch (error) {

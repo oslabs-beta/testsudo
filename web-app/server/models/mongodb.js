@@ -19,7 +19,11 @@ const userSchema = new Schema({
   password: { type: String },
   email: { type: String, required: true, unique: true },
   projects: [{}],
-  tokens: [{}]
+  tokens: [{
+    provider: { type: String },
+    accessToken: { type: String },
+    refreshToken: { type: String },
+}]
 });
 
 const User = mongoose.model('User', userSchema);
