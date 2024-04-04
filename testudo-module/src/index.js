@@ -34,12 +34,6 @@
 
 // export default runAudit;
 
-import { launch } from 'chrome-launcher';
-import lighthouse from 'lighthouse';
-import { setupMetrics } from './core/setup.js';
-import { handleMeasuredRequest } from './core/measured.js';
-import runLighthouse from '../test/test.js';
-
 // async function runLighthouseAudit(url, opts = null, config = null) {
 //     const chrome = await launch({ chromeFlags: ['--headless'] });
 //     opts = { ...opts, port: chrome.port };
@@ -50,4 +44,33 @@ import runLighthouse from '../test/test.js';
 //     return runnerResult.lhr; // Returning Lighthouse results
 // }
 
-export { runLighthouse, setupMetrics, handleMeasuredRequest };
+
+// import { launch } from 'chrome-launcher';
+// import lighthouse from 'lighthouse';
+// import { setupMetrics } from './core/setup.js';
+// import { handleMeasuredRequest } from './core/measured.js';
+// import runLighthouse from '../test/test.js';
+
+// export { runLighthouse, setupMetrics, handleMeasuredRequest };
+
+
+
+// const { launch } = require('chrome-launcher');
+// const lighthouse = require('lighthouse');
+// const { setupMetrics } = require('./core/setup.js');
+const dotenv = require('dotenv');
+const { handleMeasuredRequestFactory } = require('./core/measured.js');
+const runLighthouse = require('./core/lighthouse.js');
+
+function initializeTestudo (expressApp, options = {}) {
+    dotenv.config();
+    if (options.lighthouseUrl) {
+        runLighthouse(options.lighthouseUrl, options.projectID);
+    }
+    if (expressApp) {
+        const handleMeasuredRequest = handleMeasuredRequestFactory(options.projectID);
+        expressApp.use(handleMeasuredRequest);
+    }
+}
+
+module.exports = { initializeTestudo, runLighthouse, handleMeasuredRequestFactory };
