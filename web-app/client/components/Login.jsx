@@ -95,16 +95,14 @@ const Login = () => {
           </div>
         </form>
         {!correctCredential && <div>Incorrect username or password.</div>}
-        <div className="github-login-btn">
-          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5">
-            <img
-              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              alt="github logo"
-              className="github-logo"
-            />
-            Log in with Github
-          </a>
-        </div>
+        <button className="github-login-btn" onClick={loginWithGithub}>
+          <img
+            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="github logo"
+            className="github-logo"
+          />
+          Log in with Github
+        </button>
         <div>
           <a
             href="#"
