@@ -12,8 +12,12 @@ router.get('/:projectID', metricsController.getFEData, metricsController.getBEDa
     });
 });
 
-router.post('/:projectID', metricsController.postData,  (req, res, next) => {
+router.post('/FE/:projectID', metricsController.postFEData,  (req, res, next) => {
     return res.status(200).end();
 });
+
+router.post('/BE/:projectID', metricsController.postBEData, (req, res, next) => {
+    return res.status(200).end();
+})
 
 module.exports = router;

@@ -76,11 +76,27 @@ const URL = process.env.URL;
 // Properly awaiting the imported config which is now a promise due to async Chrome launch
 const runLighthouse = async (address, projectID) => {
     // Load the configuration asynchronously
-    const configPromise = require('./config'); // Adjust the path to your actual config file
+    const configPromise = require('./lighthouse-config'); 
     const config = await configPromise; // Await the resolution of the config promise
     const { desktopConfig, options, chrome } = config;
 
+<<<<<<< HEAD
+  console.log('address is ', address);
+  const postData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify(data),
+    });
+    // return response.json();
+    return;
+  };
+=======
     console.log('address is ', address);
+>>>>>>> dev
 
     const postData = async (url, data) => {
         // Dynamically import node-fetch as it's an ES module
@@ -116,7 +132,7 @@ const runLighthouse = async (address, projectID) => {
 
     console.log(metricsHolder);
 
-    postData(`http://localhost:3001/projects/${projectID}`, metricsHolder);
+    postData(`http://localhost:3001/projects/FE/${projectID}`, metricsHolder);
 
     await chrome.kill(); // Make sure to close Chrome after your operations
 };
