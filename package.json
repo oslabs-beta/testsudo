@@ -21,6 +21,7 @@
     "@influxdata/influxdb-client": "^1.33.2",
     "@influxdata/influxdb-client-apis": "^1.33.2",
     "@mui/material": "^5.15.12",
+    "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "chrome-launcher": "^1.1.0",
     "cookie-parser": "^1.4.6",
