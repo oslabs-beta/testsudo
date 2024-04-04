@@ -100,7 +100,7 @@ metricsController.getBEData = (req, res, next) => {
   }
 };
 
-metricsController.postData = (req, res, next) => {
+metricsController.postFEData = (req, res, next) => {
   try {
     const projectID = req.params.projectID;
     const {
@@ -138,6 +138,56 @@ metricsController.postData = (req, res, next) => {
     });
   }
 };
+
+metricsController.postBEData = async (req, res, next) => {
+  const projectID = req.params.projectID;
+  console.log('project ID is ', projectID);
+  const {
+    path,
+    duration,
+    requestBodySize,
+    totalRequests,
+    concurrentRequests,
+    errors,
+    rss,
+    heapTotal,
+    heapUsed,
+    external,
+    averageResponseTime,
+    averagePayloadSize
+  } = req.body;
+  console.log('ave payload size is ', averagePayloadSize);
+  try {
+    const queryText = `
+                INSERT INTO metrics 
+                (timestamp, path, duration, request_body_size, total_requests, concurrent_requests, errors, 
+                rss, heap_total, heap_used, external, average_response_time, average_payload_size, projectid)
+                VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                `;
+    await db.query(queryText, [
+      path,
+      duration,
+      requestBodySize,
+      totalRequests,
+      concurrentRequests,
+      errors,
+      rss,
+      heapTotal,
+      heapUsed,
+      external,
+      averageResponseTime,
+      averagePayloadSize,
+      projectID
+
+    ]);
+    console.log('Metrics saved to database');
+    return next();
+  } catch (err) {
+    console.error('Error saving metrics to database:', err.message);
+    return next(err);
+  }
+};
+
 
 // INFLUX //
 // import { InfluxDB, Point } from '@influxdata/influxdb-client';
