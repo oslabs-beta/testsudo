@@ -120,15 +120,56 @@ securityController.runBearerScript = (req, res, next) => {
   }
 };
 
+function transformData(inputObj) {
+  const transformedData = [];
+  for (const severityLevel in inputObj) {
+    //iterate over report based on severety level
+    inputObj[severityLevel].forEach((report) => {
+      const { cwe_ids, title, description, filename, line_number } = report;
+
+      //create new object with specified keys and values
+
+      //removing all unwanted characters from description
+      const formattedDescription = description
+        .replace(/## Description\n\n/, '')
+        .replace(/## Remediations\n\n❌/, '')
+        .replace(/✅/, '')
+        .replace(/```javascript\n/g, '```')
+        .replace(/```/g, '\n```')
+        .replace(/## Resources\n.*/, '')
+        .replace(/\n/g, '');
+
+      const transformedObj = {
+        severity: severityLevel.toUpperCase(),
+        cwe_id: cwe_ids[0],
+        title: title,
+        description: formattedDescription,
+        filename: filename,
+        line_number: line_number,
+      };
+      transformedData.push(transformedObj);
+    });
+  }
+  return transformedData;
+}
+
 securityController.readReport = (req, res, next) => {
   try {
     console.log('ReadReport is running');
+
+    //readin report
     const reportFilePath = path.resolve(__dirname, '../../../scan_report.json');
     const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
     const reportData = JSON.parse(reportContent);
 
-    console.log(reportData);
-    res.json({ data: reportData });
+    //parsing through report and creating a new more readable version
+
+    // console.log(reportData);
+    const editedReport = transformData(reportData);
+    // console.log(editedReport);
+    // res.json({ data: editedReport });
+    res.locals.editedReport = editedReport;
+    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -138,16 +179,26 @@ securityController.readReport = (req, res, next) => {
 
 securityController.postSecurityData = (req, res, next) => {
   try {
-    const projectID = req.params.projectID;
-    const { cwe_ids, title, full_filename, line_number } = req.body;
-    const value = [projectID, cwe_ids, title, full_filename, line_number];
-    const postQuery = `INSERT INTO metrics
-      (projectID, cwe_ids, title, full_filename, line_number)
+    const editedReport = res.locals.editedReport;
+    editedReport.forEach((entry) => {
+      const { severity, cwe_id, title, filename, line_number } = entry;
+      const projectID = req.params.projectID;
+      const values = [
+        projectID,
+        severity,
+        cwe_id,
+        title,
+        filename,
+        line_number,
+      ];
+      const postQuery = `INSERT INTO metrics
+      (projectID, severity, cwe_id, title, filename, line_number)
       VALUES 
-      ($1, $2, $3, $4, $5)`;
+      ($1, $2, $3, $4, $5, $6)`;
 
-    db.query(postQuery, value).then((data) => {
-      return next();
+      db.query(postQuery, values).then(() => {
+        return next();
+      });
     });
   } catch (err) {
     return next({
