@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import 'dotenv/config';
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -16,9 +16,14 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true },
-  password: { type: String, required: true },
+  password: { type: String },
   email: { type: String, required: true, unique: true },
   projects: [{}],
+  tokens: [{
+    provider: { type: String },
+    accessToken: { type: String },
+    refreshToken: { type: String },
+}]
 });
 
 const User = mongoose.model('User', userSchema);
@@ -36,4 +41,4 @@ const sessionSchema = new Schema({
 
 const Session = mongoose.model('Session', sessionSchema);
 
-export { User, Project, Session };
+module.exports = { User, Project, Session };

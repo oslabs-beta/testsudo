@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import google from '../assets/web_dark_sq_SI@1x.png';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -80,6 +81,15 @@ const Login = () => {
               className="github-logo"
             />
             Log in with Github
+          </a>
+          </div>
+          <div>
+          <a href="#" onClick={() => { window.location.href = '/auth/google'; }}>
+            <img
+              src={google}
+              alt="google logo"
+              className="google-logo"
+            />
           </a>
         </div>
         <p className="signup-footer">

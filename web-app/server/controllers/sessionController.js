@@ -1,4 +1,4 @@
-import { User, Session } from '../models/mongodb.js';
+const { User, Session } = require('../models/mongodb.js');
 
 const sessionController = {};
 
@@ -6,7 +6,7 @@ sessionController.isLoggedIn = async (req, res, next) => {
     try {
         const session = await Session.findOne({ cookieID: req.cookies.ssid });
         if (!session) {
-            return res.status(401).json(false)
+            return res.status(401).json(false);
         } else {
             const user = await User.findOne({ _id: session.cookieID });
             res.locals.user = user;
@@ -17,9 +17,9 @@ sessionController.isLoggedIn = async (req, res, next) => {
             log: 'Error in sessionController.isLoggedIn',
             status: 400,
             message: { err: 'Error when verifying logged in session' + error.message }
-        })
+        });
     }
-}
+};
 
 sessionController.startSession = async (req, res, next) => {
     try {
@@ -32,10 +32,10 @@ sessionController.startSession = async (req, res, next) => {
         return next({
             log: 'Error in sessionController.startSession',
             status: 400,
-            message: { err: 'Error when finding session' + error.message }
+            message: { err: 'Error when finding session ' + error.message }
         });
     }
-}
+};
 
 sessionController.endSession = async (req, res, next) => {
     try {
@@ -46,8 +46,8 @@ sessionController.endSession = async (req, res, next) => {
             log: 'Error in sessionController.endSession',
             status: 400,
             message: { err: 'Error when ending session' + error.message }
-        });    
+        });
     }
-}
+};
 
-export default sessionController;
+module.exports = sessionController;
