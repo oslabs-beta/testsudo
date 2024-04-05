@@ -19,11 +19,13 @@ const userSchema = new Schema({
   password: { type: String },
   email: { type: String, required: true, unique: true },
   projects: [{}],
-  tokens: [{
-    provider: { type: String },
-    accessToken: { type: String },
-    refreshToken: { type: String },
-}]
+  tokens: [
+    {
+      provider: { type: String },
+      accessToken: { type: String },
+      refreshToken: { type: String },
+    },
+  ],
 });
 
 const User = mongoose.model('User', userSchema);
@@ -40,5 +42,29 @@ const sessionSchema = new Schema({
 });
 
 const Session = mongoose.model('Session', sessionSchema);
+
+const securitySchema = new Schema({
+  projectID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  data: [
+    {
+      severity: {
+        type: String,
+        required: true,
+      },
+      cwe_id: {
+        type: String,
+        required: true,
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+});
 
 module.exports = { User, Project, Session };

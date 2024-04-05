@@ -181,20 +181,22 @@ securityController.postSecurityData = (req, res, next) => {
   try {
     const editedReport = res.locals.editedReport;
     editedReport.forEach((entry) => {
-      const { severity, cwe_id, title, filename, line_number } = entry;
+      const { severity, cwe_id, title, description, filename, line_number } =
+        entry;
       const projectID = req.params.projectID;
       const values = [
         projectID,
         severity,
         cwe_id,
         title,
+        description,
         filename,
         line_number,
       ];
       const postQuery = `INSERT INTO metrics
       (projectID, severity, cwe_id, title, filename, line_number)
       VALUES 
-      ($1, $2, $3, $4, $5, $6)`;
+      ($1, $2, $3, $4, $5, $6, $7)`;
 
       db.query(postQuery, values).then(() => {
         return next();
