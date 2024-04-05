@@ -55,13 +55,223 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
           <Grid container spacing={3}>
             {bEDataPresent && bEMetrics.length > 0 ? (
             <>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={2}>
               <Paper
                 sx={{
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 275,
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Overall Server Performance</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Average Response Time (ms):</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Placeholder</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Placeholder</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Placeholder</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 250,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Placeholder</div>
+                <div className="score">{Math.round(bEResponse)}</div>
+                <ResponsiveContainer height="120%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          name: 'Back End Performance',
+                          value: bEResponse,
+                          fill: '#ffeaad',
+                        },
+                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                      ]}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={70}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
+            <Grid item xs={8} md={4}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 300,
                 }}
               >
                 <div className="header">Request Duration and Response Time (ms)</div>
@@ -97,13 +307,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 </ResponsiveContainer>
               </Paper>
             </Grid>
-            <Grid item xs={4} md={8}>
+            <Grid item xs={8} md={4}>
               <Paper
                 sx={{
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 275,
+                height: 300,
               }}
               >
               <div className="header">Request and Payload Size (bytes)</div>
@@ -140,13 +350,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
               </ResponsiveContainer>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={8} md={4}>
             <Paper
               sx={{
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 275,
+                height: 300,
               }}
             >
             <div className="header">Space Usage (MB)</div>
@@ -198,41 +408,24 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
               </ResponsiveContainer>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 275,
-                textAlign: 'center',
-                fontSize: '1.25rem',
-              }}
-            >
-              {' '}
-              <div className="header">Average Response Time (ms):</div>
-              <div className="score">{Math.round(bEResponse)}</div>
-              <ResponsiveContainer height="120%">
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        name: 'Front End Performance',
-                        value: bEResponse,
-                        fill: '#ffeaad',
-                      },
-                      { name: '', value: 100 - bEResponse, fill: '#ffffff' },
-                    ]}
-                    dataKey="value"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={50}
-                    outerRadius={70}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </Paper>
-          </Grid>
+          <Grid item xs={12}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 350,
+                  textAlign: 'center',
+                  fontSize: '1.25rem',
+                }}
+              >
+                {' '}
+                <div className="header">Recommendations:</div>
+                <ResponsiveContainer height="100%">
+                  XX
+                </ResponsiveContainer>
+              </Paper>
+            </Grid>
           </>
           ) : (
             <Grid item xs={12}>
