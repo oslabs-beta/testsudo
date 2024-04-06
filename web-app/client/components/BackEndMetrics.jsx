@@ -18,16 +18,16 @@ import {
 } from 'recharts';
 
 const BackEndMetrics = ({ projectIDState, formatData }) => {
-  const [bEResponse, setBEResponse] = useState('');
   const [bEMetrics, setBEMetrics] = useState([]);
   const [bEDataPresent, setBEDataPresent] = useState(false);
+  const [latestBEMetrics, setLatestBEMetrics] = useState('');
 
   const fetchBEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setBEMetrics(data.BEmetrics);
-        setBEResponse(data.response);
+        setLatestBEMetrics(data.latestBE);
         if (data.BEmetrics.length > 0) {
           setBEDataPresent(true);
         }
@@ -40,6 +40,75 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
   useEffect(() => {
     fetchBEMetrics();
   }, []);
+
+  const bEName = (name) => {
+    if (name === 'Duration') {
+        return 'Time taken for the processing of the request in milliseconds.'
+    } if (name === 'Request Body Size') {
+        return 'Size of the request body in bytes. This is useful for understanding the data load your server is handling per request.'
+    } if (name === 'Total Requests') {
+        return 'Cumulative number of requests your server has processed since it started or since the metric tracking began.'
+    } if (name === 'Concurrent Requests') {
+        return 'Number of requests being handled concurrently at a given moment. '
+    } if (name === 'Errors') {
+        return 'Total number of requests that resulted in an error. In this context, it shows there have been no requests that ended in an error (a good sign).'
+    } if (name === 'Resident Set Size') {
+        return 'Amount of space occupied in the main memory (RAM) for the process, including all C++ and JavaScript objects and code.'
+    } if (name === 'Total Heap') {
+      return 'Total size of the allocated heap in megabytes. The heap is the memory used by JavaScript objects.'
+    } if (name === 'Heap Used') {
+      return 'Amount of the heap that is currently being used by JavaScript objects. This can help in identifying memory leaks.'
+    } if (name === 'Memory Used') {
+      return `Memory used by "external" resources like C++ objects bound to JavaScript objects managed by V8's garbage collector. This could include things like Buffer objects.`
+    } if (name === 'Average Response Time') {
+      return `Average time taken to respond to requests in milliseconds.`
+    } if (name === 'Average Payload Size') {
+      return `Average size of the request payloads in bytes your server has been receiving.`
+    }
+}
+
+const CustomTooltip = ({ active, payload, label }) => {
+  useEffect(() => {
+}, [payload]);
+
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          {payload.map((entry, index) => (
+            <div>
+              <p key={index} className="data-point">
+                <span>{`${entry.name} on ${entry.payload.timestamp}: `}</span>
+                <span className="tooltip-value">{Math.round(entry.value,2)}</span>
+                <span>{` - ${bEName(entry.name)}`}</span></p>
+            </div>
+            ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomTooltipPie = ({ active, payload, label }) => {
+    useEffect(() => {
+  }, [payload]);
+  
+      if (active && payload && payload.length) {
+        return (
+          <div className="custom-tooltip">
+            {payload.map((entry, index) => (
+              <div>
+                <p key={index} className="data-point">
+                  <span>{`${entry.name}: `}</span>
+                  <span className="tooltip-value">{Math.round(entry.value,2)}</span>
+                  <span>{` - ${bEName(entry.name)}`}</span></p>
+              </div>
+              ))}
+          </div>
+        );
+      }
+      return null;
+    };
+
   return (
     <div className="component-container">
       <Box>
@@ -68,17 +137,17 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
               >
                 {' '}
                 <div className="header">Overall Server Performance</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="score">{Math.round(latestBEMetrics.average_response_time)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
                           name: 'Back End Performance',
-                          value: bEResponse,
+                          value: latestBEMetrics.average_response_time,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.average_response_time, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -86,6 +155,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -102,18 +172,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Average Response Time (ms):</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="header">Total Requests</div>
+                <div className="score">{Math.round(latestBEMetrics.total_requests)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
-                          name: 'Back End Performance',
-                          value: bEResponse,
+                          name: 'Total Requests',
+                          value: latestBEMetrics.total_requests,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.total_requests, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -121,6 +191,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -137,18 +208,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Placeholder</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="header">Total Concurrent Requests</div>
+                <div className="score">{Math.round(latestBEMetrics.concurrent_requests)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
-                          name: 'Back End Performance',
-                          value: bEResponse,
+                          name: 'Concurrent Requests',
+                          value: latestBEMetrics.concurrent_requests,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.concurrent_requests, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -156,6 +227,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -172,18 +244,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Placeholder</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="header">No. of Errors</div>
+                <div className="score">{Math.round(latestBEMetrics.errors)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
-                          name: 'Back End Performance',
-                          value: bEResponse,
+                          name: 'Errors',
+                          value: latestBEMetrics.errors,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.errors, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -191,6 +263,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -207,18 +280,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Placeholder</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="header">Average Response Time (ms)</div>
+                <div className="score">{Math.round(latestBEMetrics.average_response_time)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
-                          name: 'Back End Performance',
-                          value: bEResponse,
+                          name: 'Average Response Time',
+                          value: latestBEMetrics.average_response_time,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.average_response_time, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -226,6 +299,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -242,18 +316,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className="header">Placeholder</div>
-                <div className="score">{Math.round(bEResponse)}</div>
+                <div className="header">Heap Used</div>
+                <div className="score">{Math.round(latestBEMetrics.heap_used)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
-                          name: 'Back End Performance',
-                          value: bEResponse,
+                          name: 'Heap Used',
+                          value: latestBEMetrics.heap_used,
                           fill: '#ffeaad',
                         },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
+                        { name: '', value: 100 - latestBEMetrics.heap_used, fill: '#ffffff' },
                       ]}
                       dataKey="value"
                       cx="50%"
@@ -261,6 +335,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={50}
                       outerRadius={70}
                     />
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 220, left: 25 }} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -281,7 +356,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                       <YAxis yAxisId="left" />
-                      <Tooltip />
+                      <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 220, left: 25 }}/>
                       <Legend />
                       <Line
                         type="monotone"
@@ -323,7 +398,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                     <YAxis yAxisId="left" />
-                    <Tooltip />
+                    <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 220, left: 25 }}/>
                     <Legend />
 
                     <Line
@@ -366,7 +441,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                   <YAxis yAxisId="left" />
-                  <Tooltip />
+                  <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 220, left: 25 }}/>
                   <Legend />
 
                   <Line
@@ -380,7 +455,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                   <Line
                     type="monotone"
                     dataKey="heap_total"
-                    name="Heap Total"
+                    name="Total Heap"
                     stroke="#a83232"
                     yAxisId="left"
                     dot={false}
@@ -396,7 +471,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                   <Line
                     type="monotone"
                     dataKey="external"
-                    name="Memory used by external resources"
+                    name="Memory Used"
                     stroke="#A436D4"
                     yAxisId="left"
                     dot={false}

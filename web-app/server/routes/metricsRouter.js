@@ -7,8 +7,9 @@ router.get('/:projectID', metricsController.getFEData, metricsController.getBEDa
     return res.status(200).json({
         FEmetrics: res.locals.FEmetrics, 
         BEmetrics: res.locals.BEmetrics, 
-        performance: res.locals.performance, 
-        response: res.locals.response
+        response: res.locals.response,
+        latestFE: res.locals.latestFE,
+        latestBE: res.locals.latestBE
     });
 });
 

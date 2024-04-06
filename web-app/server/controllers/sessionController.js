@@ -23,9 +23,10 @@ sessionController.isLoggedIn = async (req, res, next) => {
 
 sessionController.startSession = async (req, res, next) => {
     try {
-        let session = await Session.findOne({ cookieID: res.locals.userID });
+        const userID = res.locals.userID;
+        let session = await Session.findOne({ cookieID: userID });
         if (!session) {
-            session = await Session.create({ cookieID: res.locals.userID });
+            session = await Session.create({ cookieID: userID });
         }
         return next();
     } catch (error) {
