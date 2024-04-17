@@ -311,3 +311,31 @@ h4 {
   background: var(--backgroundColor);
   height: calc(100vh - 9.25rem);
 }
+
+/* recharts */
+.custom-tooltip {
+  margin: 2px;
+  line-height: 12px;
+  max-width: 500px;
+  border: 1px solid var(--secondaryColor);
+  background-color: var(--backgroundColor);
+  color: var(--white);
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.data-point {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.data-point span {
+  line-height: 1;
+}
+
+.tooltip-value {
+  font-weight: bold;
+  color: var(--secondaryColor);
+}

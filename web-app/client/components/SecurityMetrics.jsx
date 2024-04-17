@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import constructionIcon from '../assets/contructionIcon.png';
 
-const SecurityMetrics = () => {
+const SecurityMetrics = (projectIDState, formatData, showModal, setShowModal, modalPosition,handleLegendClick) => {
   return (
     <div className="component-container">
       <Grid item xs={12} md={4} lg={3}>
