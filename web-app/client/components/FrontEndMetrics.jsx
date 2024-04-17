@@ -111,6 +111,8 @@ const CustomTooltip = ({ active, payload, label }) => {
           }}
         >
           <Grid container spacing={1}>
+          {fEDataPresent && fEMetrics.length > 0 ? (
+            <>
             <Grid item xs={12} md={8} lg={6}>
               <Paper
                 sx={{
@@ -122,7 +124,7 @@ const CustomTooltip = ({ active, payload, label }) => {
               >
                 <div className="header">Front End Metrics</div>
                 <ResponsiveContainer height={225} width="100%">
-                  {fEDataPresent && fEMetrics.length > 0 ? (
+                 
                     <LineChart data={formatData(fEMetrics)}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
@@ -173,9 +175,6 @@ const CustomTooltip = ({ active, payload, label }) => {
                         yAxisId="left"
                       />
                     </LineChart>
-                  ) : (
-                    <div> Run your first front end test!</div>
-                  )}
                 </ResponsiveContainer>
               </Paper>
             </Grid>
@@ -218,8 +217,24 @@ const CustomTooltip = ({ active, payload, label }) => {
                     <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
+              </Paper> 
+            </Grid>
+            </>
+            ) : (
+              <Grid item xs={12}>
+              <Paper
+                sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                height: 275,
+                }}
+              ><div className="header">Front End Metrics</div>
+                Run your first front end test!
               </Paper>
             </Grid>
+            )}
           </Grid>
         </Container>
       </Box>
