@@ -19,15 +19,14 @@ import {
 const FrontEndMetrics = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
   const [fEDataPresent, setFEDataPresent] = useState(false);
-  const [fEPerformance, setFEPerformance] = useState('');
-  const [bEResponse, setBEResponse] = useState('');
+  const [latestFEMetrics, setLatestFEMetrics] = useState('');
 
   const fetchFEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setFEMetrics(data.FEmetrics);
-        setFEPerformance(data.performance);
+        setLatestFEMetrics(data.latestFE);
         if (data.FEmetrics.length > 0) {
           setFEDataPresent(true);
         }
@@ -37,28 +36,67 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
       });
   };
 
-  // to copy to BackEndMetrics.jsx
-  const [bEMetrics, setBEMetrics] = useState([]);
-  const [bEDataPresent, setBEDataPresent] = useState(false);
+  useEffect(() => {
+    fetchFEMetrics();
+  }, []);
 
-  const fetchBEMetrics = () => {
-    fetch(`http://localhost:3001/projects/${projectIDState}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBEMetrics(data.BEmetrics);
-        setBEResponse(data.response);
-        if (data.BEmetrics.length > 0) {
-          setBEDataPresent(true);
-        }
-      })
-      .catch((err) => {
-        console.log('error in fetching BE metrics');
-      });
+  const fEName = (name) => {
+    if (name === 'Cumulative Layout Shift') {
+        return 'This measures the movement of visible elements within the viewport.'
+    } if (name === 'First Contentful Paint') {
+        return 'This marks the time at which the first text or image is painted in seconds.'
+    } if (name === 'Speed Index') {
+        return 'This shows how quickly the contents of a page are visibly populated in seconds.'
+    } if (name === 'Largest Contentful Paint') {
+        return 'This marks the time at which the largest text or image is painted in seconds.'
+    } if (name === 'Time to Interactive') {
+        return 'This is the amount of time it takes for the page to become fully interactive in seconds.'
+    } if (name === 'Total Blocking Time') {
+        return 'This is the sum of all time periods between FCP and Time to Interactive in milliseconds, when task length exceeded 50ms.'
+    }
+}
+
+const CustomTooltip = ({ active, payload, label }) => {
+  useEffect(() => {
+}, [payload]);
+
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          {payload.map((entry, index) => (
+            <div>
+              <p key={index} className="data-point">
+                <span>{`${entry.name} on ${entry.payload.timestamp}: `}</span>
+                <span className="tooltip-value">{Math.round(entry.value,2)}</span>
+                <span>{` - ${fEName(entry.name)}`}</span></p>
+            </div>
+            ))}
+        </div>
+      );
+    }
+    return null;
   };
 
-  useEffect(() => {
-    fetchFEMetrics(), fetchBEMetrics();
-  }, []);
+  const CustomTooltipPie = ({ active, payload, label }) => {
+    useEffect(() => {
+  }, [payload]);
+  
+      if (active && payload && payload.length) {
+        return (
+          <div className="custom-tooltip">
+            {payload.map((entry, index) => (
+              <div>
+                <p key={index} className="data-point">
+                  <span>{`${entry.name}: `}</span>
+                  <span className="tooltip-value">{Math.round(entry.value,2)}</span>
+                  <span>{` - ${fEName(entry.name)}`}</span></p>
+              </div>
+              ))}
+          </div>
+        );
+      }
+      return null;
+    };
 
   return (
     <div className="frontend-metrics-page">
@@ -90,7 +128,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                       <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                       <YAxis yAxisId="left" />
                       <YAxis yAxisId="right" orientation="right" />
-                      <Tooltip />
+                      <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 220, left: 25 }}/>
                       <Legend />
                       <Line
                         type="monotone"
@@ -155,19 +193,19 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
               >
                 {' '}
                 <div className="header">Overall Front End Performance</div>
-                <div className="score"> {fEPerformance}</div>
+                <div className="score"> {latestFEMetrics.performance}</div>
                 <ResponsiveContainer width="100%" height="120%">
                   <PieChart>
                     <Pie
                       data={[
                         {
                           name: 'Front End Performance',
-                          value: fEPerformance,
+                          value: latestFEMetrics.performance,
                           fill: '#d14334',
                         },
                         {
                           name: '',
-                          value: 100 - fEPerformance,
+                          value: 100 - latestFEMetrics.performance,
                           fill: '#ffffff',
                         },
                       ]}
@@ -177,6 +215,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                       innerRadius={40}
                       outerRadius={80}
                     />
+                    <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
