@@ -1,1 +1,878 @@
-{"high":[{"cwe_ids":["532"],"id":"javascript_lang_logger","title":"Leakage of sensitive information in logger message","description":"## Description\n\nLeaking sensitive data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of sensitive data sent to loggers.\n\n## Remediations\n\n❌ Avoid using sensitive data in logger messages:\n\n```javascript\nlogger.info(`User is: ${user.email}`)\n```\n\n✅ If you need to identify a user, use their unique identifier instead of their personal identifiable information:\n\n```javascript\nlogger.info(`User is: ${user.uuid}`)\n```\n## Resources\n- [OWASP logging cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger","line_number":16,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js","filename":"web-app/server/controllers/userController.js","data_type":{"category_uuid":"cef587dd-76db-430b-9e18-7b031e1a193b","name":"Email Address"},"category_groups":["PII","Personal Data"],"source":{"start":7,"end":7,"column":{"start":13,"end":18}},"sink":{"start":16,"end":16,"column":{"start":9,"end":54},"content":""},"parent_line_number":16,"fingerprint":"c746b1de7372b5984c0e2137ebe6c72a_0","old_fingerprint":"d5cd796ccaa5eb76bb21a2278831efe6_0","code_extract":"        console.log('new user created is: ', newUser);"},{"cwe_ids":["532"],"id":"javascript_lang_logger","title":"Leakage of sensitive information in logger message","description":"## Description\n\nLeaking sensitive data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of sensitive data sent to loggers.\n\n## Remediations\n\n❌ Avoid using sensitive data in logger messages:\n\n```javascript\nlogger.info(`User is: ${user.email}`)\n```\n\n✅ If you need to identify a user, use their unique identifier instead of their personal identifiable information:\n\n```javascript\nlogger.info(`User is: ${user.uuid}`)\n```\n## Resources\n- [OWASP logging cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger","line_number":68,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js","filename":"web-app/server/controllers/userController.js","data_type":{"category_uuid":"cef587dd-76db-430b-9e18-7b031e1a193b","name":"Email Address"},"category_groups":["PII","Personal Data"],"source":{"start":67,"end":67,"column":{"start":13,"end":18}},"sink":{"start":68,"end":68,"column":{"start":5,"end":52},"content":""},"parent_line_number":68,"fingerprint":"c746b1de7372b5984c0e2137ebe6c72a_1","old_fingerprint":"d5cd796ccaa5eb76bb21a2278831efe6_1","code_extract":"    console.log('check duplicate running: ', email)"}],"low":[{"cwe_ids":["693"],"id":"javascript_express_helmet_missing","title":"Missing Helmet configuration on HTTP headers","description":"## Description\n\nHelmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately.\n\n## Remediations\n\n✅ Use Helmet middleware\n\n```javascript\nconst helmet = require(\"helmet\")\napp.use(helmet())\n```\n\n## Resources\n\n- [Express Security Best Practices: Use Helmet](https://expressjs.com/en/advanced/best-practice-security.html#use-helmet)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_express_helmet_missing","line_number":4,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/prometheus.js","filename":"testudo-module/src/core/prometheus.js","category_groups":["PII","Personal Data"],"source":{"start":4,"end":4,"column":{"start":20,"end":29}},"sink":{"start":4,"end":4,"column":{"start":20,"end":29},"content":""},"parent_line_number":4,"fingerprint":"8a5b86d779f306881157e0ca5404ac1c_0","old_fingerprint":"8d12ef38ddddb18f12166cb71947b13a_0","code_extract":"const metricsApp = express();"},{"cwe_ids":["693"],"id":"javascript_express_helmet_missing","title":"Missing Helmet configuration on HTTP headers","description":"## Description\n\nHelmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately.\n\n## Remediations\n\n✅ Use Helmet middleware\n\n```javascript\nconst helmet = require(\"helmet\")\napp.use(helmet())\n```\n\n## Resources\n\n- [Express Security Best Practices: Use Helmet](https://expressjs.com/en/advanced/best-practice-security.html#use-helmet)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_express_helmet_missing","line_number":4,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js","filename":"web-app/server/server.js","category_groups":["PII","Personal Data"],"source":{"start":4,"end":4,"column":{"start":13,"end":22}},"sink":{"start":4,"end":4,"column":{"start":13,"end":22},"content":""},"parent_line_number":4,"fingerprint":"d3a0337d0a6a73177c6cd68f76029ecb_0","old_fingerprint":"b2071c9752358fe0dc331e9505d1bab9_1","code_extract":"const app = express();"},{"cwe_ids":["693"],"id":"javascript_express_reduce_fingerprint","title":"Missing server configuration to reduce server fingerprinting","description":"## Description\n\nIt can help to provide an extra layer of security to reduce server fingerprinting. Though not a security issue itself, a method to improve the overall posture of a web server is to take measures to reduce the ability to fingerprint the software being used on the server. Server software can be fingerprinted by quirks in how they respond to specific requests.\n\nBy default, Express.js sends the X-Powered-By response header banner. This can be disabled using the app.disable() method:\n\n```javascript\n  app.disable('x-powered-by')\n```\n\n## Resources\n\n- [Express Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_express_reduce_fingerprint","line_number":4,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/prometheus.js","filename":"testudo-module/src/core/prometheus.js","category_groups":["PII","Personal Data"],"source":{"start":4,"end":4,"column":{"start":20,"end":29}},"sink":{"start":4,"end":4,"column":{"start":20,"end":29},"content":""},"parent_line_number":4,"fingerprint":"1faf315660659816fb9da489b2d1b7a4_0","old_fingerprint":"1e76613b3b2235a98a4ece938c4525a0_0","code_extract":"const metricsApp = express();"},{"cwe_ids":["693"],"id":"javascript_express_reduce_fingerprint","title":"Missing server configuration to reduce server fingerprinting","description":"## Description\n\nIt can help to provide an extra layer of security to reduce server fingerprinting. Though not a security issue itself, a method to improve the overall posture of a web server is to take measures to reduce the ability to fingerprint the software being used on the server. Server software can be fingerprinted by quirks in how they respond to specific requests.\n\nBy default, Express.js sends the X-Powered-By response header banner. This can be disabled using the app.disable() method:\n\n```javascript\n  app.disable('x-powered-by')\n```\n\n## Resources\n\n- [Express Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_express_reduce_fingerprint","line_number":4,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js","filename":"web-app/server/server.js","category_groups":["PII","Personal Data"],"source":{"start":4,"end":4,"column":{"start":13,"end":22}},"sink":{"start":4,"end":4,"column":{"start":13,"end":22},"content":""},"parent_line_number":4,"fingerprint":"332e8ec1f865948fe29246c2bcce94f2_0","old_fingerprint":"e4ebd11ec6d79554d60ee0103e88590d_1","code_extract":"const app = express();"}],"warning":[{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":15,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/bearerScriptCli.js","filename":"bearerScriptCli.js","category_groups":["PII","Personal Data"],"source":{"start":15,"end":15,"column":{"start":3,"end":31}},"sink":{"start":15,"end":15,"column":{"start":3,"end":31},"content":""},"parent_line_number":15,"fingerprint":"dabc0ff4e3f818b1a404d1d18c27a3da_0","old_fingerprint":"817ba66c20fff0a3d86a7d940adc248c_3","code_extract":"  console.error(error.message);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":62,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/bearerScriptJson.js","filename":"bearerScriptJson.js","category_groups":["PII","Personal Data"],"source":{"start":62,"end":62,"column":{"start":5,"end":33}},"sink":{"start":62,"end":62,"column":{"start":5,"end":33},"content":""},"parent_line_number":62,"fingerprint":"25d22c30402212f0d3813c3eae982187_0","old_fingerprint":"7950971037d82f13958329baad170b28_15","code_extract":"    console.error(error.message);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":115,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js","filename":"testudo-module/src/core/measured.js","category_groups":["PII","Personal Data"],"source":{"start":115,"end":115,"column":{"start":13,"end":76}},"sink":{"start":115,"end":115,"column":{"start":13,"end":76},"content":""},"parent_line_number":115,"fingerprint":"a9c5f368f98b2ec4d65e2b1eca971d69_0","old_fingerprint":"dfe348a562f41527782430572d3d2957_16","code_extract":"            console.error('Error saving metrics to database:', err.message);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":117,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js","filename":"testudo-module/src/core/measured.js","category_groups":["PII","Personal Data"],"source":{"start":117,"end":117,"column":{"start":9,"end":44}},"sink":{"start":117,"end":117,"column":{"start":9,"end":44},"content":""},"parent_line_number":117,"fingerprint":"a9c5f368f98b2ec4d65e2b1eca971d69_1","old_fingerprint":"dfe348a562f41527782430572d3d2957_17","code_extract":"        console.log('PGURI is ', projectID);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":118,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js","filename":"testudo-module/src/core/measured.js","category_groups":["PII","Personal Data"],"source":{"start":118,"end":118,"column":{"start":9,"end":118}},"sink":{"start":118,"end":118,"column":{"start":9,"end":118},"content":""},"parent_line_number":118,"fingerprint":"a9c5f368f98b2ec4d65e2b1eca971d69_2","old_fingerprint":"dfe348a562f41527782430572d3d2957_18","code_extract":"        console.log(`Request to ${req.path} took ${duration} ms. Concurrent requests: ${metrics.concurrentRequests}`);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":119,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js","filename":"testudo-module/src/core/measured.js","category_groups":["PII","Personal Data"],"source":{"start":119,"end":119,"column":{"start":9,"end":33}},"sink":{"start":119,"end":119,"column":{"start":9,"end":33},"content":""},"parent_line_number":119,"fingerprint":"a9c5f368f98b2ec4d65e2b1eca971d69_3","old_fingerprint":"dfe348a562f41527782430572d3d2957_20","code_extract":"        console.log(metricsData);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":40,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Login.jsx","filename":"web-app/client/components/Login.jsx","category_groups":["PII","Personal Data"],"source":{"start":40,"end":40,"column":{"start":27,"end":65}},"sink":{"start":40,"end":40,"column":{"start":27,"end":65},"content":""},"parent_line_number":40,"fingerprint":"fe3e162e03ad2e3a8214ba41545dd11f_0","old_fingerprint":"8625a629a73c24bf96f587844a90da98_9","code_extract":"            .catch(err =\u003e console.log(\"App: log in error \", err));"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":19,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx","filename":"web-app/client/components/Projects.jsx","category_groups":["PII","Personal Data"],"source":{"start":19,"end":19,"column":{"start":17,"end":34}},"sink":{"start":19,"end":19,"column":{"start":17,"end":34},"content":""},"parent_line_number":19,"fingerprint":"d87ba4f284c6c35154b7dd3bfa205121_0","old_fingerprint":"52d9b7a7b318943114854534815b3945_7","code_extract":"                console.log(data);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":21,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx","filename":"web-app/client/components/Projects.jsx","category_groups":["PII","Personal Data"],"source":{"start":21,"end":21,"column":{"start":27,"end":67}},"sink":{"start":21,"end":21,"column":{"start":27,"end":67},"content":""},"parent_line_number":21,"fingerprint":"d87ba4f284c6c35154b7dd3bfa205121_1","old_fingerprint":"52d9b7a7b318943114854534815b3945_8","code_extract":"            .catch(err =\u003e console.log('Error getting user: ', err));"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":47,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx","filename":"web-app/client/components/Projects.jsx","category_groups":["PII","Personal Data"],"source":{"start":47,"end":47,"column":{"start":27,"end":69}},"sink":{"start":47,"end":47,"column":{"start":27,"end":69},"content":""},"parent_line_number":47,"fingerprint":"d87ba4f284c6c35154b7dd3bfa205121_2","old_fingerprint":"52d9b7a7b318943114854534815b3945_11","code_extract":"            .catch(err =\u003e console.log('Error adding project: ', err))"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":53,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx","filename":"web-app/client/components/Projects.jsx","category_groups":["PII","Personal Data"],"source":{"start":53,"end":53,"column":{"start":29,"end":70}},"sink":{"start":53,"end":53,"column":{"start":29,"end":70},"content":""},"parent_line_number":53,"fingerprint":"d87ba4f284c6c35154b7dd3bfa205121_3","old_fingerprint":"52d9b7a7b318943114854534815b3945_14","code_extract":"            .catch((err) =\u003e console.log('Could not copy text: ', err))"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":18,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/ProtectedRoute.jsx","filename":"web-app/client/components/ProtectedRoute.jsx","category_groups":["PII","Personal Data"],"source":{"start":18,"end":18,"column":{"start":13,"end":52}},"sink":{"start":18,"end":18,"column":{"start":13,"end":52},"content":""},"parent_line_number":18,"fingerprint":"af7f887ef07390d7afeac91f43081d63_0","old_fingerprint":"140c29baad589316916a96446b1cb536_6","code_extract":"            console.log('Auth check failed: ', err);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":40,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/SignUp.jsx","filename":"web-app/client/components/SignUp.jsx","category_groups":["PII","Personal Data"],"source":{"start":40,"end":40,"column":{"start":23,"end":66}},"sink":{"start":40,"end":40,"column":{"start":23,"end":66},"content":""},"parent_line_number":40,"fingerprint":"218fb4ba473a10a161a3f6fc4e51ab3e_0","old_fingerprint":"b3e791a071835de927ebb0d75a9522b5_10","code_extract":"        .catch(err =\u003e console.log(\"App: create user error \", err));"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":48,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/SignUp.jsx","filename":"web-app/client/components/SignUp.jsx","category_groups":["PII","Personal Data"],"source":{"start":48,"end":48,"column":{"start":27,"end":81}},"sink":{"start":48,"end":48,"column":{"start":27,"end":81},"content":""},"parent_line_number":48,"fingerprint":"218fb4ba473a10a161a3f6fc4e51ab3e_1","old_fingerprint":"b3e791a071835de927ebb0d75a9522b5_12","code_extract":"            .catch(err =\u003e console.log('App: check email duplicate error: ', err))"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":5,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/cookieController.js","filename":"web-app/server/controllers/cookieController.js","category_groups":["PII","Personal Data"],"source":{"start":5,"end":5,"column":{"start":5,"end":60}},"sink":{"start":5,"end":5,"column":{"start":5,"end":60},"content":""},"parent_line_number":5,"fingerprint":"97be8177c1bfe7b42598a72bbeb10261_0","old_fingerprint":"d03fb7200a1fb80373e1984a3c5436e2_0","code_extract":"    console.log('res locals userID is ', res.locals.userID)"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":15,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/metricsController.js","filename":"web-app/server/controllers/metricsController.js","category_groups":["PII","Personal Data"],"source":{"start":15,"end":15,"column":{"start":9,"end":70}},"sink":{"start":15,"end":15,"column":{"start":9,"end":70},"content":""},"parent_line_number":15,"fingerprint":"7fbc538493b936cdf400d648875f79ea_0","old_fingerprint":"56b520ca6e684bfe27e4ca294c7a97eb_4","code_extract":"        console.log('data from metricsController.getData ',data.rows);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":118,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":118,"end":118,"column":{"start":5,"end":64}},"sink":{"start":118,"end":118,"column":{"start":5,"end":64},"content":""},"parent_line_number":118,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_0","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_19","code_extract":"    console.error('Error executing bearer scan script:', error);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":130,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":130,"end":130,"column":{"start":5,"end":28}},"sink":{"start":130,"end":130,"column":{"start":5,"end":28},"content":""},"parent_line_number":130,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_1","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_21","code_extract":"    console.log(reportData);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":133,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":133,"end":133,"column":{"start":5,"end":23}},"sink":{"start":133,"end":133,"column":{"start":5,"end":23},"content":""},"parent_line_number":133,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_2","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_22","code_extract":"    console.log(error);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":218,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":218,"end":218,"column":{"start":7,"end":60}},"sink":{"start":218,"end":218,"column":{"start":7,"end":60},"content":""},"parent_line_number":218,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_3","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_25","code_extract":"      console.log(`Reports for ${level}:`, reportsForLevel);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":228,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":228,"end":228,"column":{"start":7,"end":69}},"sink":{"start":228,"end":228,"column":{"start":7,"end":69},"content":""},"parent_line_number":228,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_4","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_26","code_extract":"      console.log(`Filtered reports for ${level}:`, filteredReports);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":252,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":252,"end":252,"column":{"start":9,"end":54}},"sink":{"start":252,"end":252,"column":{"start":9,"end":54},"content":""},"parent_line_number":252,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_5","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_27","code_extract":"        console.error('Error inserting data:', error);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":256,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js","filename":"web-app/server/controllers/securityController.js","category_groups":["PII","Personal Data"],"source":{"start":256,"end":256,"column":{"start":5,"end":68}},"sink":{"start":256,"end":256,"column":{"start":5,"end":68},"content":""},"parent_line_number":256,"fingerprint":"abf4add8a674e0d109e0c7f8b712625f_6","old_fingerprint":"8ab64975b1050f422bb6edc8143b450d_28","code_extract":"    console.error('Error reading or inserting report data:', error);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":52,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js","filename":"web-app/server/controllers/userController.js","category_groups":["PII","Personal Data"],"source":{"start":52,"end":52,"column":{"start":5,"end":39}},"sink":{"start":52,"end":52,"column":{"start":5,"end":39},"content":""},"parent_line_number":52,"fingerprint":"192b6cc9edea0dac662c71bd03b369f7_0","old_fingerprint":"49ba0e8bc52e37d781fac58418692d77_13","code_extract":"    console.log('user id is ', userID);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":13,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/mongodb.js","filename":"web-app/server/models/mongodb.js","category_groups":["PII","Personal Data"],"source":{"start":13,"end":13,"column":{"start":19,"end":35}},"sink":{"start":13,"end":13,"column":{"start":19,"end":35},"content":""},"parent_line_number":13,"fingerprint":"2cf7a197c84a88b049e940bd59267868_0","old_fingerprint":"3a7ed4b0fb966ed3c59aa916b79497f1_2","code_extract":"  .catch((err) =\u003e console.log(err));"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":8,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/sql.js","filename":"web-app/server/models/sql.js","category_groups":["PII","Personal Data"],"source":{"start":8,"end":8,"column":{"start":1,"end":43}},"sink":{"start":8,"end":8,"column":{"start":1,"end":43},"content":""},"parent_line_number":8,"fingerprint":"c7da437b8de0f478d0ed12594d114a6f_0","old_fingerprint":"b0403c833c662df8ae7d3000af8d36c1_1","code_extract":"console.log('PG_URI in model is ', PG_URI);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":16,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/sql.js","filename":"web-app/server/models/sql.js","category_groups":["PII","Personal Data"],"source":{"start":16,"end":16,"column":{"start":5,"end":40}},"sink":{"start":16,"end":16,"column":{"start":5,"end":40},"content":""},"parent_line_number":16,"fingerprint":"c7da437b8de0f478d0ed12594d114a6f_1","old_fingerprint":"b0403c833c662df8ae7d3000af8d36c1_5","code_extract":"    console.log('executed query', text);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":189,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js","filename":"web-app/server/server.js","category_groups":["PII","Personal Data"],"source":{"start":189,"end":189,"column":{"start":3,"end":19}},"sink":{"start":189,"end":189,"column":{"start":3,"end":19},"content":""},"parent_line_number":189,"fingerprint":"ee1845b5bd41c07902f2f2c9a3dc1e9c_0","old_fingerprint":"3089b55dae2be10508c363b38e9b3a93_23","code_extract":"  console.log(err);"},{"cwe_ids":["532"],"id":"javascript_lang_logger_leak","title":"Leakage of information in logger message","description":"## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n","documentation_url":"https://docs.bearer.com/reference/rules/javascript_lang_logger_leak","line_number":194,"full_filename":"/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js","filename":"web-app/server/server.js","category_groups":["PII","Personal Data"],"source":{"start":194,"end":194,"column":{"start":3,"end":46}},"sink":{"start":194,"end":194,"column":{"start":3,"end":46},"content":""},"parent_line_number":194,"fingerprint":"ee1845b5bd41c07902f2f2c9a3dc1e9c_1","old_fingerprint":"3089b55dae2be10508c363b38e9b3a93_24","code_extract":"  console.log(`Listening on port ${PORT}...`);"}]}
+{
+  "high": [
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger",
+      "title": "Leakage of sensitive information in logger message",
+      "description": "## Description\n\nLeaking sensitive data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of sensitive data sent to loggers.\n\n## Remediations\n\n❌ Avoid using sensitive data in logger messages:\n\n```javascript\nlogger.info(`User is: ${user.email}`)\n```\n\n✅ If you need to identify a user, use their unique identifier instead of their personal identifiable information:\n\n```javascript\nlogger.info(`User is: ${user.uuid}`)\n```\n## Resources\n- [OWASP logging cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger",
+      "line_number": 16,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js",
+      "filename": "web-app/server/controllers/userController.js",
+      "data_type": {
+        "category_uuid": "cef587dd-76db-430b-9e18-7b031e1a193b",
+        "name": "Email Address"
+      },
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 7, "end": 7, "column": { "start": 13, "end": 18 } },
+      "sink": {
+        "start": 16,
+        "end": 16,
+        "column": { "start": 9, "end": 54 },
+        "content": ""
+      },
+      "parent_line_number": 16,
+      "fingerprint": "c746b1de7372b5984c0e2137ebe6c72a_0",
+      "old_fingerprint": "d5cd796ccaa5eb76bb21a2278831efe6_0",
+      "code_extract": "        console.log('new user created is: ', newUser);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger",
+      "title": "Leakage of sensitive information in logger message",
+      "description": "## Description\n\nLeaking sensitive data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of sensitive data sent to loggers.\n\n## Remediations\n\n❌ Avoid using sensitive data in logger messages:\n\n```javascript\nlogger.info(`User is: ${user.email}`)\n```\n\n✅ If you need to identify a user, use their unique identifier instead of their personal identifiable information:\n\n```javascript\nlogger.info(`User is: ${user.uuid}`)\n```\n## Resources\n- [OWASP logging cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger",
+      "line_number": 68,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js",
+      "filename": "web-app/server/controllers/userController.js",
+      "data_type": {
+        "category_uuid": "cef587dd-76db-430b-9e18-7b031e1a193b",
+        "name": "Email Address"
+      },
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 67,
+        "end": 67,
+        "column": { "start": 13, "end": 18 }
+      },
+      "sink": {
+        "start": 68,
+        "end": 68,
+        "column": { "start": 5, "end": 52 },
+        "content": ""
+      },
+      "parent_line_number": 68,
+      "fingerprint": "c746b1de7372b5984c0e2137ebe6c72a_1",
+      "old_fingerprint": "d5cd796ccaa5eb76bb21a2278831efe6_1",
+      "code_extract": "    console.log('check duplicate running: ', email)"
+    }
+  ],
+  "low": [
+    {
+      "cwe_ids": ["693"],
+      "id": "javascript_express_helmet_missing",
+      "title": "Missing Helmet configuration on HTTP headers",
+      "description": "## Description\n\nHelmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately.\n\n## Remediations\n\n✅ Use Helmet middleware\n\n```javascript\nconst helmet = require(\"helmet\")\napp.use(helmet())\n```\n\n## Resources\n\n- [Express Security Best Practices: Use Helmet](https://expressjs.com/en/advanced/best-practice-security.html#use-helmet)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_express_helmet_missing",
+      "line_number": 4,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/prometheus.js",
+      "filename": "testudo-module/src/core/prometheus.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 4, "end": 4, "column": { "start": 20, "end": 29 } },
+      "sink": {
+        "start": 4,
+        "end": 4,
+        "column": { "start": 20, "end": 29 },
+        "content": ""
+      },
+      "parent_line_number": 4,
+      "fingerprint": "8a5b86d779f306881157e0ca5404ac1c_0",
+      "old_fingerprint": "8d12ef38ddddb18f12166cb71947b13a_0",
+      "code_extract": "const metricsApp = express();"
+    },
+    {
+      "cwe_ids": ["693"],
+      "id": "javascript_express_helmet_missing",
+      "title": "Missing Helmet configuration on HTTP headers",
+      "description": "## Description\n\nHelmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately.\n\n## Remediations\n\n✅ Use Helmet middleware\n\n```javascript\nconst helmet = require(\"helmet\")\napp.use(helmet())\n```\n\n## Resources\n\n- [Express Security Best Practices: Use Helmet](https://expressjs.com/en/advanced/best-practice-security.html#use-helmet)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_express_helmet_missing",
+      "line_number": 4,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js",
+      "filename": "web-app/server/server.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 4, "end": 4, "column": { "start": 13, "end": 22 } },
+      "sink": {
+        "start": 4,
+        "end": 4,
+        "column": { "start": 13, "end": 22 },
+        "content": ""
+      },
+      "parent_line_number": 4,
+      "fingerprint": "d3a0337d0a6a73177c6cd68f76029ecb_0",
+      "old_fingerprint": "b2071c9752358fe0dc331e9505d1bab9_1",
+      "code_extract": "const app = express();"
+    },
+    {
+      "cwe_ids": ["693"],
+      "id": "javascript_express_reduce_fingerprint",
+      "title": "Missing server configuration to reduce server fingerprinting",
+      "description": "## Description\n\nIt can help to provide an extra layer of security to reduce server fingerprinting. Though not a security issue itself, a method to improve the overall posture of a web server is to take measures to reduce the ability to fingerprint the software being used on the server. Server software can be fingerprinted by quirks in how they respond to specific requests.\n\nBy default, Express.js sends the X-Powered-By response header banner. This can be disabled using the app.disable() method:\n\n```javascript\n  app.disable('x-powered-by')\n```\n\n## Resources\n\n- [Express Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_express_reduce_fingerprint",
+      "line_number": 4,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/prometheus.js",
+      "filename": "testudo-module/src/core/prometheus.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 4, "end": 4, "column": { "start": 20, "end": 29 } },
+      "sink": {
+        "start": 4,
+        "end": 4,
+        "column": { "start": 20, "end": 29 },
+        "content": ""
+      },
+      "parent_line_number": 4,
+      "fingerprint": "1faf315660659816fb9da489b2d1b7a4_0",
+      "old_fingerprint": "1e76613b3b2235a98a4ece938c4525a0_0",
+      "code_extract": "const metricsApp = express();"
+    },
+    {
+      "cwe_ids": ["693"],
+      "id": "javascript_express_reduce_fingerprint",
+      "title": "Missing server configuration to reduce server fingerprinting",
+      "description": "## Description\n\nIt can help to provide an extra layer of security to reduce server fingerprinting. Though not a security issue itself, a method to improve the overall posture of a web server is to take measures to reduce the ability to fingerprint the software being used on the server. Server software can be fingerprinted by quirks in how they respond to specific requests.\n\nBy default, Express.js sends the X-Powered-By response header banner. This can be disabled using the app.disable() method:\n\n```javascript\n  app.disable('x-powered-by')\n```\n\n## Resources\n\n- [Express Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_express_reduce_fingerprint",
+      "line_number": 4,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js",
+      "filename": "web-app/server/server.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 4, "end": 4, "column": { "start": 13, "end": 22 } },
+      "sink": {
+        "start": 4,
+        "end": 4,
+        "column": { "start": 13, "end": 22 },
+        "content": ""
+      },
+      "parent_line_number": 4,
+      "fingerprint": "332e8ec1f865948fe29246c2bcce94f2_0",
+      "old_fingerprint": "e4ebd11ec6d79554d60ee0103e88590d_1",
+      "code_extract": "const app = express();"
+    }
+  ],
+  "warning": [
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 15,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/bearerScriptCli.js",
+      "filename": "bearerScriptCli.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 15, "end": 15, "column": { "start": 3, "end": 31 } },
+      "sink": {
+        "start": 15,
+        "end": 15,
+        "column": { "start": 3, "end": 31 },
+        "content": ""
+      },
+      "parent_line_number": 15,
+      "fingerprint": "dabc0ff4e3f818b1a404d1d18c27a3da_0",
+      "old_fingerprint": "817ba66c20fff0a3d86a7d940adc248c_3",
+      "code_extract": "  console.error(error.message);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 62,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/bearerScriptJson.js",
+      "filename": "bearerScriptJson.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 62, "end": 62, "column": { "start": 5, "end": 33 } },
+      "sink": {
+        "start": 62,
+        "end": 62,
+        "column": { "start": 5, "end": 33 },
+        "content": ""
+      },
+      "parent_line_number": 62,
+      "fingerprint": "25d22c30402212f0d3813c3eae982187_0",
+      "old_fingerprint": "7950971037d82f13958329baad170b28_15",
+      "code_extract": "    console.error(error.message);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 115,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js",
+      "filename": "testudo-module/src/core/measured.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 115,
+        "end": 115,
+        "column": { "start": 13, "end": 76 }
+      },
+      "sink": {
+        "start": 115,
+        "end": 115,
+        "column": { "start": 13, "end": 76 },
+        "content": ""
+      },
+      "parent_line_number": 115,
+      "fingerprint": "a9c5f368f98b2ec4d65e2b1eca971d69_0",
+      "old_fingerprint": "dfe348a562f41527782430572d3d2957_16",
+      "code_extract": "            console.error('Error saving metrics to database:', err.message);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 117,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js",
+      "filename": "testudo-module/src/core/measured.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 117,
+        "end": 117,
+        "column": { "start": 9, "end": 44 }
+      },
+      "sink": {
+        "start": 117,
+        "end": 117,
+        "column": { "start": 9, "end": 44 },
+        "content": ""
+      },
+      "parent_line_number": 117,
+      "fingerprint": "a9c5f368f98b2ec4d65e2b1eca971d69_1",
+      "old_fingerprint": "dfe348a562f41527782430572d3d2957_17",
+      "code_extract": "        console.log('PGURI is ', projectID);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 118,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js",
+      "filename": "testudo-module/src/core/measured.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 118,
+        "end": 118,
+        "column": { "start": 9, "end": 118 }
+      },
+      "sink": {
+        "start": 118,
+        "end": 118,
+        "column": { "start": 9, "end": 118 },
+        "content": ""
+      },
+      "parent_line_number": 118,
+      "fingerprint": "a9c5f368f98b2ec4d65e2b1eca971d69_2",
+      "old_fingerprint": "dfe348a562f41527782430572d3d2957_18",
+      "code_extract": "        console.log(`Request to ${req.path} took ${duration} ms. Concurrent requests: ${metrics.concurrentRequests}`);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 119,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/testudo-module/src/core/measured.js",
+      "filename": "testudo-module/src/core/measured.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 119,
+        "end": 119,
+        "column": { "start": 9, "end": 33 }
+      },
+      "sink": {
+        "start": 119,
+        "end": 119,
+        "column": { "start": 9, "end": 33 },
+        "content": ""
+      },
+      "parent_line_number": 119,
+      "fingerprint": "a9c5f368f98b2ec4d65e2b1eca971d69_3",
+      "old_fingerprint": "dfe348a562f41527782430572d3d2957_20",
+      "code_extract": "        console.log(metricsData);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 40,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Login.jsx",
+      "filename": "web-app/client/components/Login.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 40,
+        "end": 40,
+        "column": { "start": 27, "end": 65 }
+      },
+      "sink": {
+        "start": 40,
+        "end": 40,
+        "column": { "start": 27, "end": 65 },
+        "content": ""
+      },
+      "parent_line_number": 40,
+      "fingerprint": "fe3e162e03ad2e3a8214ba41545dd11f_0",
+      "old_fingerprint": "8625a629a73c24bf96f587844a90da98_9",
+      "code_extract": "            .catch(err =\u003e console.log(\"App: log in error \", err));"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 19,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx",
+      "filename": "web-app/client/components/Projects.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 19,
+        "end": 19,
+        "column": { "start": 17, "end": 34 }
+      },
+      "sink": {
+        "start": 19,
+        "end": 19,
+        "column": { "start": 17, "end": 34 },
+        "content": ""
+      },
+      "parent_line_number": 19,
+      "fingerprint": "d87ba4f284c6c35154b7dd3bfa205121_0",
+      "old_fingerprint": "52d9b7a7b318943114854534815b3945_7",
+      "code_extract": "                console.log(data);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 21,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx",
+      "filename": "web-app/client/components/Projects.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 21,
+        "end": 21,
+        "column": { "start": 27, "end": 67 }
+      },
+      "sink": {
+        "start": 21,
+        "end": 21,
+        "column": { "start": 27, "end": 67 },
+        "content": ""
+      },
+      "parent_line_number": 21,
+      "fingerprint": "d87ba4f284c6c35154b7dd3bfa205121_1",
+      "old_fingerprint": "52d9b7a7b318943114854534815b3945_8",
+      "code_extract": "            .catch(err =\u003e console.log('Error getting user: ', err));"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 47,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx",
+      "filename": "web-app/client/components/Projects.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 47,
+        "end": 47,
+        "column": { "start": 27, "end": 69 }
+      },
+      "sink": {
+        "start": 47,
+        "end": 47,
+        "column": { "start": 27, "end": 69 },
+        "content": ""
+      },
+      "parent_line_number": 47,
+      "fingerprint": "d87ba4f284c6c35154b7dd3bfa205121_2",
+      "old_fingerprint": "52d9b7a7b318943114854534815b3945_11",
+      "code_extract": "            .catch(err =\u003e console.log('Error adding project: ', err))"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 53,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/Projects.jsx",
+      "filename": "web-app/client/components/Projects.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 53,
+        "end": 53,
+        "column": { "start": 29, "end": 70 }
+      },
+      "sink": {
+        "start": 53,
+        "end": 53,
+        "column": { "start": 29, "end": 70 },
+        "content": ""
+      },
+      "parent_line_number": 53,
+      "fingerprint": "d87ba4f284c6c35154b7dd3bfa205121_3",
+      "old_fingerprint": "52d9b7a7b318943114854534815b3945_14",
+      "code_extract": "            .catch((err) =\u003e console.log('Could not copy text: ', err))"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 18,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/ProtectedRoute.jsx",
+      "filename": "web-app/client/components/ProtectedRoute.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 18,
+        "end": 18,
+        "column": { "start": 13, "end": 52 }
+      },
+      "sink": {
+        "start": 18,
+        "end": 18,
+        "column": { "start": 13, "end": 52 },
+        "content": ""
+      },
+      "parent_line_number": 18,
+      "fingerprint": "af7f887ef07390d7afeac91f43081d63_0",
+      "old_fingerprint": "140c29baad589316916a96446b1cb536_6",
+      "code_extract": "            console.log('Auth check failed: ', err);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 40,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/SignUp.jsx",
+      "filename": "web-app/client/components/SignUp.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 40,
+        "end": 40,
+        "column": { "start": 23, "end": 66 }
+      },
+      "sink": {
+        "start": 40,
+        "end": 40,
+        "column": { "start": 23, "end": 66 },
+        "content": ""
+      },
+      "parent_line_number": 40,
+      "fingerprint": "218fb4ba473a10a161a3f6fc4e51ab3e_0",
+      "old_fingerprint": "b3e791a071835de927ebb0d75a9522b5_10",
+      "code_extract": "        .catch(err =\u003e console.log(\"App: create user error \", err));"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 48,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/client/components/SignUp.jsx",
+      "filename": "web-app/client/components/SignUp.jsx",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 48,
+        "end": 48,
+        "column": { "start": 27, "end": 81 }
+      },
+      "sink": {
+        "start": 48,
+        "end": 48,
+        "column": { "start": 27, "end": 81 },
+        "content": ""
+      },
+      "parent_line_number": 48,
+      "fingerprint": "218fb4ba473a10a161a3f6fc4e51ab3e_1",
+      "old_fingerprint": "b3e791a071835de927ebb0d75a9522b5_12",
+      "code_extract": "            .catch(err =\u003e console.log('App: check email duplicate error: ', err))"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 5,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/cookieController.js",
+      "filename": "web-app/server/controllers/cookieController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 5, "end": 5, "column": { "start": 5, "end": 60 } },
+      "sink": {
+        "start": 5,
+        "end": 5,
+        "column": { "start": 5, "end": 60 },
+        "content": ""
+      },
+      "parent_line_number": 5,
+      "fingerprint": "97be8177c1bfe7b42598a72bbeb10261_0",
+      "old_fingerprint": "d03fb7200a1fb80373e1984a3c5436e2_0",
+      "code_extract": "    console.log('res locals userID is ', res.locals.userID)"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 15,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/metricsController.js",
+      "filename": "web-app/server/controllers/metricsController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 15, "end": 15, "column": { "start": 9, "end": 70 } },
+      "sink": {
+        "start": 15,
+        "end": 15,
+        "column": { "start": 9, "end": 70 },
+        "content": ""
+      },
+      "parent_line_number": 15,
+      "fingerprint": "7fbc538493b936cdf400d648875f79ea_0",
+      "old_fingerprint": "56b520ca6e684bfe27e4ca294c7a97eb_4",
+      "code_extract": "        console.log('data from metricsController.getData ',data.rows);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 118,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 118,
+        "end": 118,
+        "column": { "start": 5, "end": 64 }
+      },
+      "sink": {
+        "start": 118,
+        "end": 118,
+        "column": { "start": 5, "end": 64 },
+        "content": ""
+      },
+      "parent_line_number": 118,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_0",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_19",
+      "code_extract": "    console.error('Error executing bearer scan script:', error);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 130,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 130,
+        "end": 130,
+        "column": { "start": 5, "end": 28 }
+      },
+      "sink": {
+        "start": 130,
+        "end": 130,
+        "column": { "start": 5, "end": 28 },
+        "content": ""
+      },
+      "parent_line_number": 130,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_1",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_21",
+      "code_extract": "    console.log(reportData);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 133,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 133,
+        "end": 133,
+        "column": { "start": 5, "end": 23 }
+      },
+      "sink": {
+        "start": 133,
+        "end": 133,
+        "column": { "start": 5, "end": 23 },
+        "content": ""
+      },
+      "parent_line_number": 133,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_2",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_22",
+      "code_extract": "    console.log(error);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 218,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 218,
+        "end": 218,
+        "column": { "start": 7, "end": 60 }
+      },
+      "sink": {
+        "start": 218,
+        "end": 218,
+        "column": { "start": 7, "end": 60 },
+        "content": ""
+      },
+      "parent_line_number": 218,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_3",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_25",
+      "code_extract": "      console.log(`Reports for ${level}:`, reportsForLevel);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 228,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 228,
+        "end": 228,
+        "column": { "start": 7, "end": 69 }
+      },
+      "sink": {
+        "start": 228,
+        "end": 228,
+        "column": { "start": 7, "end": 69 },
+        "content": ""
+      },
+      "parent_line_number": 228,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_4",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_26",
+      "code_extract": "      console.log(`Filtered reports for ${level}:`, filteredReports);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 252,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 252,
+        "end": 252,
+        "column": { "start": 9, "end": 54 }
+      },
+      "sink": {
+        "start": 252,
+        "end": 252,
+        "column": { "start": 9, "end": 54 },
+        "content": ""
+      },
+      "parent_line_number": 252,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_5",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_27",
+      "code_extract": "        console.error('Error inserting data:', error);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 256,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/securityController.js",
+      "filename": "web-app/server/controllers/securityController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 256,
+        "end": 256,
+        "column": { "start": 5, "end": 68 }
+      },
+      "sink": {
+        "start": 256,
+        "end": 256,
+        "column": { "start": 5, "end": 68 },
+        "content": ""
+      },
+      "parent_line_number": 256,
+      "fingerprint": "abf4add8a674e0d109e0c7f8b712625f_6",
+      "old_fingerprint": "8ab64975b1050f422bb6edc8143b450d_28",
+      "code_extract": "    console.error('Error reading or inserting report data:', error);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 52,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers/userController.js",
+      "filename": "web-app/server/controllers/userController.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 52, "end": 52, "column": { "start": 5, "end": 39 } },
+      "sink": {
+        "start": 52,
+        "end": 52,
+        "column": { "start": 5, "end": 39 },
+        "content": ""
+      },
+      "parent_line_number": 52,
+      "fingerprint": "192b6cc9edea0dac662c71bd03b369f7_0",
+      "old_fingerprint": "49ba0e8bc52e37d781fac58418692d77_13",
+      "code_extract": "    console.log('user id is ', userID);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 13,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/mongodb.js",
+      "filename": "web-app/server/models/mongodb.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 13,
+        "end": 13,
+        "column": { "start": 19, "end": 35 }
+      },
+      "sink": {
+        "start": 13,
+        "end": 13,
+        "column": { "start": 19, "end": 35 },
+        "content": ""
+      },
+      "parent_line_number": 13,
+      "fingerprint": "2cf7a197c84a88b049e940bd59267868_0",
+      "old_fingerprint": "3a7ed4b0fb966ed3c59aa916b79497f1_2",
+      "code_extract": "  .catch((err) =\u003e console.log(err));"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 8,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/sql.js",
+      "filename": "web-app/server/models/sql.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 8, "end": 8, "column": { "start": 1, "end": 43 } },
+      "sink": {
+        "start": 8,
+        "end": 8,
+        "column": { "start": 1, "end": 43 },
+        "content": ""
+      },
+      "parent_line_number": 8,
+      "fingerprint": "c7da437b8de0f478d0ed12594d114a6f_0",
+      "old_fingerprint": "b0403c833c662df8ae7d3000af8d36c1_1",
+      "code_extract": "console.log('PG_URI in model is ', PG_URI);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 16,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/models/sql.js",
+      "filename": "web-app/server/models/sql.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": { "start": 16, "end": 16, "column": { "start": 5, "end": 40 } },
+      "sink": {
+        "start": 16,
+        "end": 16,
+        "column": { "start": 5, "end": 40 },
+        "content": ""
+      },
+      "parent_line_number": 16,
+      "fingerprint": "c7da437b8de0f478d0ed12594d114a6f_1",
+      "old_fingerprint": "b0403c833c662df8ae7d3000af8d36c1_5",
+      "code_extract": "    console.log('executed query', text);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 189,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js",
+      "filename": "web-app/server/server.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 189,
+        "end": 189,
+        "column": { "start": 3, "end": 19 }
+      },
+      "sink": {
+        "start": 189,
+        "end": 189,
+        "column": { "start": 3, "end": 19 },
+        "content": ""
+      },
+      "parent_line_number": 189,
+      "fingerprint": "ee1845b5bd41c07902f2f2c9a3dc1e9c_0",
+      "old_fingerprint": "3089b55dae2be10508c363b38e9b3a93_23",
+      "code_extract": "  console.log(err);"
+    },
+    {
+      "cwe_ids": ["532"],
+      "id": "javascript_lang_logger_leak",
+      "title": "Leakage of information in logger message",
+      "description": "## Description\n\nLeaking data to loggers is a common cause of data leaks and can lead to data breaches. This rule looks for instances of data sent to loggers.\n\n## Remediations\n\n❌ Avoid using data in logger messages:\n\n```javascript\nlogger.info(`Results: ${data}`)\n```\n",
+      "documentation_url": "https://docs.bearer.com/reference/rules/javascript_lang_logger_leak",
+      "line_number": 194,
+      "full_filename": "/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/server.js",
+      "filename": "web-app/server/server.js",
+      "category_groups": ["PII", "Personal Data"],
+      "source": {
+        "start": 194,
+        "end": 194,
+        "column": { "start": 3, "end": 46 }
+      },
+      "sink": {
+        "start": 194,
+        "end": 194,
+        "column": { "start": 3, "end": 46 },
+        "content": ""
+      },
+      "parent_line_number": 194,
+      "fingerprint": "ee1845b5bd41c07902f2f2c9a3dc1e9c_1",
+      "old_fingerprint": "3089b55dae2be10508c363b38e9b3a93_24",
+      "code_extract": "  console.log(`Listening on port ${PORT}...`);"
+    }
+  ]
+}

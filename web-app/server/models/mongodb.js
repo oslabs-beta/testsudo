@@ -1,3 +1,4 @@
+const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -50,6 +51,7 @@ const securitySchema = new Schema({
     unique: true,
   },
   data: [
+    
     {
       severity: {
         type: String,
@@ -63,8 +65,22 @@ const securitySchema = new Schema({
         type: String,
         required: true,
       },
+      description: {
+        type: String,
+        required: true,
+      },
+      filename: {
+        type: String,
+        required: true,
+      },
+      line_number: {
+        type: Number,
+        required: true,
+      },
     },
   ],
 });
 
-module.exports = { User, Project, Session };
+const Security = mongoose.model('Security', securitySchema);
+
+module.exports = { User, Project, Session, Security };

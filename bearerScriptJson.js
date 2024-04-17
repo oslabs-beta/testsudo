@@ -43,8 +43,8 @@
 
 // export default runBearerScript;
 
-import { execSync } from 'child_process';
-import path from 'path';
+const { execSync } = require('child_process');
+const path = require('path');
 
 const runBearerScript = () => {
   // console.log(process.cwd());
@@ -68,4 +68,4 @@ const runBearerScript = () => {
   // }
 };
 
-export default runBearerScript;
+module.exports = runBearerScript;

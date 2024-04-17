@@ -23,10 +23,10 @@ const { User } = require('./models/mongodb.js');
 
 // const GitHubStrategy = require('passport-github').Strategy;
 
-import cookieParser from 'cookie-parser';
-import metricsRouter from './routes/metricsRouter.js';
-import securityRouter from './routes/securityRouter.js';
-import authController from './controllers/authController.js';
+// import cookieParser from 'cookie-parser';
+
+const securityRouter = require('./routes/securityRouter.js');
+const authController = require('./controllers/authController.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -34,7 +34,13 @@ app.use(cors());
 
 app.use('/api/security', securityRouter);
 
-app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -76,13 +82,13 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
   const objectId = new ObjectId(id);
   User.findById(objectId)
-    .then(user => {
-        done(null, user); 
+    .then((user) => {
+      done(null, user);
     })
-    .catch(err => {
-        done(err, null);
+    .catch((err) => {
+      done(err, null);
     });
-})
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
@@ -138,47 +144,62 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
-passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/auth/google/callback"
-  },
-  async function (accessToken, refreshToken, profile, done) {
-    try {
-      let user = await User.findOne({ email: profile.emails[0].value });
-      if (!user) {
-          user = await User.create({email: profile.emails[0].value, tokens: {provider: 'Google', profileID: profile.id, accessToken, refreshToken}});
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3001/auth/google/callback',
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let user = await User.findOne({ email: profile.emails[0].value });
+        if (!user) {
+          user = await User.create({
+            email: profile.emails[0].value,
+            tokens: {
+              provider: 'Google',
+              profileID: profile.id,
+              accessToken,
+              refreshToken,
+            },
+          });
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error);
       }
-      return done(null, user);
-  } catch (error) {
-      return done(error);
-  }
-}
-));
+    }
+  )
+);
 
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-app.get('/auth/google/callback', 
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get(
+  '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/error' }),
-  function(req, res, next) {
+  function (req, res, next) {
     res.locals.userID = req.user.id;
-    next()
+    next();
   },
   cookieController.setSSIDCookie,
   sessionController.startSession,
-  function(req, res) {
+  function (req, res) {
     // Successful authentication, redirect to home
     res.redirect('http://localhost:8081/home');
-});
+  }
+);
 
 app.use('/projects', metricsRouter);
 
 // app.use(prometheusController.requestDuration);
 
 app.get('/metrics', async (req, res) => {
-    res.set('Content-Type', register.contentType);
-    res.end(await register.metrics());
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
 });
 
 app.use('*', (req, res) => {

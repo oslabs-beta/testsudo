@@ -1,108 +1,21 @@
-// import runBearerScript from '../../../bearerScriptJson.js';
-// import fs from 'fs';
-// import path from 'path';
-
-// const securityController = {};
-
-// securityController.runBearerScript = async (req, res, next) => {
-//   try {
-//     console.log('running bearer script');
-//     await runBearerScript();
-//     res
-//       .status(200)
-//       .json({ message: 'Script completed. Sending success response.' });
-//   } catch (error) {
-//     // res.status(200).json({ message: 'Scan has been completed' });
-//     console.log(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//     return next();
-//   }
-// };
-
-// securityController.readReport = (req, res, next) => {
-//   try {
-//     const reportFilePath = path.resolve(__dirname, '../../scan_report.json');
-//     const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
-//     const reportData = JSON.parse(reportContent);
-
-//     console.log(reportData);
-//     res.json({ data: reportData });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//     return next();
-//   }
-// };
-
 // import { execSync } from 'child_process';
-
-// const runNpmScriptSync = (scriptName) => {
-//   try {
-//     const command = `npm run ${scriptName}`;
-//     const result = execSync(command, { encoding: 'utf-8' });
-
-//     console.log(`npm script output: ${result}`);
-//     console.log('npm script executed successfully');
-//   } catch (error) {
-//     console.error(`Error executing npm script: ${error.message}`);
-//     throw new Error(`Error executing npm script: ${error.message}`);
-//   }
-// };
-
-// const securityController = {};
-
-// securityController.runBearerScript = (req, res, next) => {
-//   try {
-//     console.log('running bearer script');
-//     runNpmScriptSync('sec_json');
-//     console.log('Script completed. Sending success response.');
-//     res.status(200).json({ message: 'Scan has been completed' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//     return next();
-//   }
-// };
-
-// export default securityController;
-
-// import runBearerScript from '../../../bearerScriptJson.js';
-// import fs from 'fs';
 // import path from 'path';
+// import bearerScriptJson from '../../../bearerScriptJson.js';
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
+// import fs from 'fs';
+// import db from '../models/sql.js';
+const { execSync } = require('child_process');
+const path = require('path');
+const bearerScriptJson = require('../../../bearerScriptJson.js');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
+const fs = require('fs');
+const db = require('../models/sql.js');
+const { Security } = require('../models/mongodb.js');
 
-// const securityController = {};
-
-// securityController.runBearerScript = (req, res, next) => {
-//   try {
-//     console.log('running bearer script');
-//     runBearerScript();
-//     // const reportFilePath = path.resolve(__dirname, '../../scan_report.json');
-//     // const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
-//     // const reportData = JSON.parse(reportContent);
-
-//     res.status(200).json({ message: 'scan complete' });
-//     // console.log(reportData);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//     return next();
-//   }
-// };
-
-// export default securityController;
-
-import { execSync } from 'child_process';
-import path from 'path';
-import bearerScriptJson from '../../../bearerScriptJson.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import fs from 'fs';
-import db from '../models/sql.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Now you can use __dirname in your code
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 // Adjust the path as needed
 const securityController = {};
@@ -119,7 +32,7 @@ securityController.runBearerScript = (req, res, next) => {
     // Respond with an error message or perform other error handling actions
   }
 };
-
+// Reading report and transforming it into more concise version
 function transformData(inputObj) {
   const transformedData = [];
   for (const severityLevel in inputObj) {
@@ -157,12 +70,12 @@ securityController.readReport = (req, res, next) => {
   try {
     console.log('ReadReport is running');
 
-    //readin report
+    //reading report
     const reportFilePath = path.resolve(__dirname, '../../../scan_report.json');
     const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
     const reportData = JSON.parse(reportContent);
 
-    //parsing through report and creating a new more readable version
+    //parsing through report and creating a new, better readable version
 
     // console.log(reportData);
     const editedReport = transformData(reportData);
@@ -176,6 +89,8 @@ securityController.readReport = (req, res, next) => {
     return next();
   }
 };
+
+//posting data into sql database
 
 securityController.postSecurityData = (req, res, next) => {
   try {
@@ -213,102 +128,54 @@ securityController.postSecurityData = (req, res, next) => {
   }
 };
 
-// securityController.readAndPostSecurityData = (req, res, next) => {
-//   try {
-//     // Read the report data
-//     const reportFilePath = path.resolve(__dirname, '../../../scan_report.json');
-//     const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
-//     const reportData = JSON.parse(reportContent);
+// Posting data to mongoDB
 
-//     // Post the report data to the database
-//     const projectID = req.params.projectID;
-//     const promises = reportData.map((data) => {
-//       const { cwe_ids, title, full_filename, line_number } = data;
-//       const values = [projectID, cwe_ids, title, full_filename, line_number];
-//       const postQuery = `
-//         INSERT INTO metrics
-//         (projectID, cwe_ids, title, full_filename, line_number)
-//         VALUES
-//         ($1, $2, $3, $4, $5)`;
-
-//       return db.query(postQuery, values);
-//     });
-
-//     // Wait for all insertions to complete
-//     Promise.all(promises)
-//       .then(() => {
-//         res.json({ message: 'Data inserted successfully' });
-//       })
-//       .catch((error) => {
-//         console.error('Error inserting data:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//       });
-//   } catch (error) {
-//     console.error('Error reading report:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
-securityController.readAndPostSecurityData = async (req, res, next) => {
+securityController.postSecurityDataMongo = async (req, res, next) => {
   try {
-    // Read the report data
-    const reportFilePath = path.resolve(__dirname, '../../../scan_report.json');
-    const reportContent = fs.readFileSync(reportFilePath, 'utf-8');
-
-    // Parse the report data
-    const reportData = JSON.parse(reportContent);
-
-    // Check if reportData is an object
-    if (typeof reportData !== 'object') {
-      throw new Error('Invalid report data format: expected an object');
-    }
-
-    // Define an array to hold filtered reports
-    const filteredReports = [];
-
-    // Iterate over each severity level in the report data
-    for (const level of Object.keys(reportData)) {
-      const reportsForLevel = reportData[level] || [];
-      console.log(`Reports for ${level}:`, reportsForLevel);
-      for (const report of reportsForLevel) {
-        const filteredReport = {};
-        for (const key in report) {
-          if (req.body.hasOwnProperty(key)) {
-            filteredReport[key] = report[key];
-          }
-        }
-        filteredReports.push(filteredReport);
-      }
-      console.log(`Filtered reports for ${level}:`, filteredReports);
-    }
-
-    // Post the filtered report data to the database
+    const editedReport = res.locals.editedReport;
     const projectID = req.params.projectID;
-    const promises = filteredReports.map((data) => {
-      const { cwe_ids, title, full_filename, line_number } = data;
-      const values = [projectID, cwe_ids, title, full_filename, line_number];
-      const postQuery = `
-        INSERT INTO metrics
-        (projectID, cwe_ids, title, full_filename, line_number)
-        VALUES 
-        ($1, $2, $3, $4, $5)`;
 
-      // return db.query(postQuery, values);
-      return db.query(postQuery, values);
+    const securityDataArray = [];
+    for (const entry of editedReport) {
+      const { severity, cwe_id, title, description, filename, line_number } =
+        entry;
+      const securityData = {
+        severity,
+        cwe_id,
+        title,
+        description,
+        filename,
+        line_number,
+      };
+
+      //push securityData obj into the array
+      securityDataArray.push(securityData);
+    }
+
+    //create the obj with project ID and data array
+    // const postData = new Security({
+    //   projectID: projectID,
+    //   data: securityDataArray,
+    // });
+    // console.log(postData);
+
+    const savedData = await Security.findOneAndUpdate(
+      { projectID: projectID },
+      { $set: { data: securityDataArray } },
+      { upsert: true, new: true }
+    );
+    res.json(savedData);
+    res.locals.securityDataArray = savedData;
+    next();
+  } catch (err) {
+    return next({
+      log: 'metricsController.postData - error adding project data: ' + err,
+      status: 500,
+      message: {
+        err: 'metricsController.postData - error adding project data:',
+      },
     });
-
-    // Wait for all insertions to complete
-    Promise.all(promises)
-      .then(() => {
-        res.json({ message: 'Data inserted successfully' });
-      })
-      .catch((error) => {
-        console.error('Error inserting data:', error);
-        res.status(500).json({ error: 'Internal server error' });
-      });
-  } catch (error) {
-    console.error('Error reading or inserting report data:', error);
-    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-export default securityController;
+module.exports = securityController;
