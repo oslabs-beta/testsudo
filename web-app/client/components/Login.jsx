@@ -29,7 +29,7 @@ const Login = () => {
   };
   const loginWithGithub = () => {
     const clientId = '3ec978f6189f3f53cf18';
-    const redirectUri = 'http://localhost:8081/home';
+    const redirectUri = 'http://localhost:3001/github/oauth/callback';
     const scope = 'read:user'; // Adjust the scope according to your needs
     const state = generateRandomString(16); // Generate a random string for CSRF protection
 
