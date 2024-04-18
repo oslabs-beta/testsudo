@@ -50,7 +50,7 @@ metricsController.getFEData = (req, res, next) => {
 metricsController.getBEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests FROM metrics WHERE projectID = $1
+    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests, performance_score FROM metrics WHERE projectID = $1
   `;
   const value = [projectID];
 
@@ -68,7 +68,8 @@ metricsController.getBEData = (req, res, next) => {
           entry.average_response_time !== null &&
           entry.average_payload_size !== null &&
           entry.total_requests !== null &&
-          entry.concurrent_requests !== null
+          entry.concurrent_requests !== null &&
+          entry.performance_score !== null
         );
       });
       res.locals.BEmetrics = filteredData;
@@ -151,15 +152,16 @@ metricsController.postBEData = async (req, res, next) => {
     heapUsed,
     external,
     averageResponseTime,
-    averagePayloadSize
+    averagePayloadSize,
+    performanceScore
   } = req.body;
   console.log('ave payload size is ', averagePayloadSize);
   try {
     const queryText = `
                 INSERT INTO metrics 
                 (timestamp, path, duration, request_body_size, total_requests, concurrent_requests, errors, 
-                rss, heap_total, heap_used, external, average_response_time, average_payload_size, projectid)
-                VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                rss, heap_total, heap_used, external, average_response_time, average_payload_size, projectid, performance_score)
+                VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
                 `;
     await db.query(queryText, [
       path,
@@ -174,8 +176,8 @@ metricsController.postBEData = async (req, res, next) => {
       external,
       averageResponseTime,
       averagePayloadSize,
-      projectID
-
+      projectID,
+      performanceScore
     ]);
     console.log('Metrics saved to database');
     return next();
