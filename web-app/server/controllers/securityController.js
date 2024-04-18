@@ -137,7 +137,7 @@ securityController.getReportById = async (req, res, next) => {
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
-    console.log(project);
+    // console.log(project);
     res.status(200).json(project);
   } catch (error) {
     console.log(error);
