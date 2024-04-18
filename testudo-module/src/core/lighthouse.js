@@ -80,7 +80,19 @@ const runLighthouse = async (address, projectID) => {
     const config = await configPromise; // Await the resolution of the config promise
     const { desktopConfig, options, chrome } = config;
 
-    console.log('address is ', address);
+  console.log('address is ', address);
+  // const postData = async (url, data) => {
+  //   const response = await fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     }, 
+  //     body: JSON.stringify(data),
+  //   });
+  //   // return response.json();
+  //   return;
+  // };
 
     const postData = async (url, data) => {
         // Dynamically import node-fetch as it's an ES module
