@@ -300,7 +300,7 @@ const CustomTooltip = ({ active, payload, label }) => {
                       />
                     </LineChart>
                   ) : (
-                    <div> </div>
+                    <div> Run your first back end test! </div>
                   )}
                 </ResponsiveContainer>
               </Paper>
@@ -319,6 +319,8 @@ const CustomTooltip = ({ active, payload, label }) => {
               >
                 {' '}
                 <div className="header">Overall Front End Performance</div>
+                {fEDataPresent && fEMetrics.length > 0 ? (
+                <>
                 <div className="score"> {latestFEMetrics.performance}</div>
                 <ResponsiveContainer width="100%" height="120%">
                   <PieChart>
@@ -344,6 +346,10 @@ const CustomTooltip = ({ active, payload, label }) => {
                     <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
+                </>
+                   ) : (
+                    <div style={{fontSize: '1rem'}}> Run your first front end test! </div>
+                )}
               </Paper>
               <Paper
                 sx={{
@@ -357,6 +363,8 @@ const CustomTooltip = ({ active, payload, label }) => {
               >
                 {' '}
                 <div className="header">Overall Server Performance:</div>
+                {bEDataPresent && bEMetrics.length > 0 ? (
+                <>
                 <div className="score">{Math.round(latestBEMetrics.average_response_time)}</div>
                 <ResponsiveContainer height="120%">
                   <PieChart>
@@ -378,6 +386,10 @@ const CustomTooltip = ({ active, payload, label }) => {
                     <Tooltip content={<CustomTooltipPie />} wrapperStyle={{ top: 120}} />
                   </PieChart>
                 </ResponsiveContainer>
+                </>
+                ) : (
+                  <div style={{fontSize: '1rem'}}> Run your first back end test! </div>
+                )}
               </Paper>
               <Paper
                 sx={{
@@ -432,7 +444,7 @@ const CustomTooltip = ({ active, payload, label }) => {
                       />
                     </LineChart>
                   ) : (
-                    <div> </div>
+                    <div> Run your first back end test! </div>
                   )}
                 </ResponsiveContainer>
               </Paper>
