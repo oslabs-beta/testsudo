@@ -5,7 +5,7 @@ import constructionIcon from '../assets/contructionIcon.png';
 
 const SecurityMetrics = () => {
   return (
-    <div className="component-container">
+    <div className='component-container'>
       <Grid item xs={12} md={4} lg={3}>
         <Paper
           sx={{
@@ -19,7 +19,7 @@ const SecurityMetrics = () => {
           }}
         >
           {' '}
-          <div className="header">
+          <div className='header'>
             Security Metrics
             <br />
           </div>
@@ -33,9 +33,9 @@ const SecurityMetrics = () => {
           >
             Coming Soon! <br />
             <img
-              className="PUC-icon"
+              className='PUC-icon'
               src={constructionIcon}
-              alt=""
+              alt=''
               style={{
                 width: 'auto',
                 height: 'auto',

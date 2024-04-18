@@ -1,10 +1,3 @@
-// import { execSync } from 'child_process';
-// import path from 'path';
-// import bearerScriptJson from '../../../bearerScriptJson.js';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
-// import fs from 'fs';
-// import db from '../models/sql.js';
 const { execSync } = require('child_process');
 const path = require('path');
 const bearerScriptJson = require('../../../bearerScriptJson.js');
@@ -13,9 +6,6 @@ const { dirname } = require('path');
 const fs = require('fs');
 const db = require('../models/sql.js');
 const { Security } = require('../models/mongodb.js');
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
 
 // Adjust the path as needed
 const securityController = {};
@@ -90,44 +80,6 @@ securityController.readReport = (req, res, next) => {
   }
 };
 
-//posting data into sql database
-
-securityController.postSecurityData = (req, res, next) => {
-  try {
-    const editedReport = res.locals.editedReport;
-    editedReport.forEach((entry) => {
-      const { severity, cwe_id, title, description, filename, line_number } =
-        entry;
-      const projectID = req.params.projectID;
-      const values = [
-        projectID,
-        severity,
-        cwe_id,
-        title,
-        description,
-        filename,
-        line_number,
-      ];
-      const postQuery = `INSERT INTO metrics
-      (projectID, severity, cwe_id, title, filename, line_number)
-      VALUES 
-      ($1, $2, $3, $4, $5, $6, $7)`;
-
-      db.query(postQuery, values).then(() => {
-        return next();
-      });
-    });
-  } catch (err) {
-    return next({
-      log: 'metricsController.postData - error adding project data: ' + err,
-      status: 500,
-      message: {
-        err: 'metricsController.postData - error adding project data:',
-      },
-    });
-  }
-};
-
 // Posting data to mongoDB
 
 securityController.postSecurityDataMongo = async (req, res, next) => {
@@ -152,12 +104,8 @@ securityController.postSecurityDataMongo = async (req, res, next) => {
       securityDataArray.push(securityData);
     }
 
-    //create the obj with project ID and data array
-    // const postData = new Security({
-    //   projectID: projectID,
-    //   data: securityDataArray,
-    // });
-    // console.log(postData);
+    //find the projectID in db, if doesn't exist create the obj with project ID and data array
+    //if exists, update the data
 
     const savedData = await Security.findOneAndUpdate(
       { projectID: projectID },
@@ -169,13 +117,71 @@ securityController.postSecurityDataMongo = async (req, res, next) => {
     next();
   } catch (err) {
     return next({
-      log: 'metricsController.postData - error adding project data: ' + err,
+      log:
+        'securityController.postSecurityDataMongo - error adding project data: ' +
+        err,
       status: 500,
       message: {
-        err: 'metricsController.postData - error adding project data:',
+        err: 'securityController.postSecurityDataMongo - error adding project data:',
       },
     });
   }
 };
 
+securityController.getReportById = async (req, res, next) => {
+  try {
+    const projectID = req.params.projectID;
+    // console.log(projectID);
+    const project = await Security.findOne({ projectID: projectID });
+    // console.log(project);
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    console.log(project);
+    res.status(200).json(project);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+    return next();
+  }
+};
+
 module.exports = securityController;
+
+//posting data into sql database
+
+// securityController.postSecurityData = (req, res, next) => {
+//   try {
+//     const editedReport = res.locals.editedReport;
+//     editedReport.forEach((entry) => {
+//       const { severity, cwe_id, title, description, filename, line_number } =
+//         entry;
+//       const projectID = req.params.projectID;
+//       const values = [
+//         projectID,
+//         severity,
+//         cwe_id,
+//         title,
+//         description,
+//         filename,
+//         line_number,
+//       ];
+//       const postQuery = `INSERT INTO metrics
+//       (projectID, severity, cwe_id, title, filename, line_number)
+//       VALUES
+//       ($1, $2, $3, $4, $5, $6, $7)`;
+
+//       db.query(postQuery, values).then(() => {
+//         return next();
+//       });
+//     });
+//   } catch (err) {
+//     return next({
+//       log: 'metricsController.postData - error adding project data: ' + err,
+//       status: 500,
+//       message: {
+//         err: 'metricsController.postData - error adding project data:',
+//       },
+//     });
+//   }
+// };
