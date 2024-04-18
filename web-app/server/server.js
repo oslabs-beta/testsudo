@@ -21,42 +21,6 @@ const { ObjectId } = require('mongodb');
 // const bcrypt = require('bcryptjs');
 const { User } = require('./models/mongodb.js');
 
-const GitHubStrategy = require('passport-github').Strategy;
-
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-
-passport.use(
-  new GitHubStrategy(
-    {
-      clientID: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3001/auth/github/callback',
-    },
-    async function (accessToken, refreshToken, profile, done) {
-      try {
-        console.log(profile);
-        console.log(profile.emails);
-        let user = await User.findOne({ email: profile.emails[0].value });
-        if (!user) {
-          user = await User.create({
-            email: profile.emails[0].value,
-            tokens: {
-              provider: 'Github',
-              profileID: profile.id,
-              accessToken,
-              refreshToken,
-            },
-          });
-        }
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -136,7 +100,7 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
   res.redirect('/');
 });
-
+// GOOGLE OAUTH
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
 passport.use(
@@ -186,6 +150,40 @@ app.get(
     // Successful authentication, redirect to home
     res.redirect('http://localhost:8081/home');
   }
+);
+// GITHUB OAUTH
+const GitHubStrategy = require('passport-github').Strategy;
+
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3001/auth/github/callback',
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let user = await User.findOne({ email: profile.emails[0].value });
+        if (!user) {
+          user = await User.create({
+            email: profile.emails[0].value,
+            tokens: {
+              provider: 'Github',
+              profileID: profile.id,
+              accessToken,
+              refreshToken,
+            },
+          });
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
 );
 
 app.get(
