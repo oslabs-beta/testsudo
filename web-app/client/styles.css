@@ -339,3 +339,13 @@ h4 {
   font-weight: bold;
   color: var(--secondaryColor);
 }
+
+.metrics-description{
+  font-size: 70%
+}
+
+.large-score{
+  font-size: 400%;
+  margin-top: auto;
+
+}
