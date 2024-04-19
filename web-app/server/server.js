@@ -168,10 +168,10 @@ passport.use(
       try {
         console.log('LINE 169 --->', profile);
         console.log('LINE 170 --->', profile.emails);
-        let user = await User.findOne({ email: profile.emails[0].value });
+        let user = await User.findOne({ username: profile.username });
         if (!user) {
           user = await User.create({
-            email: profile.emails[0].value,
+            username: profile.username,
             tokens: {
               provider: 'Github',
               profileID: profile.id,
@@ -190,7 +190,7 @@ passport.use(
 
 app.get(
   '/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] })
+  passport.authenticate('github', { scope: ['read:user', 'user:email'] })
 );
 
 app.get(

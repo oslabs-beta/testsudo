@@ -52,6 +52,7 @@ const Login = () => {
             name="email"
             value={userData.email}
             onChange={handleDataChange}
+            required
           />
 
           <p>Password</p>
@@ -60,6 +61,7 @@ const Login = () => {
             name="password"
             value={userData.password}
             onChange={handleDataChange}
+            required
           />
 
           <div>
