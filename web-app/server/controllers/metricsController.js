@@ -6,7 +6,7 @@ const metricsController = {};
 metricsController.getFEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance FROM metrics WHERE projectID = $1
+    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, timeToInteractive, totalByteWeight, accessibility, bestPractices FROM femetrics WHERE projectID = $1
   `;
   const value = [projectID];
 
@@ -19,12 +19,17 @@ metricsController.getFEData = (req, res, next) => {
           entry.totalBlockingTime !== null &&
           entry.largestContentfulPaint !== null &&
           entry.cumulativeLayoutShift !== null &&
-          entry.performance !== null
+          entry.performance !== null &&
+          entry.timeToInteractive !== null &&
+          entry.totalByteWeight !== null &&
+          entry.accessibility !== null &&
+          entry.bestPractices !== null 
         );
       });
       res.locals.FEmetrics = filteredData;
      
       const entries = Object.entries(filteredData);
+      console.log(filteredData);
 
       // Check if there are any entries
       if (entries.length > 0) {
@@ -50,7 +55,7 @@ metricsController.getFEData = (req, res, next) => {
 metricsController.getBEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests, performance_score FROM metrics WHERE projectID = $1
+    SELECT projectID, timestamp, duration, request_body_size, errors, rss, heap_total, heap_used, external, average_response_time, average_payload_size, total_requests, concurrent_requests, performance_score, path FROM metrics WHERE projectID = $1
   `;
   const value = [projectID];
 
@@ -69,7 +74,8 @@ metricsController.getBEData = (req, res, next) => {
           entry.average_payload_size !== null &&
           entry.total_requests !== null &&
           entry.concurrent_requests !== null &&
-          entry.performance_score !== null
+          entry.performance_score !== null &&
+          entry.path !== null
         );
       });
       res.locals.BEmetrics = filteredData;
@@ -79,7 +85,6 @@ metricsController.getBEData = (req, res, next) => {
       if (entries.length > 0) {
         // Access the last entry
         const lastEntry = entries[entries.length - 1][1];
-        res.locals.response = lastEntry.average_response_time || undefined;
         res.locals.latestBE = lastEntry || undefined;
       } else {
         // Handle the case where there are no entries (e.g., filteredData is empty)
@@ -91,9 +96,9 @@ metricsController.getBEData = (req, res, next) => {
     });
   } catch (err) {
     return next({
-      log: 'metricsController.getData - error getting FE data',
+      log: 'metricsController.getData - error getting BE data',
       status: 500,
-      message: { err: 'metricsController.getData - error getting FE data' },
+      message: { err: 'metricsController.getData - error getting BE data' },
     });
   }
 };
@@ -102,26 +107,36 @@ metricsController.postFEData = (req, res, next) => {
   try {
     const projectID = req.params.projectID;
     const {
+      endpoint,
       firstContentfulPaint,
       speedIndex,
       totalBlockingTime,
       largestContentfulPaint,
       cumulativeLayoutShift,
       performance,
+      timeToInteractive,
+      totalByteWeight,
+      accessibility,
+      bestPractices
     } = req.body;
     const value = [
       projectID,
+      endpoint,
       firstContentfulPaint,
       speedIndex,
       totalBlockingTime,
       largestContentfulPaint,
       cumulativeLayoutShift,
       performance,
+      timeToInteractive,
+      totalByteWeight,
+      accessibility,
+      bestPractices
     ];
-    const postQuery = `INSERT INTO metrics
-    (projectID, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance)
+    const postQuery = `INSERT INTO femetrics
+    (projectID, endpoint, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, timeToInteractive, totalByteWeight, accessibility, bestPractices)
     VALUES 
-    ($1, $2, $3, $4, $5, $6, $7)`;
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
 
     db.query(postQuery, value).then((data) => {
       return next();

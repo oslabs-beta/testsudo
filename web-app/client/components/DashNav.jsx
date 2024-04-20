@@ -47,7 +47,7 @@ const DashNav = ({ setActiveComponent }) => {
             className="btn dashboard-btn run-btn"
           >
             {' '}
-            Run{' '}
+            Delete{' '}
           </button>
         </li>
       </ul>

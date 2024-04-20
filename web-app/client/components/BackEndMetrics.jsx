@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-
+import { Box, Container, Paper, Grid, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import {
   LineChart,
   Line,
@@ -21,6 +17,8 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
   const [bEMetrics, setBEMetrics] = useState([]);
   const [bEDataPresent, setBEDataPresent] = useState(false);
   const [latestBEMetrics, setLatestBEMetrics] = useState('');
+  const [paths, setPaths] = useState([]);
+  const [selectedPath, setSelectedPath] = useState('');
 
   const fetchBEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
@@ -28,6 +26,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
       .then((data) => {
         setBEMetrics(data.BEmetrics);
         setLatestBEMetrics(data.latestBE);
+        const uniquePaths = Object.values(bEMetrics).reduce((paths, metric) => {
+          if (metric.path && !paths.includes(metric.path)) {
+            paths.push(metric.path);
+          }
+          return paths;
+        }, []);
+        setPaths(uniquePaths);
         if (data.BEmetrics.length > 0) {
           setBEDataPresent(true);
         }
@@ -125,6 +130,19 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
           <Grid container spacing={3}>
             {bEDataPresent && bEMetrics.length > 0 ? (
               <>
+              <FormControl fullWidth>
+                <InputLabel id="input-label">Paths</InputLabel>
+                  <Select 
+                    labelId="input-label"
+                    id="selectedPath"
+                    value={selectedPath}
+                    label="Paths"
+                    onChange={(e) => setSelectedPath(e.targetvalue)}
+                  />
+                  {paths.map((path, index) => (
+                    <MenuItem key={index} value={path}>{path}</MenuItem>
+                  ))}
+              </FormControl>
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -135,7 +153,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                       textAlign: 'center',
                       fontSize: '1.25rem',
                     }}
-                  >
+                  >  
                     {' '}
                     <div className="header">Overall Server Performance Score</div>
                     <div className="metrics-description">Composite score out of 100</div>
@@ -305,7 +323,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                     {' '}
                     <div className="header">Duration (ms)</div>
                     <div className="metrics-description">Time taken for the processing of the request</div>
-                    <div className="score large-score">{Number(latestBEMetrics.duration).toFixed(2)}</div>
+                    <div className="score large-score">{Number(latestBEMetrics.duration).toFixed(1)}</div>
                     {/* <ResponsiveContainer height="120%">
                   <PieChart>
                     <Pie
@@ -432,8 +450,8 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                   >
                     <div className="header">Request Duration and Response Time (ms)</div>
                     <div className="metrics-description">
-                      <b>Request duration:</b> time taken for the processing of the request.<br></br>
-                      <b>Response time:</b> average time taken to respond to requests in milliseconds
+                      <b>Request duration:</b> Time taken for the processing of the request.<br></br>
+                      <b>Response time:</b> Average time taken to respond to requests in milliseconds
                     </div>
                     <div style={{ marginTop: '50px' }}> {/* Adjust the top margin here */}
 
@@ -464,7 +482,9 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           />
                         </LineChart>
                       ) : (
-                        <div> Run your first back end test!</div>
+                        <div> 
+                          Run your first back end test!
+                          </div>
                       )}
                     </ResponsiveContainer>
                     </div>
@@ -480,8 +500,8 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                     }}
                   >
                     <div className="header">Request and Payload Size (bytes)</div>
-                    <div className="metrics-description"><b>Request size:</b> size of the request body (the data load your server is handling per request)
-                    <br></br><b>Payload size:</b> avg size of the request payloads your server has been receiving
+                    <div className="metrics-description"><b>Request size:</b> Size of the request body (the data load your server is handling per request)
+                    <br></br><b>Payload size:</b> Avg size of the request payloads your server has been receiving
                     </div>
                     <div style={{ marginTop: '35px' }}> {/* Adjust the top margin here */}
 
@@ -612,6 +632,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                     height: 275,
                   }}
                 >
+                  <div className="header">Back End Metrics</div>
                   Run your first back end test!
                 </Paper>
               </Grid>
