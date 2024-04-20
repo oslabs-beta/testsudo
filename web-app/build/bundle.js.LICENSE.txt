@@ -16,6 +16,8 @@
  * http://api.jqueryui.com/category/ui-core/
  */
 
+/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
+
 /**
  * @license React
  * react-dom.production.min.js
