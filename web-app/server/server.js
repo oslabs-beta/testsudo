@@ -96,6 +96,10 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
 });
 
+app.delete('/action/deleteProject/:projectID', userController.deleteProject, (req, res) => {
+  res.json(res.locals.user);
+});
+
 app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
   res.redirect('/');

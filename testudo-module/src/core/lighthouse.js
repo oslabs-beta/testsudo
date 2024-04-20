@@ -81,18 +81,6 @@ const runLighthouse = async (address, projectID) => {
   const { desktopConfig, options, chrome } = config;
 
   console.log('address is ', address);
-  // const postData = async (url, data) => {
-  //   const response = await fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data),
-  //   });
-  //   // return response.json();
-  //   return;
-  // };
 
   const postData = async (url, data) => {
     // Dynamically import node-fetch as it's an ES module
@@ -119,19 +107,20 @@ const runLighthouse = async (address, projectID) => {
     runnerResult.lhr.categories.performance.score * 100
   );
 
-  const metricsHolder = {
-    projectID: PROJECTID,
-    firstContentfulPaint:
-      runnerResult.lhr.audits['first-contentful-paint'].numericValue,
-    speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
-    largestContentfulPaint:
-      runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
-    totalBlockingTime:
-      runnerResult.lhr.audits['total-blocking-time'].numericValue,
-    cumulativeLayoutShift:
-      runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
-    performance: runnerResult.lhr.categories.performance.score * 100,
-  };
+    const metricsHolder = {
+        projectID: PROJECTID,
+        endpoint: address,
+        firstContentfulPaint: runnerResult.lhr.audits['first-contentful-paint'].numericValue,
+        speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
+        largestContentfulPaint: runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
+        totalBlockingTime: runnerResult.lhr.audits['total-blocking-time'].numericValue,
+        cumulativeLayoutShift: runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
+        performance: runnerResult.lhr.categories.performance.score * 100,
+        timeToInteractive: runnerResult.lhr.audits['interactive'].numericValue,
+        totalByteWeight: runnerResult.lhr.audits['total-byte-weight'].numericValue,
+        accessibility: runnerResult.lhr.categories.accessibility.score * 100,
+        bestPractices: runnerResult.lhr.categories['best-practices'].score * 100
+    };
 
   console.log(metricsHolder);
 
