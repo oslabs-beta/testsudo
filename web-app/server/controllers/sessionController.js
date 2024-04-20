@@ -42,7 +42,6 @@ sessionController.startSession = async (req, res, next) => {
 
 sessionController.endSession = async (req, res, next) => {
   try {
-    console.log(req.cookies);
     const session = await Session.findOneAndDelete({
       cookieID: req.cookies.ssid,
     });
