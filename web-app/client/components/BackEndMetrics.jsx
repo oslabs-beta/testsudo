@@ -26,13 +26,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
       .then((data) => {
         setBEMetrics(data.BEmetrics);
         setLatestBEMetrics(data.latestBE);
-        const uniquePaths = Object.values(bEMetrics).reduce((paths, metric) => {
-          if (metric.path && !paths.includes(metric.path)) {
-            paths.push(metric.path);
-          }
-          return paths;
-        }, []);
-        setPaths(uniquePaths);
+        // const uniquePaths = Object.values(bEMetrics).reduce((paths, metric) => {
+        //   if (metric.path && !paths.includes(metric.path)) {
+        //     paths.push(metric.path);
+        //   }
+        //   return paths;
+        // }, []);
+        // setPaths(uniquePaths);
         if (data.BEmetrics.length > 0) {
           setBEDataPresent(true);
         }
@@ -130,7 +130,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
           <Grid container spacing={3}>
             {bEDataPresent && bEMetrics.length > 0 ? (
               <>
-              <FormControl fullWidth>
+              {/* <FormControl fullWidth>
                 <InputLabel id="input-label">Paths</InputLabel>
                   <Select 
                     labelId="input-label"
@@ -142,7 +142,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                   {paths.map((path, index) => (
                     <MenuItem key={index} value={path}>{path}</MenuItem>
                   ))}
-              </FormControl>
+              </FormControl> */}
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
