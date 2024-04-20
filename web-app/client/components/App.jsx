@@ -7,6 +7,7 @@ import BackEndMetrics from './BackEndMetrics.jsx';
 import Dashboard from './Dashboard.jsx';
 import Projects from './Projects.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
+import Landing from './Landing.jsx'
 
 function App() {
   const [projectIDState, setProjectIDState] = useState(() => {
@@ -14,9 +15,10 @@ function App() {
   });
 
   return (
-    <div>
+   <div>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/backendMetrics"
