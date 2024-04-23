@@ -52,6 +52,7 @@ const Login = () => {
             name='email'
             value={userData.email}
             onChange={handleDataChange}
+            required
           />
 
           <p>Password</p>
@@ -60,6 +61,7 @@ const Login = () => {
             name='password'
             value={userData.password}
             onChange={handleDataChange}
+            required
           />
 
           <div>
@@ -75,6 +77,13 @@ const Login = () => {
         {!correctCredential && <div>Incorrect username or password.</div>}
         <div className='github-login-btn'>
           <a href='https://github.com/login/oauth/authorize?client_id=Iv1.37c37bf5027578f5'>
+        <div className="github-login-btn">
+          <a
+            href="#"
+            onClick={() => {
+              window.location.href = '/auth/github';
+            }}
+          >
             <img
               src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
               alt='github logo'

@@ -21,15 +21,17 @@ import contructionIcon from '../assets/contructionIcon.png';
 const Summary = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
   const [fEDataPresent, setFEDataPresent] = useState(false);
-  const [fEPerformance, setFEPerformance] = useState('');
-  const [bEResponse, setBEResponse] = useState('');
+  const [latestFEMetrics, setLatestFEMetrics] = useState('');
+  const [bEMetrics, setBEMetrics] = useState([]);
+  const [bEDataPresent, setBEDataPresent] = useState(false);
+  const [latestBEMetrics, setLatestBEMetrics] = useState('');
 
   const fetchFEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setFEMetrics(data.FEmetrics);
-        setFEPerformance(data.performance);
+        setLatestFEMetrics(data.latestFE);
         if (data.FEmetrics.length > 0) {
           setFEDataPresent(true);
         }
@@ -39,16 +41,12 @@ const Summary = ({ projectIDState, formatData }) => {
       });
   };
 
-  // to copy to BackEndMetrics.jsx
-  const [bEMetrics, setBEMetrics] = useState([]);
-  const [bEDataPresent, setBEDataPresent] = useState(false);
-
   const fetchBEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setBEMetrics(data.BEmetrics);
-        setBEResponse(data.response);
+        setLatestBEMetrics(data.latestBE);
         if (data.BEmetrics.length > 0) {
           setBEDataPresent(true);
         }
@@ -61,6 +59,106 @@ const Summary = ({ projectIDState, formatData }) => {
   useEffect(() => {
     fetchFEMetrics(), fetchBEMetrics();
   }, []);
+
+  const name = (name) => {
+    if (name === 'Cumulative Layout Shift') {
+      return 'This measures the movement of visible elements within the viewport.';
+    }
+    if (name === 'First Contentful Paint') {
+      return 'This marks the time at which the first text or image is painted in seconds.';
+    }
+    if (name === 'Speed Index') {
+      return 'This shows how quickly the contents of a page are visibly populated in seconds.';
+    }
+    if (name === 'Largest Contentful Paint') {
+      return 'This marks the time at which the largest text or image is painted in seconds.';
+    }
+    if (name === 'Time to Interactive') {
+      return 'This is the amount of time it takes for the page to become fully interactive in seconds.';
+    }
+    if (name === 'Total Blocking Time') {
+      return 'This is the sum of all time periods between FCP and Time to Interactive in milliseconds, when task length exceeded 50ms.';
+    }
+    if (name === 'Duration') {
+      return 'Time taken for the processing of the request in milliseconds.';
+    }
+    if (name === 'Request Body Size') {
+      return 'Size of the request body in bytes. This is useful for understanding the data load your server is handling per request.';
+    }
+    if (name === 'Total Requests') {
+      return 'Cumulative number of requests your server has processed since it started or since the metric tracking began.';
+    }
+    if (name === 'Concurrent Requests') {
+      return 'Number of requests being handled concurrently at a given moment. ';
+    }
+    if (name === 'Errors') {
+      return 'Total number of requests that resulted in an error. In this context, it shows there have been no requests that ended in an error (a good sign).';
+    }
+    if (name === 'Resident Set Size') {
+      return 'Amount of space occupied in the main memory (RAM) for the process, including all C++ and JavaScript objects and code.';
+    }
+    if (name === 'Total Heap') {
+      return 'Total size of the allocated heap in megabytes. The heap is the memory used by JavaScript objects.';
+    }
+    if (name === 'Heap Used') {
+      return 'Amount of the heap that is currently being used by JavaScript objects. This can help in identifying memory leaks.';
+    }
+    if (name === 'Memory Used') {
+      return `Memory used by "external" resources like C++ objects bound to JavaScript objects managed by V8's garbage collector. This could include things like Buffer objects.`;
+    }
+    if (name === 'Average Response Time') {
+      return `Average time taken to respond to requests in milliseconds.`;
+    }
+    if (name === 'Average Payload Size') {
+      return `Average size of the request payloads in bytes your server has been receiving.`;
+    }
+  };
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    useEffect(() => {}, [payload]);
+
+    if (active && payload && payload.length) {
+      return (
+        <div className='custom-tooltip'>
+          {payload.map((entry, index) => (
+            <div>
+              <p key={index} className='data-point'>
+                <span>{`${entry.name} on ${entry.payload.timestamp}: `}</span>
+                <span className='tooltip-value'>
+                  {Math.round(entry.value, 2)}
+                </span>
+                <span>{` - ${name(entry.name)}`}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomTooltipPie = ({ active, payload, label }) => {
+    useEffect(() => {}, [payload]);
+
+    if (active && payload && payload.length) {
+      return (
+        <div className='custom-tooltip'>
+          {payload.map((entry, index) => (
+            <div>
+              <p key={index} className='data-point'>
+                <span>{`${entry.name}: `}</span>
+                <span className='tooltip-value'>
+                  {Math.round(entry.value, 2)}
+                </span>
+                <span>{` - ${name(entry.name)}`}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className='frontend-metrics-page'>
@@ -93,7 +191,10 @@ const Summary = ({ projectIDState, formatData }) => {
                       <XAxis dataKey='timestamp' tick={{ fontSize: 12 }} />
                       <YAxis yAxisId='left' />
                       <YAxis yAxisId='right' orientation='right' />
-                      <Tooltip />
+                      <Tooltip
+                        content={<CustomTooltip />}
+                        wrapperStyle={{ top: 220, left: 25 }}
+                      />
                       <Legend />
                       <Line
                         type='monotone'
@@ -160,7 +261,10 @@ const Summary = ({ projectIDState, formatData }) => {
                       <CartesianGrid strokeDasharray='3 3' />
                       <XAxis dataKey='timestamp' tick={{ fontSize: 12 }} />
                       <YAxis yAxisId='left' />
-                      <Tooltip />
+                      <Tooltip
+                        content={<CustomTooltip />}
+                        wrapperStyle={{ top: 220, left: 25 }}
+                      />
                       <Legend />
                       <Line
                         type='monotone'
@@ -200,7 +304,10 @@ const Summary = ({ projectIDState, formatData }) => {
                       <CartesianGrid strokeDasharray='3 3' />
                       <XAxis dataKey='timestamp' tick={{ fontSize: 12 }} />
                       <YAxis yAxisId='left' />
-                      <Tooltip />
+                      <Tooltip
+                        content={<CustomTooltip />}
+                        wrapperStyle={{ top: 220, left: 25 }}
+                      />
                       <Legend />
 
                       <Line
@@ -222,7 +329,7 @@ const Summary = ({ projectIDState, formatData }) => {
                       />
                     </LineChart>
                   ) : (
-                    <div> </div>
+                    <div> Run your first back end test! </div>
                   )}
                 </ResponsiveContainer>
               </Paper>
@@ -241,30 +348,43 @@ const Summary = ({ projectIDState, formatData }) => {
               >
                 {' '}
                 <div className='header'>Overall Front End Performance</div>
-                <div className='score'> {fEPerformance}</div>
-                <ResponsiveContainer width='100%' height='120%'>
-                  <PieChart>
-                    <Pie
-                      data={[
-                        {
-                          name: 'Front End Performance',
-                          value: fEPerformance,
-                          fill: '#d14334',
-                        },
-                        {
-                          name: '',
-                          value: 100 - fEPerformance,
-                          fill: '#ffffff',
-                        },
-                      ]}
-                      dataKey='value'
-                      cx='50%'
-                      cy='50%'
-                      innerRadius={40}
-                      outerRadius={80}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                {fEDataPresent && fEMetrics.length > 0 ? (
+                  <>
+                    <div className='score'> {latestFEMetrics.performance}</div>
+                    <ResponsiveContainer width='100%' height='120%'>
+                      <PieChart>
+                        <Pie
+                          data={[
+                            {
+                              name: 'Front End Performance',
+                              value: latestFEMetrics.performance,
+                              fill: '#d14334',
+                            },
+                            {
+                              name: '',
+                              value: 100 - latestFEMetrics.performance,
+                              fill: '#ffffff',
+                            },
+                          ]}
+                          dataKey='value'
+                          cx='50%'
+                          cy='50%'
+                          innerRadius={40}
+                          outerRadius={80}
+                        />
+                        <Tooltip
+                          content={<CustomTooltipPie />}
+                          wrapperStyle={{ top: 120 }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </>
+                ) : (
+                  <div style={{ fontSize: '1rem' }}>
+                    {' '}
+                    Run your first front end test!{' '}
+                  </div>
+                )}
               </Paper>
               <Paper
                 sx={{
@@ -277,27 +397,47 @@ const Summary = ({ projectIDState, formatData }) => {
                 }}
               >
                 {' '}
-                <div className='header'>Average Response Time (ms):</div>
-                <div className='score'>{Math.round(bEResponse)}</div>
-                <ResponsiveContainer height='120%'>
-                  <PieChart>
-                    <Pie
-                      data={[
-                        {
-                          name: 'Front End Performance',
-                          value: bEResponse,
-                          fill: '#ffeaad',
-                        },
-                        { name: '', value: 100 - bEResponse, fill: '#ffffff' },
-                      ]}
-                      dataKey='value'
-                      cx='50%'
-                      cy='50%'
-                      innerRadius={50}
-                      outerRadius={70}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className='header'>Overall Server Performance:</div>
+                {bEDataPresent && bEMetrics.length > 0 ? (
+                  <>
+                    <div className='score'>
+                      {Math.round(latestBEMetrics.average_response_time)}
+                    </div>
+                    <ResponsiveContainer height='120%'>
+                      <PieChart>
+                        <Pie
+                          data={[
+                            {
+                              name: 'Back End Performance',
+                              value: latestBEMetrics.average_response_time,
+                              fill: '#ffeaad',
+                            },
+                            {
+                              name: '',
+                              value:
+                                100 - latestBEMetrics.average_response_time,
+                              fill: '#ffffff',
+                            },
+                          ]}
+                          dataKey='value'
+                          cx='50%'
+                          cy='50%'
+                          innerRadius={50}
+                          outerRadius={70}
+                        />
+                        <Tooltip
+                          content={<CustomTooltipPie />}
+                          wrapperStyle={{ top: 120 }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </>
+                ) : (
+                  <div style={{ fontSize: '1rem' }}>
+                    {' '}
+                    Run your first back end test!{' '}
+                  </div>
+                )}
               </Paper>
               <Paper
                 sx={{
@@ -352,7 +492,7 @@ const Summary = ({ projectIDState, formatData }) => {
                       />
                     </LineChart>
                   ) : (
-                    <div> </div>
+                    <div> Run your first back end test! </div>
                   )}
                 </ResponsiveContainer>
               </Paper>

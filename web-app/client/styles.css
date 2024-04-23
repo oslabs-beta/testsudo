@@ -113,6 +113,7 @@ h4 {
 .github-login-btn {
   display: inline-flex;
   align-items: center;
+  border: transparent;
   background-color: #24292e;
   font-size: 1rem;
   color: white;
@@ -309,4 +310,42 @@ h4 {
 .component-container{
   background: var(--backgroundColor);
   height: calc(100vh - 9.25rem);
+}
+
+/* recharts */
+.custom-tooltip {
+  margin: 2px;
+  line-height: 12px;
+  max-width: 500px;
+  border: 1px solid var(--secondaryColor);
+  background-color: var(--backgroundColor);
+  color: var(--white);
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.data-point {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.data-point span {
+  line-height: 1;
+}
+
+.tooltip-value {
+  font-weight: bold;
+  color: var(--secondaryColor);
+}
+
+.metrics-description{
+  font-size: 70%
+}
+
+.large-score{
+  font-size: 400%;
+  margin-top: auto;
+
 }

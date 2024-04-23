@@ -21,8 +21,6 @@ const { ObjectId } = require('mongodb');
 // const bcrypt = require('bcryptjs');
 const { User } = require('./models/mongodb.js');
 
-// const GitHubStrategy = require('passport-github').Strategy;
-
 // import cookieParser from 'cookie-parser';
 
 const securityRouter = require('./routes/securityRouter.js');
@@ -31,9 +29,6 @@ const authController = require('./controllers/authController.js');
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-
-app.use('/api/security', securityRouter);
-
 app.use(
   session({
     secret: process.env.SESSION_KEY,
@@ -46,34 +41,6 @@ app.use(passport.session());
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-
-// const client_id = process.env.CLIENT_ID;
-// const client_secret = process.env.CLIENT_SECRET;
-// const redirect_uri = process.env.REDIRECT_URI;
-
-// passport.use(new GitHubStrategy({
-//     clientID: client_id,
-//     clientSecret: client_secret,
-//     callbackURL: redirect_uri
-// },
-//     async function (accessToken, refreshToken, profile, done) {
-//         try {
-//             const user = await User.findOne({ githubId: profile.id });
-//             if (user) {
-//                 if (!user.email) {
-//                     user.email = profile.emails[0].value;
-//                     await user.save();
-//                 }
-//                 return done(null, user);
-//             } else {
-//                 user = await User.create({ githubId: profile.id, email: profile.emails[0].value });
-//             };
-//             return done(null, user);
-//         } catch (error) {
-//             return done(error);
-//         }
-//     }
-// ));
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -137,11 +104,19 @@ app.post('/action/addProject', userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
 });
 
+app.delete(
+  '/action/deleteProject/:projectID',
+  userController.deleteProject,
+  (req, res) => {
+    res.json(res.locals.user);
+  }
+);
+
 app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
   res.redirect('/');
 });
-
+// GOOGLE OAUTH
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
 passport.use(

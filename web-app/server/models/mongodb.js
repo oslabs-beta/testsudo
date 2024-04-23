@@ -6,8 +6,9 @@ const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
   .connect(MONGO_URI, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ignoreUndefined: true,
     dbName: 'Testudo',
   })
   .then(() => console.log('Connected to Mongo DB.'))
@@ -18,7 +19,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true },
   password: { type: String },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, unique: true, sparse: true },
   projects: [{}],
   tokens: [
     {
@@ -51,7 +52,6 @@ const securitySchema = new Schema({
     unique: true,
   },
   data: [
-    
     {
       severity: {
         type: String,
