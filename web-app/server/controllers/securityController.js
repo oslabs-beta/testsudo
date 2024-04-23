@@ -71,7 +71,10 @@ securityController.readReport = (req, res, next) => {
     const editedReport = transformData(reportData);
     // console.log(editedReport);
     // res.json({ data: editedReport });
+    console.log('Sending response...');
     res.locals.editedReport = editedReport;
+    console.log('Response sent');
+
     next();
   } catch (error) {
     console.log(error);
@@ -114,7 +117,6 @@ securityController.postSecurityDataMongo = async (req, res, next) => {
     );
     res.json(savedData);
     res.locals.securityDataArray = savedData;
-    next();
   } catch (err) {
     return next({
       log:
