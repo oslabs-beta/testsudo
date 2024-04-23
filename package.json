@@ -10,7 +10,7 @@
     "sec_cli": "node bearerScriptCli.js",
     "sec_json": "node bearerScriptJson.js",
     "sec": "npm run sec_json && npm run sec_cli",
-    "postinstall": "curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh && export PATH=$PATH:$(pwd)/bin"
+    "postinstall": "curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh -s -- -b /usr/local/binn"
   },
   "keywords": [
     "development",
