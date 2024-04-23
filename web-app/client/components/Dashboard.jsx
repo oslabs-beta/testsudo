@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import DashNav from './DashNav.jsx';
 import Summary from './Summary.jsx';
 import FrontEndMetrics from './FrontEndMetrics.jsx';
@@ -8,6 +9,8 @@ import NavBar from './NavBar.jsx';
 
 const Dashboard = ({ projectIDState, setProjectIDState }) => {
   const [activeComponent, setActiveComponent] = useState('summary');
+  const navigate = useNavigate();
+
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleString('en-US', {
@@ -26,10 +29,27 @@ const Dashboard = ({ projectIDState, setProjectIDState }) => {
     }));
   };
 
+  const handleDelete = () => {
+    if (confirm('Are you sure you want to delete this project?')) {
+      fetch(`/action/deleteProject/${projectIDState}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(res => {
+          navigate('/home');
+        })
+        .catch((err) => console.log('App: delete project error ', err));
+    } else {
+      console.log('Deletion cancelled by user.');
+    }
+  }
+
   return (
     <div>
       <NavBar />
-      <DashNav setActiveComponent={setActiveComponent} />
+      <DashNav setActiveComponent={setActiveComponent} handleDelete={handleDelete} />
 
       {activeComponent === 'summary' && (
         <Summary projectIDState={projectIDState} formatData={formatData} />

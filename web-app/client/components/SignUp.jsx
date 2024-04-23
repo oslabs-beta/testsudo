@@ -62,6 +62,7 @@ const SignUp = () => {
             name="email"
             value={userData.email}
             onChange={handleDataChange}
+            required
           />
 
           <p>Password</p>
@@ -70,12 +71,13 @@ const SignUp = () => {
             name="password"
             value={userData.password}
             onChange={handleDataChange}
+            required
           />
           <div>
             <button
               type="submit"
               className="btn login-btn"
-              disabled={!userData.email || !userData.password}
+              // disabled={!userData.email || !userData.password}
             >
               Sign up
             </button>
@@ -92,12 +94,13 @@ const SignUp = () => {
           </a>
         </div>
         <div>
-          <a href="#" onClick={() => { window.location.href = '/auth/google'; }}>
-            <img
-              src={google}
-              alt="google logo"
-              className="google-logo"
-            />
+          <a
+            href="#"
+            onClick={() => {
+              window.location.href = '/auth/google';
+            }}
+          >
+            <img src={google} alt="google logo" className="google-logo" />
           </a>
         </div>
         {duplicate && (

@@ -60,6 +60,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './web-app/index.html',
+      favicon: './web-app/client/assets/favicon.png',
     }),
   ],
 };

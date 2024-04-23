@@ -113,6 +113,7 @@ h4 {
 .github-login-btn {
   display: inline-flex;
   align-items: center;
+  border: transparent;
   background-color: #24292e;
   font-size: 1rem;
   color: white;
@@ -337,4 +338,14 @@ h4 {
 .tooltip-value {
   font-weight: bold;
   color: var(--secondaryColor);
+}
+
+.metrics-description{
+  font-size: 70%
+}
+
+.large-score{
+  font-size: 400%;
+  margin-top: auto;
+
 }
