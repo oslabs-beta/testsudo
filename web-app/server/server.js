@@ -38,6 +38,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api', securityRouter);
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
