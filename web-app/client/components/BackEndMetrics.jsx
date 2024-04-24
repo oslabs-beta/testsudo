@@ -28,7 +28,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
         if (data.BEmetrics.length > 0) {
           setBEDataPresent(true);
         }
-        const uniquePaths = [...new Set(Object.values(data.BEmetrics).map(metric => metric.path))]
+        const uniquePaths = [...new Set(Object.values(data.BEmetrics).map(metric => metric.path))];
         setPaths(uniquePaths);
       })
       .catch((err) => {
@@ -660,7 +660,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 }}
               >
                 <div className="header">Back End Metrics</div>
-                Run your first back end test!
+                Run your first back end test.
               </Paper>
             </Grid>
           )}
