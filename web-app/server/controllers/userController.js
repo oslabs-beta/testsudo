@@ -102,4 +102,26 @@ userController.addProject = async (req, res, next) => {
   }
 };
 
+userController.deleteProject = async (req, res, next) => {
+  const { projectID } = req.params;
+  console.log('project ID from userControllerDlete project is ' + projectID)
+  const userID = req.cookies.ssid;
+
+  try {
+    const user = await User.findOne({ _id: userID });
+    const newProjects = user.projects.filter(project => project._id.toString() !== projectID);
+    const newUser = await User.updateOne({ _id: userID }, { projects: newProjects });
+    res.locals.user = newUser;
+    console.log('new user is ' + newUser);
+    await Project.findOneAndDelete({ _id: projectID });
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Error in userController.deleteProject',
+      status: 400,
+      message: { err: 'Error adding project:' + error.message }, 
+    })
+  }
+}
+
 module.exports = userController;

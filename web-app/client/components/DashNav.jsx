@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-const DashNav = ({ setActiveComponent }) => {
+const DashNav = ({ setActiveComponent, handleDelete }) => {
   const navigate = useNavigate();
-  const runMetricsHandle = () => {
-    console.log('button clicked');
-  };
+  // const runMetricsHandle = () => {
+  //   console.log('button clicked');
+  // };
   return (
     <div className="btn-container">
       <ul className="metric-btns">
@@ -43,7 +43,7 @@ const DashNav = ({ setActiveComponent }) => {
         <li>
           <button
             style={{ marginLeft: '0%' }}
-            onClick={runMetricsHandle}
+            onClick={() => handleDelete()}
             className="btn dashboard-btn run-btn"
           >
             {' '}

@@ -21,6 +21,11 @@ const { ObjectId } = require('mongodb');
 // const bcrypt = require('bcryptjs');
 const { User } = require('./models/mongodb.js');
 
+// import cookieParser from 'cookie-parser';
+
+const securityRouter = require('./routes/securityRouter.js');
+const authController = require('./controllers/authController.js');
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -33,6 +38,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api/security', securityRouter);
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -56,6 +62,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../web-app/index.html'));
 });
 
+app.get('/action/getUser', userController.getUser, (req, res) => {
+  res.json(res.locals.user);
+});
 app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
   res.json(res.locals.user);
 });
@@ -95,6 +104,14 @@ app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
 app.post('/action/addProject', userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
 });
+
+app.delete(
+  '/action/deleteProject/:projectID',
+  userController.deleteProject,
+  (req, res) => {
+    res.json(res.locals.user);
+  }
+);
 
 app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
@@ -140,64 +157,6 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/error' }),
-  function (req, res, next) {
-    res.locals.userID = req.user.id;
-    next();
-  },
-  cookieController.setSSIDCookie,
-  sessionController.startSession,
-  function (req, res) {
-    // Successful authentication, redirect to home
-    res.redirect('http://localhost:8081/home');
-  }
-);
-// GITHUB OAUTH
-const GitHubStrategy = require('passport-github').Strategy;
-
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-
-passport.use(
-  new GitHubStrategy(
-    {
-      clientID: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3001/auth/github/callback',
-    },
-    async function (accessToken, refreshToken, profile, done) {
-      try {
-        let user = await User.findOne({ username: profile.username });
-        if (!user) {
-          user = await User.create({
-            username: profile.username,
-            email:
-              profile.emails && profile.emails[0]
-                ? profile.emails[0].value
-                : undefined,
-            tokens: {
-              provider: 'Github',
-              profileID: profile.id,
-              accessToken,
-              refreshToken,
-            },
-          });
-        }
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
-
-app.get(
-  '/auth/github',
-  passport.authenticate('github', { scope: ['read:user'] })
-);
-
-app.get(
-  '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/error' }),
   function (req, res, next) {
     res.locals.userID = req.user.id;
     next();
