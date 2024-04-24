@@ -15,12 +15,11 @@ const runBearerScript = () => {
     //   '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
 
     // Run the bearer scan command and output to a JSON file
-    const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json`;
+    const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json --exit-code 0`;
     // const command = `bearer scan ${absolutePath} --report security --output scan_report.json`;
     execSync(command, { stdio: 'inherit' });
   } catch (error) {
-    console.error(error.message);
-    throw error;
+    console.error('Error running bearer scan:', error);
   }
   // } finally {
   //   // Always exit with success status code
