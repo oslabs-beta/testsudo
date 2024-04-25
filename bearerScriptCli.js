@@ -7,7 +7,7 @@ const path = require('path');
 try {
   const absolutePath = process.cwd();
   // const absolutePath =
-  //   '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
+  //   '/Users/admin/Desktop/Github/testudo/web-app/server/routes';
 
   // Run the bearer scan command
   const command = `bearer scan ${absolutePath}`;

@@ -352,6 +352,11 @@ h4 {
 
 }
 
+.security {
+  text-align: left;
+  font-size: 1rem;
+}
+
 .image-container {
   height: 100vh;
   width: 100%;
@@ -483,4 +488,8 @@ h4 {
 
 .autocomplete .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: none;
+}
+
+.file-log{
+  overflow-y: scroll;
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const SecurityPieChart = ({ securityData }) => {
+const SecurityPieChart = ({ securityData, handleClick }) => {
+  
   const calculateSeverityCount = () => {
     console.log('tis is props data ->', securityData);
     if (!securityData) return {}; // Check if securityData is defined
@@ -44,11 +45,11 @@ const SecurityPieChart = ({ securityData }) => {
 
   //   const COLORS = ['#8B0000', '#FF0000', '#FFA500', '#FFFF00', '#0000FF'];
   const COLORS = {
-    CRITICAL: '#8B0000',
-    HIGH: '#FF0000',
-    MEDIUM: '#FFA500',
-    LOW: '#FFFF00',
-    WARNING: '#0000FF',
+    CRITICAL: '#cc3300',
+    HIGH: '#ff9966',
+    MEDIUM: '#ffcc00',
+    LOW: '#99cc33',
+    WARNING: '#339900',
   };
 
   const RADIAN = Math.PI / 180;
@@ -91,12 +92,12 @@ const SecurityPieChart = ({ securityData }) => {
           cy='50%'
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={80}
+          outerRadius={125}
           fill='#8884d8'
           dataKey='value'
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[data[index].name]} />
+            <Cell key={`cell-${index}`} fill={COLORS[data[index].name]} onClick={() => handleClick(data[index].name)}/>
           ))}
         </Pie>
       </PieChart>
