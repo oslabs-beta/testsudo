@@ -1,30 +1,36 @@
-const { execSync } = require('child_process');
-const path = require('path');
+const { spawn } = require('child_process'); // Import spawn from child_process
+const fs = require('fs');
 
-const runBearerScript = () => {
-  // console.log(process.cwd());
+function bearerScriptJson(callback) {
+  //path for directory to scan
+  const cwd = process.cwd(); // Get the current working directory
 
-  try {
-    // Find the absolute path of the current working directory
-    // if (!process.env.BEARER_API_KEY) {
-    //   console.error('BEARER_API_KEY environment variable is not set.');
-    //   process.exit(1); // Exit the script with an error code
-    // }
-    const absolutePath = process.cwd();
-    // const absolutePath =
-    //   '/Users/pavelkrapivin/Desktop/codesmith/testudo/web-app/server/controllers';
+  const scanProcess = spawn('bearer', ['scan', cwd, '--format=json']);
 
-    // Run the bearer scan command and output to a JSON file
-    const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json --exit-code 0`;
-    // const command = `bearer scan ${absolutePath} --report security --output scan_report.json`;
-    execSync(command, { stdio: 'inherit' });
-  } catch (error) {
-    console.error('Error running bearer scan:', error);
-  }
-  // } finally {
-  //   // Always exit with success status code
-  //   process.exit(0);
-  // }
-};
+  let output = '';
 
-module.exports = runBearerScript;
+  scanProcess.stdout.on('data', (data) => {
+    output += data.toString();
+  });
+
+  scanProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  scanProcess.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+
+    try {
+      // Save output directly to JSON file
+      fs.writeFileSync('scan_report.json', output);
+      console.log('Output saved to scan_report.json');
+      if (callback) {
+        callback(); // Invoke the callback function
+      }
+    } catch (error) {
+      console.error('Error saving output to file:', error);
+    }
+  });
+}
+
+module.exports = bearerScriptJson;
