@@ -1,8 +1,5 @@
 import React, { useState, useEffect, PureComponent } from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import {Box, Container, Grid, Paper} from '@mui/material/';
 import {
   LineChart,
   Line,
@@ -15,12 +12,15 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Cell,
+  BarChart, Bar
 } from 'recharts';
 import constructionIcon from '../assets/contructionIcon.png';
 import SecurityPieChart from './SecurityPieChart';
 
 const SecurityMetrics = ({ projectIDState }) => {
   const [securityData, setSecurityData] = useState([]);
+  const [pieData, setPieData] = useState([]);
+  let securityDataCopy = [...securityData];
   const data = [
     { name: 'Group A', value: 400 },
     { name: 'Group B', value: 300 },
@@ -29,6 +29,15 @@ const SecurityMetrics = ({ projectIDState }) => {
   ];
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
+  const handleClick = (entry) => {
+    securityDataCopy = pieData.filter((item) => {
+      const {severity} = item;
+      return severity === entry;
+    })
+    setSecurityData(securityDataCopy);
+    console.log(`You clicked on ${entry}`);
+  }
+
   const fetchSecurityMetrics = () => {
     fetch(`http://localhost:3001/api/security/get-report/${projectIDState}`)
       .then((res) => res.json())
@@ -36,6 +45,7 @@ const SecurityMetrics = ({ projectIDState }) => {
         const data = responseData.data || [];
         // console.log(data);
         setSecurityData(data);
+        setPieData(data);
       })
       .catch((err) => {
         console.log('error in fetching Security data');
@@ -46,10 +56,51 @@ const SecurityMetrics = ({ projectIDState }) => {
     fetchSecurityMetrics();
   }, []);
 
+  const titles = () => {
+    return securityData.reduce((acc, curr) => {
+      const title = curr.title;
+      acc[title] = (acc[title] || 0) + 1;
+      return acc;
+    }, {});
+  }
+  
+  const titleChart = Object.keys(titles()).map(title => ({  
+      title,
+      count: titles()[title]
+    }));
+
+  const uniqueData = {};
+  const uniqueTitles = Array.from(new Set(securityData.map(item => item.title)));
+    
+  uniqueTitles.forEach(title => {
+      const description = securityData.find(item => item.title === title).description;
+      uniqueData[title] = description;
+  });
+
   return (
     <div className='component-container'>
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={4}>
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              marginBottom: '1.1rem',
+              height: 560,
+              textAlign: 'center',
+              fontSize: '1.25rem',
+            }}
+          >
+          {' '}
+            <div className='header'>
+              Security Metrics<br />
+            </div>
+            <SecurityPieChart securityData={pieData} handleClick={handleClick}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper
           sx={{
             p: 2,
             display: 'flex',
@@ -59,53 +110,61 @@ const SecurityMetrics = ({ projectIDState }) => {
             textAlign: 'center',
             fontSize: '1.25rem',
           }}
-        >
-          {' '}
-          <div className='header'>
-            Security Metrics
-            <br />
-          </div>
-          <SecurityPieChart securityData={securityData} />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
           >
-            {/* Coming Soon! <br />
-            <img
-              className='PUC-icon'
-              src={constructionIcon}
-              alt=''
-              style={{
-                width: 'auto',
-                height: 'auto',
-                display: 'block',
-                marginLeft: 'auto',
-                marginRight: 'auto',
+            {' '}
+            <div className='header'>
+              Security Vulnerabilities
+            </div>
+            <ResponsiveContainer width="100%" height={400} margin={{top: 20, right: 30, bottom: 20, left: 30 }}>
+              <BarChart height={100} data={titleChart}>
+                <Bar dataKey="count" fill="#e53170">
+                  {titleChart.map((entry, index) => (
+                    <Cell cursor="pointer" fill='#e53170' />
+                  ))}
+                </Bar>
+                <YAxis tick={{ fontSize: 12 }} />
+                <XAxis dataKey="title" type="category" angle="20" tick={{ fontSize: 12 }}/>
+              </BarChart>
+          </ResponsiveContainer>
+          {/* <p className="content">
+            {Object.keys(uniqueData).map((item, index) => (
+            <div key={index}>
+              <p>{item.title}</p>
+              <p>{item.description}</p>
+            </div>
+          ))}
+          </p> */}
+        </ Paper>
+        </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                marginBottom: '1.1rem',
+                height: 560,
+                textAlign: 'center',
+                fontSize: '1.25rem',
               }}
-            /> */}
-            /{' '}
+              className='file-log'
+            >
+            {' '}
+            <div className='header'>
+              Location of Vulnerabilities<br />
+            </div>
             {securityData.map((item) => (
-              <li key={item._id}>
-                {/* Render each security scan item */}
-                <p>Risk: {item.severity}</p>
-                <p>CWE ID: {item.cwe_id}</p>
-                <p>Title: {item.title}</p>
-                <p>Description: {item.description}</p>
-                <p>
-                  Location: {item.filename}: {item.line_number}
-                </p>
-
-                {/* Render other details as needed */}
-              </li>
+              <div className="security" key={item._id}>
+              <p>CWE ID: {item.cwe_id}</p>
+              <p>Title: {item.title}</p>
+              <p>File Location: {item.filename} Line Number: {item.line_number}</p><br/></div>
             ))}
-          </div>
-        </Paper>
+            </Paper>
+            </Grid>
+          {/* </div> */}
       </Grid>
     </div>
   );
 };
+
 export default SecurityMetrics;

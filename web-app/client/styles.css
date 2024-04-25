@@ -1,7 +1,8 @@
 /* Variables */
 :root {
   /* colors vars */
-  --backgroundColor: #0f0e17;
+  /* --backgroundColor: #0f0e17; */
+  --backgroundColor: black;
   --headingColor: #fffffe;
   --paragraphColor: #a7a9be;
   --btnColor: #ff8906;
@@ -10,6 +11,7 @@
   --tertiaryColor: #e53170;
   --black: black;
   --white: #fffffe;
+  --grey: #777777;
   /* rest of vars */
   --transition: all 0.3s linear;
   --spacing: 0.25rem;
@@ -348,4 +350,146 @@ h4 {
   font-size: 400%;
   margin-top: auto;
 
+}
+
+.security {
+  text-align: left;
+  font-size: 1rem;
+}
+
+.image-container {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  overflow-y: auto; 
+  overflow-x: hidden
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.landing-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 3.5rem;
+  z-index: 2; 
+  background-color: transparent;
+}
+
+.menu {
+  text-decoration: none;
+  color: var(--white); 
+  margin-left: 2rem;
+}
+
+.menu:hover {
+  text-decoration: underline;
+}
+
+.overlay-logo, .overlay-text, .description, .title1, .content1, .title2, .content2, .title3, .content3 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.overlay-logo {
+  top: 4%;
+  color: var(--white); 
+  font-family: "Figtree", sans-serif;
+  font-weight: 300;
+  font-size: 3rem;
+}
+
+.overlay-text {
+  top: 20%;
+  color: var(--white); 
+  font-family: "Figtree", sans-serif;
+  font-size: 1.3rem;
+  line-height: normal;
+  margin-top: -0.75px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.description {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--white);
+  top: 30%;
+}
+
+.title1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--secondaryColor);
+  top: 40%;
+}
+
+.content1 {
+  font-size: 1.2rem;
+  color: var(--white);
+  top: 42%;
+}
+
+.title2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--secondaryColor);
+  top: 46%;
+}
+
+.content2 {
+  font-size: 1.2rem;
+  color: var(--white);
+  top: 48%;
+}
+
+.title3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--secondaryColor);
+  top:52%;
+}
+
+.content3 {
+  font-size: 1.2rem;
+  color: var(--white);
+  top: 54%;
+}
+
+.description {
+  color: white;
+  margin-top: 1rem; 
+}
+
+.MuiAutocomplete-inputRoot {
+  background-color: var(--white);
+  outline: none;
+}
+.MuiAutocomplete-input {
+  color: var(--btnColor); 
+  outline: none;
+}
+.MuiAutocomplete-popper {
+  background-color: var(--white); 
+  outline: none;
+}
+.MuiAutocomplete-option {
+  color: var(--black); 
+  outline: none;
+}
+
+.autocomplete .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: none;
+}
+
+.file-log{
+  overflow-y: scroll;
 }
