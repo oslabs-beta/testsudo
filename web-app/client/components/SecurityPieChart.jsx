@@ -45,10 +45,10 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
 
   //   const COLORS = ['#8B0000', '#FF0000', '#FFA500', '#FFFF00', '#0000FF'];
   const COLORS = {
-    CRITICAL: '#cc3300',
-    HIGH: '#ff9966',
-    MEDIUM: '#ffcc00',
-    LOW: '#99cc33',
+    CRITICAL: '#FF0000',
+    HIGH: '#FF6347',
+    MEDIUM: '#FFA500',
+    LOW: '#FFFF00',
     WARNING: '#339900',
   };
 

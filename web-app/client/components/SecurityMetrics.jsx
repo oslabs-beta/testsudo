@@ -126,14 +126,14 @@ const SecurityMetrics = ({ projectIDState }) => {
                 <XAxis dataKey="title" type="category" angle="20" tick={{ fontSize: 12 }}/>
               </BarChart>
           </ResponsiveContainer>
-          <p className="content">
+          {/* <p className="content">
             {Object.keys(uniqueData).map((item, index) => (
             <div key={index}>
               <p>{item.title}</p>
               <p>{item.description}</p>
             </div>
           ))}
-          </p>
+          </p> */}
         </ Paper>
         </Grid>
             <Grid item xs={12} md={4}>
@@ -150,6 +150,9 @@ const SecurityMetrics = ({ projectIDState }) => {
               className='file-log'
             >
             {' '}
+            <div className='header'>
+              Location of Vulnerabilities<br />
+            </div>
             {securityData.map((item) => (
               <div className="security" key={item._id}>
               <p>CWE ID: {item.cwe_id}</p>
