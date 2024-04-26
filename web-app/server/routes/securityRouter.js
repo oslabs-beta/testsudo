@@ -6,8 +6,6 @@ router.get('/scan-report', securityController.runBearerScript);
 router.get('/get-report/:projectID', securityController.getReportById);
 router.post(
   '/postSecurityData/:projectID',
-  // securityController.runBearerScript,
-  securityController.readReport,
-  securityController.postSecurityDataMongo
-);
+  securityController.runBearerScript,
+  );
 module.exports = router;

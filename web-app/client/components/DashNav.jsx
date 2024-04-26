@@ -8,14 +8,14 @@ const DashNav = ({ setActiveComponent, handleDelete }) => {
   return (
     <div className="btn-container">
       <ul className="metric-btns">
-        <li>
+        {/* <li>
           <button
             className="btn dashboard-btn"
             onClick={() => setActiveComponent('summary')}
           >
             Summary
           </button>
-        </li>
+        </li> */}
         <li>
           <button
             className="btn dashboard-btn"

@@ -15,7 +15,7 @@ securityController.runBearerScript = (req, res, next) => {
     bearerScriptJson(); // Call the exported function directly
     console.log('Bearer scan script executed successfully.');
     // Respond with a success message or perform other actions as needed
-    res.status(200).json({ message: 'Scan completed' });
+    res.json({ message: 'Scan completed' });
     return next();
   } catch (error) {
     console.error('Error executing bearer scan script:', error);
