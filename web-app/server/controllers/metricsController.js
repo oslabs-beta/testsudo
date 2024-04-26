@@ -6,7 +6,7 @@ const metricsController = {};
 metricsController.getFEData = (req, res, next) => {
   const projectID = req.params.projectID;
   const metricsQuery = `
-    SELECT projectID, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, timeToInteractive, totalByteWeight, accessibility, bestPractices FROM femetrics WHERE projectID = $1
+    SELECT projectID, endpoint, timestamp, firstContentfulPaint, speedIndex, totalBlockingTime, largestContentfulPaint, cumulativeLayoutShift, performance, timeToInteractive, totalByteWeight, accessibility, bestPractices FROM femetrics WHERE projectID = $1
   `;
   const value = [projectID];
 
@@ -23,7 +23,8 @@ metricsController.getFEData = (req, res, next) => {
           entry.timeToInteractive !== null &&
           entry.totalByteWeight !== null &&
           entry.accessibility !== null &&
-          entry.bestPractices !== null 
+          entry.bestPractices !== null &&
+          entry.endpoint !== null
         );
       });
       res.locals.FEmetrics = filteredData;
