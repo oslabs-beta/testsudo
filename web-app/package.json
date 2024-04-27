@@ -2,10 +2,9 @@
   "name": "testudo",
   "version": "1.0.0",
   "description": "Comprehensive development optimization tool for front-end, back-end and security",
-  "main": "./testudo-module/src/index.js",
   "scripts": {
-    "start": "NODE_ENV=production node web-app/server/server.js",
-    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon web-app/server/server.js\"",
+    "start": "NODE_ENV=production node server/server.js",
+    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --open\" \"nodemon server/server.js\"",
     "build": "NODE_ENV=production webpack"
   },
   "keywords": [
