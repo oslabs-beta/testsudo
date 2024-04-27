@@ -7,7 +7,7 @@ const runBearerScript = require('./core/bearerScriptJson.js')
 function initializeTestudo (expressApp, options = {}) {
     dotenv.config();
     if (options.frontEndUrl && options.enableFrontEndScan) {
-        runLighthouse(options.lighthouseUrl, options.projectID);
+        runLighthouse(options.frontEndUrl, options.projectID);
     }
     if (expressApp && options.enableBackEndScan) {
         const handleMeasuredRequest = handleMeasuredRequestFactory(options.projectID);

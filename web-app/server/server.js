@@ -13,7 +13,7 @@ const sessionController = require('./controllers/sessionController.js');
 const metricsRouter = require('./routes/metricsRouter.js');
 // const authController = require('./controllers/authController.js');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
