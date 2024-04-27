@@ -1,4 +1,28 @@
 # Testudo
+
+## Instructions on using the Testudo Module
+
+1. Sign up and login into testudo web app.
+1. Create a new project, making sure you copy the Project ID.  
+
+1. Create a ```testudoConfig.js``` in the root directory of your consuming app.
+```
+module.exports = {
+    lighthouseUrl: <insert url of what you want to test>, 
+    projectID: <insert project id from the web app in quotes>,
+};
+```
+
+2. In the consuming app’s server.js file, add the following code immediately after app is initialized (```const app = express()```):
+```
+const testudo = require(‘testudo’);
+const testudoConfig = require(‘../testudoConfig.js’); // make sure this is linked to the actual location of testudoConfig.js
+testudo.initializeTestudo(app, testudoConfig);
+```
+
+3. Run your dev as you would normally would.
+
+4. Login in to your testudo web to view your results.
  
 ## Frontend Testing
  ### Lighthouse metrics
@@ -73,68 +97,3 @@ Different types of backend testing:
      - Makes sure the DB doesn't exhaust the alloted storage space and stops
      - ? Make sure your logs don't exhaust the alloted disk storage (what is logs referring to?)                                                          
      - Makes sure the external services (?) you depend on don't stop working after certain amount of request are executed.
-
-
-### MVP instructions
-
-1. in the testudo repo:
-
-    make a symoblic npm link: ```npm link```
-
-    run the script:
-    ``` npm run dev ```
-
-2. sign up for an account and login
-3. create a project and copy the project id
-
-4. in the consuming app, create an env file.
-
-    initalize the project id string with the variable ```PROJECTID```
-
-    ie: ```PROJECTID=<paste your project id string here>```
-
-5. in the same file, paste the URI of the SQL with the variable ```PG_URI```
-
-    ie: ```PG_URI=<paste your sql uri string here>```
-
-6. run ```npm link testudo```
-
-7. in the root directory of the consuming app:
-
-    create new file named ```testudo.mjs``` (cli ```touch <name-of-file.extension```)
-
-    paste the following into testudo.mjs, replacing ```<address here>``` with the address (in string) where the consuming app will be launched (usually can be found in webpack):
-
-    ```
-    import { runLighthouse, handleMeasuredRequest } from 'testudo';
-    import 'dotenv/config';
-
-    const PROJECTID = process.env.PROJECTID;
-    const results = await runLighthouse(<address here>, PROJECTID);
-
-    export {handleMeasuredRequest};
-    ```
-8. in the consuming app's server file:
-
-    where after ```app``` has been declared, paste the code below, below the declaration:
-
-    ```
-    const app = express();
-
-    import('../testudo.mjs').then(({handleMeasuredRequest }) => {
-
-        app.use(handleMeasuredRequest)
-    ```
-    at the very bottom of the same file paste the code below, below the very last code that was there previous:
-
-    ```
-    }).catch(error => console.error('Error loading testudo:', error));
-    ```
-
-9. in the consuming app's ```package.json```, add a new script under the ```scripts``` property, replacing the ```<consuming-script>``` with the script currently that runs both front and backend of your consuming app:
-
-    ```    "testudo": "concurrently \"<consuming-script>\" \"sleep 5 && node testudo.mjs\"``` 
-
-10. run ```npm run testudo```.
-
-
