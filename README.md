@@ -3,7 +3,9 @@
 ## Instructions on using the Testudo Module
 
 1. Sign up and login into testudo web app.
+
 1. Create a new project, making sure you copy the Project ID.  
+ 
 
 1. Create a ```testudoConfig.js``` in the root directory of your consuming app.
 ```
@@ -14,15 +16,24 @@ module.exports = {
 ```
 
 2. In the consuming app’s server.js file, add the following code immediately after app is initialized (```const app = express()```):
+
+If using CommonJS:
 ```
 const testudo = require(‘testudo’);
-const testudoConfig = require(‘../testudoConfig.js’); // make sure this is linked to the actual location of testudoConfig.js
+const testudoConfig = require(‘../testudoConfig.js’); // make sure this is the actual location of testudoConfig.js
+testudo.initializeTestudo(app, testudoConfig);
+```
+
+If using ES6+:
+```
+import testudo from 'testudo';
+import testudoConfig from '../testudoConfig.js'; // make sure this is the actual location of testudoConfig.js
 testudo.initializeTestudo(app, testudoConfig);
 ```
 
 3. Run your dev as you would normally would.
 
-4. Login in to your testudo web to view your results.
+4. Login in to your testudo 
  
 ## Frontend Testing
  ### Lighthouse metrics
