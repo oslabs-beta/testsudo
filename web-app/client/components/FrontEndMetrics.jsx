@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Container, Paper, Grid, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Box, Container, Paper, Grid, Autocomplete, TextField } from '@mui/material';
 import {
   LineChart,
   Line,
@@ -16,17 +16,20 @@ import {
 const FrontEndMetrics = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
   const [fEDataPresent, setFEDataPresent] = useState(false);
-  const [latestFEMetrics, setLatestFEMetrics] = useState('');
+  const [endpoints, setEndpoints] = useState([])
+  const [selectedEndpoint, setSelectedEndpoint] = useState('')
 
   const fetchFEMetrics = () => {
     fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setFEMetrics(data.FEmetrics);
-        setLatestFEMetrics(data.latestFE);
+        // setfilteredLatest(data.filteredLatest);
         if (data.FEmetrics.length > 0) {
           setFEDataPresent(true);
         }
+        const uniqueEndpoints = [...new Set(Object.values(data.FEmetrics).map(metric => metric.endpoint))];
+        setEndpoints(uniqueEndpoints);
       })
       .catch((err) => {
         console.log('error in fetching FE metrics');
@@ -36,6 +39,22 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
   useEffect(() => {
     fetchFEMetrics();
   }, []);
+
+  const handleEndpointChange = (event, newEndpoint) => {
+    setSelectedEndpoint(newEndpoint);
+  };
+
+  const filteredFE = useMemo(() => { 
+    if (selectedEndpoint) return fEMetrics.filter(metric => metric.endpoint === selectedEndpoint);
+    else return null;
+  }, [fEMetrics, selectedEndpoint]);
+
+  const filteredLatest = useMemo(() => {
+    if (selectedEndpoint) {
+      const filteredData = fEMetrics.filter(metric => metric.endpoint === selectedEndpoint);
+      return filteredData[filteredData.length - 1];
+    } else return null
+  }, [fEMetrics, selectedEndpoint]);
 
   const fEName = (name) => {
     if (name === 'Cumulative Layout Shift') {
@@ -111,8 +130,21 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
           }}
         >
           <Grid container spacing={3}>
-            {fEDataPresent && fEMetrics.length > 0 ? (
+            {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
+            {fEDataPresent ? (
               <>
+               <Grid item xs={12}>
+                <Autocomplete
+                  disablePortal
+                  id="endpoints"
+                  options={endpoints}
+                  value={selectedEndpoint}
+                  onChange={handleEndpointChange}
+                  renderInput={(params) => <TextField {...params} label="Endpoints" />}
+                />
+              </Grid> 
+              {selectedEndpoint && filteredFE.length > 0 ? (
+                <>
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -132,10 +164,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                           data={[
                             {
                               name: 'Front End Performance',
-                              value: latestFEMetrics.performance,
+                              value: filteredLatest.performance,
                               fill: '#ffeaad',
                             },
-                            { name: '', value: 100 - latestFEMetrics.performance, fill: '#ffffff' },
+                            { name: '', value: 100 - filteredLatest.performance, fill: '#ffffff' },
                           ]}
                           dataKey="value"
                           cx="50%"
@@ -157,7 +189,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                                 fontWeight: 'bold'   // Bold text
                               }}
                             >
-                              {latestFEMetrics.performance.toFixed(0)}
+                              {filteredLatest.performance.toFixed(0)}
                             </text>
                           )}
                         />
@@ -187,10 +219,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                           data={[
                             {
                               name: 'Front End Performance',
-                              value: latestFEMetrics.bestpractices,
+                              value: filteredLatest.bestpractices,
                               fill: '#ffeaad',
                             },
-                            { name: '', value: 100 - latestFEMetrics.bestpractices, fill: '#ffffff' },
+                            { name: '', value: 100 - filteredLatest.bestpractices, fill: '#ffffff' },
                           ]}
                           dataKey="value"
                           cx="50%"
@@ -212,7 +244,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                                 fontWeight: 'bold'   // Bold text
                               }}
                             >
-                              {latestFEMetrics.bestpractices.toFixed(0)}
+                              {filteredLatest.bestpractices.toFixed(0)}
                             </text>
                           )}
                         />
@@ -240,10 +272,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                           data={[
                             {
                               name: 'Front End Performance',
-                              value: latestFEMetrics.accessibility,
+                              value: filteredLatest.accessibility,
                               fill: '#ffeaad',
                             },
-                            { name: '', value: 100 - latestFEMetrics.accessibility, fill: '#ffffff' },
+                            { name: '', value: 100 - filteredLatest.accessibility, fill: '#ffffff' },
                           ]}
                           dataKey="value"
                           cx="50%"
@@ -265,7 +297,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                                 fontWeight: 'bold'   // Bold text
                               }}
                             >
-                              {latestFEMetrics.accessibility.toFixed(0)}
+                              {filteredLatest.accessibility.toFixed(0)}
                             </text>
                           )}
                         />
@@ -288,7 +320,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     {' '}
                     <div className="header">Time to Interactive</div>
                     <div className="metrics-description">Time taken for page to become fully interactive (ms)</div>
-                    <div className="score large-score">{Number(latestFEMetrics.timetointeractive).toFixed(0)}</div>
+                    <div className="score large-score">{Number(filteredLatest.timetointeractive).toFixed(0)}</div>
                   </Paper>
                 </Grid>
 
@@ -306,7 +338,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     {' '}
                     <div className="header">First Contentful Paint</div>
                     <div className="metrics-description">Time at which the first text or image is painted (ms)</div>
-                    <div className="score large-score">{Number(latestFEMetrics.firstcontentfulpaint).toFixed(0)}</div>
+                    <div className="score large-score">{Number(filteredLatest.firstcontentfulpaint).toFixed(0)}</div>
                   </Paper>
                 </Grid>
 
@@ -324,7 +356,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     {' '}
                     <div className="header">Speed Index</div>
                     <div className="metrics-description">How quickly the contents of a page are visibly populated (ms)</div>
-                    <div className="score large-score">{Number(latestFEMetrics.speedindex).toFixed(0)}</div>
+                    <div className="score large-score">{Number(filteredLatest.speedindex).toFixed(0)}</div>
                   </Paper>
                 </Grid>
 
@@ -345,8 +377,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     <div style={{ marginTop: '50px' }}> {/* Adjust the top margin here */}
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {fEDataPresent && fEMetrics.length > 0 ? (
-                          <LineChart data={formatData(fEMetrics)}>
+                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
+                          <LineChart data={formatData(filteredFE)}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                             <YAxis yAxisId="left" />
@@ -361,11 +393,9 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               dot={false}
                             />
                           </LineChart>
-                        ) : (
-                          <div>
-                            Run your first front end test!
-                          </div>
-                        )}
+                        {/* ) : (
+                          <div></div>
+                        )} */}
                       </ResponsiveContainer>
                     </div>
                   </Paper>
@@ -391,8 +421,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     <div style={{ marginTop: '30px' }}> {/* Adjust the top margin here */}
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {fEDataPresent && fEMetrics.length > 0 ? (
-                          <LineChart data={formatData(fEMetrics)}>
+                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
+                          <LineChart data={formatData(filteredFE)}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                             <YAxis yAxisId="left" />
@@ -434,11 +464,9 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               dot={false}
                             />
                           </LineChart>
-                        ) : (
-                          <div>
-                            Run your first back end test!
-                          </div>
-                        )}
+                        {/* ) : (
+                          <div> </div>
+                        )} */}
                       </ResponsiveContainer>
                     </div>
                   </Paper>
@@ -462,8 +490,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     <div style={{ marginTop: '20px' }}> {/* Adjust the top margin here */}
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {fEDataPresent && fEMetrics.length > 0 ? (
-                          <LineChart data={formatData(fEMetrics)}>
+                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
+                          <LineChart data={formatData(filteredFE)}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
                             <YAxis yAxisId="left" />
@@ -496,16 +524,30 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               dot={false}
                             />
                           </LineChart>
-                        ) : (
-                          <div>
-                            Run your first back end test!
-                          </div>
-                        )}
+                        {/* ) : (
+                          <div></div>
+                        )} */}
                       </ResponsiveContainer>
                     </div>
                   </Paper>
                 </Grid>
-               
+                </>
+            ) : (
+              <Grid item xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      height: 275,
+                    }}
+                  >
+                    <div className="header">Front End Metrics </div>
+                    Select an endpoint to start viewing your front end performance metrics.
+                  </Paper>
+                </Grid>
+            )}
               </>
             ) : (
               <Grid item xs={12}>
@@ -518,7 +560,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     height: 275,
                   }}
                 ><div className="header">Front End Metrics</div>
-                  Run your first front end test!
+                  Run your first front end test.
                 </Paper>
               </Grid>
             )}

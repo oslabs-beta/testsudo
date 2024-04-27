@@ -12,11 +12,12 @@ const securityController = {};
 securityController.runBearerScript = (req, res, next) => {
   try {
     console.log('Running bearer scan script...');
-    bearerScriptJson(); // Call the exported function directly
-    console.log('Bearer scan script executed successfully.');
-    // Respond with a success message or perform other actions as needed
-    res.status(200).json({ message: 'Scan completed' });
-    return next();
+    bearerScriptJson(() => {
+      console.log('Bearer scan script executed successfully.');
+      // Respond with a success message or perform other actions as needed
+      res.status(200).json({ message: 'Scan completed' });
+      return next();
+    });
   } catch (error) {
     console.error('Error executing bearer scan script:', error);
     // Respond with an error message or perform other error handling actions
@@ -117,6 +118,7 @@ securityController.postSecurityDataMongo = async (req, res, next) => {
       { $set: { data: securityDataArray } },
       { upsert: true, new: true }
     );
+    console.log('Scan results added to database');
     res.json(savedData);
     res.locals.securityDataArray = savedData;
   } catch (err) {
@@ -151,41 +153,3 @@ securityController.getReportById = async (req, res, next) => {
 };
 
 module.exports = securityController;
-
-//posting data into sql database
-
-// securityController.postSecurityData = (req, res, next) => {
-//   try {
-//     const editedReport = res.locals.editedReport;
-//     editedReport.forEach((entry) => {
-//       const { severity, cwe_id, title, description, filename, line_number } =
-//         entry;
-//       const projectID = req.params.projectID;
-//       const values = [
-//         projectID,
-//         severity,
-//         cwe_id,
-//         title,
-//         description,
-//         filename,
-//         line_number,
-//       ];
-//       const postQuery = `INSERT INTO metrics
-//       (projectID, severity, cwe_id, title, filename, line_number)
-//       VALUES
-//       ($1, $2, $3, $4, $5, $6, $7)`;
-
-//       db.query(postQuery, values).then(() => {
-//         return next();
-//       });
-//     });
-//   } catch (err) {
-//     return next({
-//       log: 'metricsController.postData - error adding project data: ' + err,
-//       status: 500,
-//       message: {
-//         err: 'metricsController.postData - error adding project data:',
-//       },
-//     });
-//   }
-// };
