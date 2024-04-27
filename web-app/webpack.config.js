@@ -6,10 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   mode: process.env.NODE_ENV,
-  entry: './web-app/client/index.js',
+  entry: '/client/index.js',
 
   output: {
-    path: path.join(__dirname, '/web-app/build'),
+    path: path.join(__dirname, '/build'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -21,7 +21,7 @@ const config = {
       //   changeOrigin: true,
     },
     historyApiFallback: true,
-    static: './web-app/build',
+    static: '/build',
     hot: true,
   },
   resolve: {
@@ -59,8 +59,8 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './web-app/index.html',
-      favicon: './web-app/client/assets/favicon.png',
+      template: './index.html',
+      favicon: './client/assets/favicon.png',
     }),
   ],
 };

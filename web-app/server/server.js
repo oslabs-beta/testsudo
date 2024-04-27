@@ -5,8 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
 
-const { register } = require('./prometheus.js');
-// const prometheusController = require('./controllers/prometheusController.js');
+
 const userController = require('./controllers/userController.js');
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
@@ -24,7 +23,7 @@ const { User } = require('./models/mongodb.js');
 // import cookieParser from 'cookie-parser';
 
 const securityRouter = require('./routes/securityRouter.js');
-const authController = require('./controllers/authController.js');
+// const authController = require('./controllers/authController.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -229,8 +228,6 @@ app.get(
 );
 
 app.use('/projects', metricsRouter);
-
-// app.use(prometheusController.requestDuration);
 
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
