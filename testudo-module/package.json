@@ -2,7 +2,7 @@
     "name": "testudo",
     "version": "1.0.0",
     "description": "Comprehensive development optimization tool for front-end, back-end and security",
-    "main": "./testudo-module/src/index.js",
+    "main": "./src/index.js",
     "scripts": {
       "sec_cli": "node bearerScriptCli.js",
       "sec_json": "node bearerScriptJson.js",
