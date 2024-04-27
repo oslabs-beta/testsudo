@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 const path = require('path');
-const bearerScriptJson = require('../../../bearerScriptJson.js');
+const bearerScriptJson = require('../../bearerScriptJson.js');
 const { fileURLToPath } = require('url');
 const { dirname } = require('path');
 const fs = require('fs');
