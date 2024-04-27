@@ -39,7 +39,7 @@ const path = require('path');
 
 
 const runBearerScript = (projectID) => {
-  
+  console.log('runbearerscript project ID is ', projectID)
   try {
     const absolutePath = process.cwd();
     console.log(`Running Bearer scan on path: ${absolutePath}`);
@@ -97,7 +97,9 @@ const transformData = (inputObj) => {
 const postSecurityDataMongo = async (projectID, data) => {
   try {
     const response = await axios.post(`http://localhost:3001/api/security/postSecurityData/${projectID}`, data);
-    console.log('Data successfully posted to MongoDB:', response.data);
+    console.log('Data successfully posted to MongoDB:', 
+    // response.data
+    );
   } catch (err) {
     console.error('Error posting data to MongoDB:', err);
   }

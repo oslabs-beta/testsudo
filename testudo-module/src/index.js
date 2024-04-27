@@ -14,7 +14,7 @@ function initializeTestudo (expressApp, options = {}) {
         expressApp.use(handleMeasuredRequest);
     }
     if (options.enableSecurityScan) {
-        runBearerScript();
+        runBearerScript(options.projectID);
     }
 }
 

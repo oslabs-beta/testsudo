@@ -90,6 +90,7 @@ securityController.postSecurityDataMongo = async (req, res, next) => {
     // const editedReport = res.locals.editedReport;
     const editedReport = req.body;
     const projectID = req.params.projectID;
+    console.log('securityController.postSecurityDataMongo projectID is ', projectID)
 
     const securityDataArray = [];
     for (const entry of editedReport) {
