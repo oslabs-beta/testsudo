@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 const path = require('path');
-const bearerScriptJson = require('../../../bearerScriptJson.js');
+const bearerScriptJson = require('../../../testudo-module/src/core/bearerScriptJson.js');
 const { fileURLToPath } = require('url');
 const { dirname } = require('path');
 const fs = require('fs');
@@ -88,8 +88,10 @@ securityController.readReport = (req, res, next) => {
 
 securityController.postSecurityDataMongo = async (req, res, next) => {
   try {
-    const editedReport = res.locals.editedReport;
+    // const editedReport = res.locals.editedReport;
+    const editedReport = req.body;
     const projectID = req.params.projectID;
+    console.log('securityController.postSecurityDataMongo projectID is ', projectID)
 
     const securityDataArray = [];
     for (const entry of editedReport) {
