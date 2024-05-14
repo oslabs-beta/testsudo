@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import DashNav from './DashNav.jsx';
-// import Summary from './Summary.jsx';
 import FrontEndMetrics from './FrontEndMetrics.jsx';
 import BackEndMetrics from './BackEndMetrics.jsx';
 import SecurityMetrics from './SecurityMetrics.jsx';
@@ -47,11 +46,8 @@ const Dashboard = ({ projectIDState, setProjectIDState }) => {
   return (
     <div>
       <NavBar />
-      <DashNav setActiveComponent={setActiveComponent} handleDelete={handleDelete} />
+      <DashNav setActiveComponent={setActiveComponent} handleDelete={handleDelete} projectID={projectIDState}/>
 
-      {/* {activeComponent === 'summary' && (
-        <Summary projectIDState={projectIDState} formatData={formatData} />
-      )} */}
       {activeComponent === 'frontend' && (
         <FrontEndMetrics
           projectIDState={projectIDState}
@@ -70,8 +66,6 @@ const Dashboard = ({ projectIDState, setProjectIDState }) => {
           formatData={formatData}
         />
       )}
-      {/* <BackEndMetrics projectIDState={projectIDState} formatData={formatData} /> */}
-      {/* <SecurityMetrics projectIDState={projectIDState} formatData={formatData}  /> */}
     </div>
   );
 };

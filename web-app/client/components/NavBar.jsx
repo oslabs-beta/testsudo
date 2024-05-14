@@ -7,7 +7,6 @@ const NavBar = () => {
         <a href="/home" className="projects-link">
           My Projects
         </a>
-
         <a href="/action/logout" className="logout">
           Log out
         </a>

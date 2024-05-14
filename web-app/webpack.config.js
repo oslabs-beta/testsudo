@@ -1,9 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// Assuming __dirname is defined elsewhere in your configuration or environment
-// If not, you can directly specify the paths as needed without relying on __dirname
-
 const config = {
   mode: process.env.NODE_ENV,
   entry: '/client/index.js',
@@ -18,7 +15,6 @@ const config = {
     proxy: {
       '/action': 'http://localhost:3001',
       '/auth': 'http://localhost:3001',
-      //   changeOrigin: true,
     },
     historyApiFallback: true,
     static: '/build',

@@ -1,5 +1,6 @@
 
 const db = require('../models/sql.js');
+const { Security } = require('../models/mongodb.js');
 
 const metricsController = {};
 
@@ -30,15 +31,11 @@ metricsController.getFEData = (req, res, next) => {
       res.locals.FEmetrics = filteredData;
      
       const entries = Object.entries(filteredData);
-      console.log(filteredData);
 
-      // Check if there are any entries
       if (entries.length > 0) {
-        // Access the last entry
         const lastEntry = entries[entries.length - 1][1];
         res.locals.latestFE = lastEntry || undefined;
       } else {
-        // Handle the case where there are no entries (e.g., filteredData is empty)
         res.locals.latestFE = undefined;
       }
 
@@ -82,13 +79,10 @@ metricsController.getBEData = (req, res, next) => {
       res.locals.BEmetrics = filteredData;
 
       const entries = Object.entries(filteredData);
-      // Check if there are any entries
       if (entries.length > 0) {
-        // Access the last entry
         const lastEntry = entries[entries.length - 1][1];
         res.locals.latestBE = lastEntry || undefined;
       } else {
-        // Handle the case where there are no entries (e.g., filteredData is empty)
         res.locals.response = undefined;
         res.locals.latestBE = undefined;
       }
@@ -103,6 +97,23 @@ metricsController.getBEData = (req, res, next) => {
     });
   }
 };
+
+metricsController.getSecurityData = async (req, res, next) => {
+  try {
+    const projectID = req.params.projectID;
+    const project = await Security.findOne({ projectID: projectID });
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    res.locals.securityMetrics = project.data;
+    return next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+    return next();
+  }
+}
+
 
 metricsController.postFEData = (req, res, next) => {
   try {
@@ -203,98 +214,47 @@ metricsController.postBEData = async (req, res, next) => {
   }
 };
 
+metricsController.postSecurityData = async (req, res, next) => {
+  try {
+    const editedReport = req.body;
+    const projectID = req.params.projectID;
+    console.log('securityController.postSecurityDataMongo projectID is ', projectID)
 
-// INFLUX //
-// import { InfluxDB, Point } from '@influxdata/influxdb-client';
-// import 'dotenv/config';
+    const securityDataArray = [];
+    for (const entry of editedReport) {
+      const { severity, cwe_id, title, description, filename, line_number } =
+        entry;
+      const securityData = {
+        severity,
+        cwe_id,
+        title,
+        description,
+        filename,
+        line_number,
+      };
 
-// const url = process.env.INFLUX_URL;
-// const token = process.env.INFLUX_TOKEN;
-// const org = process.env.INFLUX_ORG;
-// const bucket = process.env.INFLUX_BUCKET;
-// // const projectID = process.env.PROJECT_ID;
+      securityDataArray.push(securityData);
+    }
 
-// const influxDB = new InfluxDB({ url, token });
-
-// const writeApi = influxDB.getWriteApi(org, bucket);
-
-// const measurementName = 'metrics';
-
-// const metricsController = {};
-
-// metricsController.getData = async (req, res, next) => {
-//   const { userID, serverID } = req.body;
-
-//   const query = `
-//     from(bucket:"${bucket}")
-//     |> range(start: 0)
-//     |> filter (fn: (r) => r.userID == "${userID}" and r.serverID == "${serverID}")
-//   `;
-
-//   try {
-//     const queryApi = influxDB.getQueryApi(org);
-
-//     const result = await queryApi.queryRaw(query);
-
-//     // to send back result
-//     console.log('result from metricsController.getData, ', result);
-//     return next();
-//   } catch (err) {
-//     console.log('error getting data from metricsController.getData ', err);
-//     return next();
-//   }
-// };
-
-// metricsController.postData = async (req, res, next) => {
-//   console.log('entered metricsController.postData');
-//   const {
-//     userID,
-//     serverID,
-//     firstContentfulPaint,
-//     speedIndex,
-//     totalBlockingTime,
-//     largestContentfulPaint,
-//     cumulativeLayoutShift,
-//     performance,
-//   } = req.body;
-//   console.log('req.body ', req.body);
-//   console.log(
-//     userID,
-//     serverID,
-//     firstContentfulPaint,
-//     speedIndex,
-//     totalBlockingTime,
-//     largestContentfulPaint,
-//     cumulativeLayoutShift,
-//     performance
-//   );
-
-//   try {
-//     console.log('in metricsController');
-//     // create a point by calling the Point method
-//     const point = new Point(measurementName)
-//       .tag('userID', userID)
-//       .tag('serverID', serverID)
-//       .floatField('first-contentful-paint', firstContentfulPaint) // saved in milliseconds but to display in seconds
-//       .floatField('speed-index', speedIndex) // saved in milliseconds but to display in seconds
-//       .floatField('total-blocking-time', totalBlockingTime) // saved in milliseconds but to display in seconds
-//       .floatField('largest-contentful-paint', largestContentfulPaint) // saved in milliseconds; display in milliseconds
-//       .floatField('cumulative-layout-shift', cumulativeLayoutShift) // saved in milliseconds but to display in seconds
-//       .floatField('performance', performance) // no unit
-//       .timestamp(new Date());
-
-//     console.log(` ${point}`);
-
-//     await writeApi.writePoint(point);
-
-//     writeApi.close().then(() => {
-//       console.log('WRITE FINISHED in metricsController.postData');
-//       return next();
-//     });
-//   } catch (err) {
-//     console.log('error writing data in metricsController.postData ', err);
-//     return next();
-//   }
-// };
+    const savedData = await Security.findOneAndUpdate(
+      { projectID: projectID },
+      { $set: { data: securityDataArray } },
+      { upsert: true, new: true }
+    );
+    console.log('Scan results added to database');
+    res.json(savedData);
+    res.locals.securityDataArray = savedData;
+  } catch (err) {
+    return next({
+      log:
+        'securityController.postSecurityDataMongo - error adding project data: ' +
+        err,
+      status: 500,
+      message: {
+        err: 'securityController.postSecurityDataMongo - error adding project data:',
+      },
+    });
+  }
+}
 
 module.exports = metricsController;

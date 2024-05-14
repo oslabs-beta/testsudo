@@ -1,21 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-const DashNav = ({ setActiveComponent, handleDelete }) => {
+const DashNav = ({ setActiveComponent, handleDelete, projectID }) => {
   const navigate = useNavigate();
-  // const runMetricsHandle = () => {
-  //   console.log('button clicked');
-  // };
   return (
     <div className="btn-container">
       <ul className="metric-btns">
-        {/* <li>
-          <button
-            className="btn dashboard-btn"
-            onClick={() => setActiveComponent('summary')}
-          >
-            Summary
-          </button>
-        </li> */}
         <li>
           <button
             className="btn dashboard-btn"
@@ -38,6 +27,20 @@ const DashNav = ({ setActiveComponent, handleDelete }) => {
             onClick={() => setActiveComponent('security')}
           >
             Security
+          </button>
+        </li>
+        <li>
+          <button
+            style={{ marginLeft: '0%'}}
+            onClick={() => {
+              navigator.clipboard
+              .writeText(projectID)
+              .then(() => {alert('Project ID has been copied to clipboard')})
+              .catch((err) => console.log('Could not copy text: ', err));
+            }}
+            className="btn dashboard-btn run-btn"
+          >
+            Copy Project ID
           </button>
         </li>
         <li>

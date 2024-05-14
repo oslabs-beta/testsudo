@@ -14,27 +14,6 @@ const Landing = () => {
             <div className={`overlay-text`}>
             Optimize performance. Enhance security. Simplify development.
           </div>
-          {/* <div className="description">
-            Our all-in-one toolkit integrates front-end and back-end performance monitoring with robust security testing capabilities, providing developers with actionable insights and tools to optimize their projects effortlessly.
-          </div>
-          <div className="title1">
-          Performance Analysis
-          </div>
-          <div className="content1">
-          Measures front-end and back-end performance metrics, including speed index, load times, response times, errors, and more, giving you a comprehensive overview of your application's health.
-          </div>
-          <div className="title2">
-          Security Testing
-          </div>
-          <div className="content2">
-           Identify and address security vulnerabilities early in the development process with Testudo's built-in security monitoring capabilities.
-          </div>  
-          <div className="title3">
-          Dashboard Visualization
-          </div> 
-          <div className="content3">
-          Manage your projects and access your performance and security metrics conveniently through the dashboard, providing you with insights to optimize your application.
-          </div> */}
         </div> 
       </div>
     )

@@ -8,7 +8,6 @@ const LandingNav = () => {
       <div>
         <nav className="landing-nav">
             <div>
-                <Link to="/about" className="menu">ABOUT</Link>
                 <Link to="/login" className="menu">LOGIN</Link>
             </div>
         </nav>  
@@ -17,4 +16,3 @@ const LandingNav = () => {
 }
 
 export default LandingNav;
-
