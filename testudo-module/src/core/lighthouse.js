@@ -1,20 +1,16 @@
-
 const fs = require('fs');
 require('dotenv').config();
 const PROJECTID = process.env.PROJECTID;
 const URL = process.env.URL;
 
-// Properly awaiting the imported config which is now a promise due to async Chrome launch
 const runLighthouse = async (address, projectID) => {
-  // Load the configuration asynchronously
   const configPromise = require('./lighthouse-config');
-  const config = await configPromise; // Await the resolution of the config promise
+  const config = await configPromise; 
   const { desktopConfig, options, chrome } = config;
 
   console.log('address is ', address);
 
   const postData = async (url, data) => {
-    // Dynamically import node-fetch as it's an ES module
     const { default: fetch } = await import('node-fetch');
     await fetch(url, {
       method: 'POST',
@@ -24,10 +20,8 @@ const runLighthouse = async (address, projectID) => {
       },
       body: JSON.stringify(data),
     });
-    // You might want to handle the response
   };
 
-  // Dynamically import lighthouse as it's an ES module
   const lighthouse = (await import('lighthouse')).default;
 
   const runnerResult = await lighthouse(address, options, desktopConfig);
@@ -57,7 +51,7 @@ const runLighthouse = async (address, projectID) => {
 
   postData(`http://localhost:3001/projects/FE/${projectID}`, metricsHolder);
 
-  await chrome.kill(); // Make sure to close Chrome after your operations
+  await chrome.kill();
 };
 
 module.exports = runLighthouse;
