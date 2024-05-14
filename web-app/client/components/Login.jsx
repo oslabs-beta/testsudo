@@ -68,7 +68,6 @@ const Login = () => {
             <button
               type='submit'
               className='btn login-btn'
-              // disabled={!userData.email || !userData.password}
             >
               Sign in
             </button>

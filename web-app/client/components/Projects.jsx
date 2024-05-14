@@ -23,12 +23,6 @@ const Projects = ({ projectIDState, setProjectIDState }) => {
   useEffect(getUser, []);
 
   let projects = null;
-  // if (user && user.projects) {
-  //     projects = user.projects.map((project, i) => (
-  //         <div key={i}><a href={`/dashboard/${project._id}`}>{project.name}</a></div>
-  //     ));
-  // }
-
   if (user && user.projects) {
     projects = user.projects.map((project, i) => (
       <div key={i} className="individual-project">

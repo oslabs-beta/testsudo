@@ -1,7 +1,5 @@
 /* Variables */
 :root {
-  /* colors vars */
-  /* --backgroundColor: #0f0e17; */
   --backgroundColor: black;
   --headingColor: #fffffe;
   --paragraphColor: #a7a9be;
@@ -12,7 +10,6 @@
   --black: black;
   --white: #fffffe;
   --grey: #777777;
-  /* rest of vars */
   --transition: all 0.3s linear;
   --spacing: 0.25rem;
   --radius: 0.5rem;
@@ -348,8 +345,6 @@ h4 {
 
 .large-score{
   font-size: 400%;
-  margin-top: auto;
-
 }
 
 .security {

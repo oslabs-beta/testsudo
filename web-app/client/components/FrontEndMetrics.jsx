@@ -1,17 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Box, Container, Paper, Grid, Autocomplete, TextField } from '@mui/material';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Legend,
-  Tooltip,
-  PieChart,
-  Pie,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Legend, PieChart, Pie, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 const FrontEndMetrics = ({ projectIDState, formatData }) => {
   const [fEMetrics, setFEMetrics] = useState([]);
@@ -24,10 +13,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
       .then((res) => res.json())
       .then((data) => {
         setFEMetrics(data.FEmetrics);
-        // setfilteredLatest(data.filteredLatest);
         if (data.FEmetrics.length > 0) {
           setFEDataPresent(true);
-        }
+        };
+        console.log('test');
         const uniqueEndpoints = [...new Set(Object.values(data.FEmetrics).map(metric => metric.endpoint))];
         setEndpoints(uniqueEndpoints);
       })
@@ -56,21 +45,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
     } else return null
   }, [fEMetrics, selectedEndpoint]);
 
-  const fEName = (name) => {
-    if (name === 'Cumulative Layout Shift') {
-      return 'This measures the movement of visible elements within the viewport.'
-    } if (name === 'First Contentful Paint') {
-      return 'This marks the time at which the first text or image is painted in seconds.'
-    } if (name === 'Speed Index') {
-      return 'This shows how quickly the contents of a page are visibly populated in seconds.'
-    } if (name === 'Largest Contentful Paint') {
-      return 'This marks the time at which the largest text or image is painted in seconds.'
-    } if (name === 'Time to Interactive') {
-      return 'This is the amount of time it takes for the page to become fully interactive in seconds.'
-    } if (name === 'Total Blocking Time') {
-      return 'This is the sum of all time periods between FCP and Time to Interactive in milliseconds, when task length exceeded 50ms.'
-    }
-  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     useEffect(() => {
@@ -84,7 +58,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
               <p key={index} className="data-point">
                 <span>{`${entry.name} on ${entry.payload.timestamp}: `}</span>
                 <span className="tooltip-value">{Math.round(entry.value, 2)}</span>
-                {/* <span>{` - ${fEName(entry.name)}`}</span> */}
               </p>
             </div>
           ))}
@@ -94,29 +67,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
     return null;
   };
 
-  const CustomTooltipPie = ({ active, payload, label }) => {
-    useEffect(() => {
-    }, [payload]);
-
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          {payload.map((entry, index) => (
-            <div>
-              <p key={index} className="data-point">
-                <span>{`${entry.name}: `}</span>
-                <span className="tooltip-value">{Math.round(entry.value, 2)}</span>
-                <span>{` - ${fEName(entry.name)}`}</span></p>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
-    // <div className="frontend-metrics-page">
     <div className="component-container">
 
       <Box>
@@ -130,7 +81,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
           }}
         >
           <Grid container spacing={3}>
-            {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
             {fEDataPresent ? (
               <>
                <Grid item xs={12}>
@@ -185,8 +135,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               textAnchor="middle"
                               dominantBaseline="central"
                               style={{
-                                fontSize: '2rem', // Larger font size
-                                fontWeight: 'bold'   // Bold text
+                                fontSize: '2rem',
+                                fontWeight: 'bold' 
                               }}
                             >
                               {filteredLatest.performance.toFixed(0)}
@@ -195,11 +145,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                         />
                       </PieChart>
                     </ResponsiveContainer>
-
-
                   </Paper>
                 </Grid>
-
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -240,8 +187,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               textAnchor="middle"
                               dominantBaseline="central"
                               style={{
-                                fontSize: '2rem', // Larger font size
-                                fontWeight: 'bold'   // Bold text
+                                fontSize: '2rem', 
+                                fontWeight: 'bold' 
                               }}
                             >
                               {filteredLatest.bestpractices.toFixed(0)}
@@ -252,7 +199,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     </ResponsiveContainer>
                   </Paper>
                 </Grid>
-
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -293,8 +239,8 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               textAnchor="middle"
                               dominantBaseline="central"
                               style={{
-                                fontSize: '2rem', // Larger font size
-                                fontWeight: 'bold'   // Bold text
+                                fontSize: '2rem', 
+                                fontWeight: 'bold'  
                               }}
                             >
                               {filteredLatest.accessibility.toFixed(0)}
@@ -323,7 +269,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     <div className="score large-score">{Number(filteredLatest.timetointeractive).toFixed(0)}</div>
                   </Paper>
                 </Grid>
-
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -341,7 +286,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                     <div className="score large-score">{Number(filteredLatest.firstcontentfulpaint).toFixed(0)}</div>
                   </Paper>
                 </Grid>
-
                 <Grid item xs={12} md={2}>
                   <Paper
                     sx={{
@@ -374,33 +318,28 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                       <b>Cumulative Layout Shift:</b> Score measuring the movement of visible elements within the viewport
 
                     </div>
-                    <div style={{ marginTop: '50px' }}> {/* Adjust the top margin here */}
+                    <div style={{ marginTop: '50px' }}> 
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
-                          <LineChart data={formatData(filteredFE)}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                            <YAxis yAxisId="left" />
-                            <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 0, left: 25 }} />
-                            <Legend />
-                            <Line
-                              type="monotone"
-                              dataKey="cumulativelayoutshift"
-                              name="Cumulative Layout Shift"
-                              stroke="#82ca9d"
-                              yAxisId="left"
-                              dot={false}
-                            />
-                          </LineChart>
-                        {/* ) : (
-                          <div></div>
-                        )} */}
+                        <LineChart data={formatData(filteredFE)}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
+                          <YAxis yAxisId="left" />
+                          <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 0, left: 25 }} />
+                          <Legend />
+                          <Line
+                            type="monotone"
+                            dataKey="cumulativelayoutshift"
+                            name="Cumulative Layout Shift"
+                            stroke="#82ca9d"
+                            yAxisId="left"
+                            dot={false}
+                          />
+                        </LineChart>
                       </ResponsiveContainer>
                     </div>
                   </Paper>
                 </Grid>
-
                 <Grid item xs={8} md={4}>
                   <Paper
                     sx={{
@@ -418,10 +357,9 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                       <b>Time to Interactive:</b> Time taken for page to become fully interactive
 
                     </div>
-                    <div style={{ marginTop: '30px' }}> {/* Adjust the top margin here */}
+                    <div style={{ marginTop: '30px' }}>
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
                           <LineChart data={formatData(filteredFE)}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
@@ -436,7 +374,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               yAxisId="left"
                               dot={false}
                             />
-
                             <Line
                               type="monotone"
                               dataKey="speedindex"
@@ -445,7 +382,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               yAxisId="left"
                               dot={false}
                             />
-
                             <Line
                               type="monotone"
                               dataKey="largestcontentfulpaint"
@@ -454,7 +390,6 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               yAxisId="left"
                               dot={false}
                             />
-
                             <Line
                               type="monotone"
                               dataKey="timetointeractive"
@@ -464,14 +399,10 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                               dot={false}
                             />
                           </LineChart>
-                        {/* ) : (
-                          <div> </div>
-                        )} */}
                       </ResponsiveContainer>
                     </div>
                   </Paper>
                 </Grid>
-
                 <Grid item xs={8} md={4}>
                   <Paper
                     sx={{
@@ -487,46 +418,40 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
                       <b>Accessibility Score:</b> Category score for app's accessibility for users, incl. those with disabilities<br></br>
                       <b>Best Practices Score:</b> Category score for best practices that improve code health and quality of app
                     </div>
-                    <div style={{ marginTop: '20px' }}> {/* Adjust the top margin here */}
+                    <div style={{ marginTop: '20px' }}> 
 
                       <ResponsiveContainer height={225} width="100%" sx={{ mt: 2 }}>
-                        {/* {fEDataPresent && fEMetrics.length > 0 ? ( */}
-                          <LineChart data={formatData(filteredFE)}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
-                            <YAxis yAxisId="left" />
-                            <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 0, left: 25 }} />
-                            <Legend />
-                            <Line
-                              type="monotone"
-                              dataKey="performance"
-                              name="Performance"
-                              stroke="#8884d8"
-                              yAxisId="left"
-                              dot={false}
-                            />
-
-                            <Line
-                              type="monotone"
-                              dataKey="accessibility"
-                              name="Accessibility"
-                              stroke="#3951C8"
-                              yAxisId="left"
-                              dot={false}
-                            />
-
-                            <Line
-                              type="monotone"
-                              dataKey="bestpractices"
-                              name="Best Practices"
-                              stroke="#003459"
-                              yAxisId="left"
-                              dot={false}
-                            />
-                          </LineChart>
-                        {/* ) : (
-                          <div></div>
-                        )} */}
+                        <LineChart data={formatData(filteredFE)}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="timestamp" tick={{ fontSize: 12 }} />
+                          <YAxis yAxisId="left" />
+                          <Tooltip content={<CustomTooltip />} wrapperStyle={{ top: 0, left: 25 }} />
+                          <Legend />
+                          <Line
+                            type="monotone"
+                            dataKey="performance"
+                            name="Performance"
+                            stroke="#8884d8"
+                            yAxisId="left"
+                            dot={false}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="accessibility"
+                            name="Accessibility"
+                            stroke="#3951C8"
+                            yAxisId="left"
+                            dot={false}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="bestpractices"
+                            name="Best Practices"
+                            stroke="#003459"
+                            yAxisId="left"
+                            dot={false}
+                          />
+                        </LineChart>
                       </ResponsiveContainer>
                     </div>
                   </Paper>

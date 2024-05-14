@@ -5,25 +5,17 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
 
-
 const userController = require('./controllers/userController.js');
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
 const metricsRouter = require('./routes/metricsRouter.js');
-// const authController = require('./controllers/authController.js');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const passport = require('passport');
 const session = require('express-session');
 const { ObjectId } = require('mongodb');
-// const bcrypt = require('bcryptjs');
 const { User } = require('./models/mongodb.js');
-
-// import cookieParser from 'cookie-parser';
-
-const securityRouter = require('./routes/securityRouter.js');
-// const authController = require('./controllers/authController.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -37,7 +29,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api/security', securityRouter);
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -116,6 +107,7 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
   res.clearCookie('ssid');
   res.redirect('/');
 });
+
 // GOOGLE OAUTH
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
@@ -163,7 +155,6 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    // Successful authentication, redirect to home
     res.redirect('http://localhost:8081/home');
   }
 );
@@ -222,7 +213,6 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    // Successful authentication, redirect to home
     res.redirect('http://localhost:8081/home');
   }
 );
