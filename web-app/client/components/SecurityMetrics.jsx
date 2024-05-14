@@ -1,20 +1,6 @@
 import React, { useState, useEffect, PureComponent } from 'react';
 import {Box, Container, Grid, Paper} from '@mui/material/';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Legend,
-  Tooltip,
-  PieChart,
-  Pie,
-  CartesianGrid,
-  ResponsiveContainer,
-  Cell,
-  BarChart, Bar
-} from 'recharts';
-import constructionIcon from '../assets/contructionIcon.png';
+import { LineChart, Line, XAxis, YAxis, Legend, PieChart, Pie, Tooltip, CartesianGrid, ResponsiveContainer,   Cell, BarChart, Bar } from 'recharts';
 import SecurityPieChart from './SecurityPieChart';
 
 const SecurityMetrics = ({ projectIDState }) => {
@@ -39,11 +25,11 @@ const SecurityMetrics = ({ projectIDState }) => {
   }
 
   const fetchSecurityMetrics = () => {
-    fetch(`http://localhost:3001/api/security/get-report/${projectIDState}`)
+    fetch(`http://localhost:3001/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((responseData) => {
-        const data = responseData.data || [];
-        // console.log(data);
+        const data = responseData.securityMetrics || [];
+        console.log(data);
         setSecurityData(data);
         setPieData(data);
       })
@@ -115,7 +101,7 @@ const SecurityMetrics = ({ projectIDState }) => {
             <div className='header'>
               Security Vulnerabilities
             </div>
-            <ResponsiveContainer width="100%" height={400} margin={{top: 20, right: 30, bottom: 20, left: 30 }}>
+            <ResponsiveContainer width="100%" height={500} margin={{top: 20, right: 30, bottom: 20, left: 30 }}>
               <BarChart height={100} data={titleChart}>
                 <Bar dataKey="count" fill="#e53170">
                   {titleChart.map((entry, index) => (
@@ -123,17 +109,9 @@ const SecurityMetrics = ({ projectIDState }) => {
                   ))}
                 </Bar>
                 <YAxis tick={{ fontSize: 12 }} />
-                <XAxis dataKey="title" type="category" angle="20" tick={{ fontSize: 12 }}/>
+                <XAxis dataKey="title" type="category" angle={-90} textAnchor="end" height={300} tick={{ fontSize: 11 }}/>
               </BarChart>
           </ResponsiveContainer>
-          {/* <p className="content">
-            {Object.keys(uniqueData).map((item, index) => (
-            <div key={index}>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-            </div>
-          ))}
-          </p> */}
         </ Paper>
         </Grid>
             <Grid item xs={12} md={4}>

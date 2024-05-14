@@ -1,4 +1,3 @@
-
 const dotenv = require('dotenv');
 const { handleMeasuredRequestFactory } = require('./core/measured.js');
 const runLighthouse = require('./core/lighthouse.js');

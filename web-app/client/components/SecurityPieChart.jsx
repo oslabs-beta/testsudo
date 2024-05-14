@@ -5,7 +5,7 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
   
   const calculateSeverityCount = () => {
     console.log('tis is props data ->', securityData);
-    if (!securityData) return {}; // Check if securityData is defined
+    if (!securityData) return {}; // 
 
     const severityCount = {
       CRITICAL: 0,
@@ -41,14 +41,13 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
     { name: 'MEDIUM', value: severityCount.MEDIUM },
     { name: 'LOW', value: severityCount.LOW },
     { name: 'WARNING', value: severityCount.WARNING },
-  ].filter((item) => item.value !== 0); // Remove items with value 0
+  ].filter((item) => item.value !== 0); 
 
-  //   const COLORS = ['#8B0000', '#FF0000', '#FFA500', '#FFFF00', '#0000FF'];
   const COLORS = {
     CRITICAL: '#FF0000',
     HIGH: '#FF6347',
     MEDIUM: '#FFA500',
-    LOW: '#FFFF00',
+    LOW: '#F7CA18',
     WARNING: '#339900',
   };
 
@@ -71,9 +70,13 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
         <text
           x={x}
           y={y}
-          fill='red'
+          fill={COLORS[data[index].name]}
           textAnchor={x > cx ? 'start' : 'end'}
           dominantBaseline='central'
+          style={{
+            fontSize: '16px', 
+            fontWeight: 'bold',
+          }}
         >
           {`${data[index].name} (${data[index].value})`}
         </text>

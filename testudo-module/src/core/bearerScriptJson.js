@@ -2,42 +2,6 @@ const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
 
-// const runBearerScript = async () => {
-//   console.log('runBearereScript running')
-//   try {
-//     const absolutePath = process.cwd();
-//     // const command = `bearer scan ${absolutePath} --format=json --output=scan_report.json --exit-code 0`;
-//     // execSync(command, { stdio: 'inherit' });
-
-//     const command = `bearer scan ${absolutePath} --format=json --exit-code 0`;
-//     console.log('command is ' + command)
-
-//     exec(command, (error, stdout, stderr) => {
-//       if (error) {
-//         console.error('Error running bearer scan:', error);
-//         return;
-//       }
-//       if (stderr) {
-//         console.error('Stderr from bearer scan:', stderr);
-//         return;
-//       }
-
-//       try {
-//         // Parse the JSON output directly from stdout
-//         const scanResults = JSON.parse(stdout);
-//         console.log('Bearer scan results:', scanResults);
-//         // Process the scan results here or pass them to another function
-//       } catch (parseError) {
-//         console.error('Error parsing bearer output:', parseError);
-//       }
-//     });
-
-//   } catch (error) {
-//     console.error('Error running bearer scan or fetching report:', error);
-//   }
-// };
-
-
 const runBearerScript = (projectID) => {
   console.log('runbearerscript project ID is ', projectID)
   try {
@@ -53,7 +17,6 @@ const runBearerScript = (projectID) => {
         return;
       }
 
-      // Log stderr as informational output instead of treating it as an error
       console.log('Bearer scan progress and info:', stderr);
 
       if (stdout) {
@@ -96,12 +59,11 @@ const transformData = (inputObj) => {
 
 const postSecurityDataMongo = async (projectID, data) => {
   try {
-    const response = await axios.post(`http://localhost:3001/api/security/postSecurityData/${projectID}`, data);
-    console.log('Data successfully posted to MongoDB:', 
-    // response.data
-    );
+    const response = await axios.post(`http://localhost:3001/projects/security/${projectID}`, data);
+    console.log('Data successfully posted to MongoDB:');
   } catch (err) {
     console.error('Error posting data to MongoDB:', err);
   }
 };
+
 module.exports = runBearerScript;

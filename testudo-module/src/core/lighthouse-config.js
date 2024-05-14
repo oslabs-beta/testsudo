@@ -1,5 +1,4 @@
 async function initializeConfig() {
-  // Dynamically import chrome-launcher due to its ES Module format
   const chromeLauncher = await import('chrome-launcher');
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
 
@@ -62,5 +61,4 @@ async function initializeConfig() {
   return config;
 }
 
-// Export a promise that resolves to `config`
 module.exports = initializeConfig();
