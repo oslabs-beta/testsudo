@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 # COPY all of our application files tp the WORKDIR in the container
 COPY . /usr/src/app
 
+
 # npm install to create node-modules in the container
 RUN npm install
 
