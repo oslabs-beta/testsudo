@@ -25,7 +25,7 @@ const SecurityMetrics = ({ projectIDState }) => {
   }
 
   const fetchSecurityMetrics = () => {
-    fetch(`http://localhost:3001/projects/${projectIDState}`)
+    fetch(`/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((responseData) => {
         const data = responseData.securityMetrics || [];

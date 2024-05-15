@@ -9,7 +9,7 @@ const FrontEndMetrics = ({ projectIDState, formatData }) => {
   const [selectedEndpoint, setSelectedEndpoint] = useState('')
 
   const fetchFEMetrics = () => {
-    fetch(`http://localhost:3001/projects/${projectIDState}`)
+    fetch(`/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setFEMetrics(data.FEmetrics);
