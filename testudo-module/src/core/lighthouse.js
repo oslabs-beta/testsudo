@@ -5,7 +5,7 @@ const URL = process.env.URL;
 
 const runLighthouse = async (address, projectID) => {
   const configPromise = require('./lighthouse-config');
-  const config = await configPromise; 
+  const config = await configPromise;
   const { desktopConfig, options, chrome } = config;
 
   console.log('address is ', address);
@@ -32,24 +32,31 @@ const runLighthouse = async (address, projectID) => {
     runnerResult.lhr.categories.performance.score * 100
   );
 
-    const metricsHolder = {
-        projectID: PROJECTID,
-        endpoint: address,
-        firstContentfulPaint: runnerResult.lhr.audits['first-contentful-paint'].numericValue,
-        speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
-        largestContentfulPaint: runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
-        totalBlockingTime: runnerResult.lhr.audits['total-blocking-time'].numericValue,
-        cumulativeLayoutShift: runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
-        performance: runnerResult.lhr.categories.performance.score * 100,
-        timeToInteractive: runnerResult.lhr.audits['interactive'].numericValue,
-        totalByteWeight: runnerResult.lhr.audits['total-byte-weight'].numericValue,
-        accessibility: runnerResult.lhr.categories.accessibility.score * 100,
-        bestPractices: runnerResult.lhr.categories['best-practices'].score * 100
-    };
+  const metricsHolder = {
+    projectID: PROJECTID,
+    endpoint: address,
+    firstContentfulPaint:
+      runnerResult.lhr.audits['first-contentful-paint'].numericValue,
+    speedIndex: runnerResult.lhr.audits['speed-index'].numericValue,
+    largestContentfulPaint:
+      runnerResult.lhr.audits['largest-contentful-paint'].numericValue,
+    totalBlockingTime:
+      runnerResult.lhr.audits['total-blocking-time'].numericValue,
+    cumulativeLayoutShift:
+      runnerResult.lhr.audits['cumulative-layout-shift'].numericValue,
+    performance: runnerResult.lhr.categories.performance.score * 100,
+    timeToInteractive: runnerResult.lhr.audits['interactive'].numericValue,
+    totalByteWeight: runnerResult.lhr.audits['total-byte-weight'].numericValue,
+    accessibility: runnerResult.lhr.categories.accessibility.score * 100,
+    bestPractices: runnerResult.lhr.categories['best-practices'].score * 100,
+  };
 
   console.log(metricsHolder);
 
-  postData(`http://localhost:3001/projects/FE/${projectID}`, metricsHolder);
+  postData(
+    `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/FE/${projectID}`,
+    metricsHolder
+  );
 
   await chrome.kill();
 };
