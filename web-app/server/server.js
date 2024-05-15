@@ -53,7 +53,6 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.get('/', (req, res) => {
   // res.sendFile(path.join(__dirname, '../index.html'));
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
-
 });
 
 app.get('/action/getUser', userController.getUser, (req, res) => {
@@ -159,7 +158,7 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('http://localhost:8081/home');
+    res.redirect('http://localhost:3001/home');
   }
 );
 
@@ -217,7 +216,7 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('http://localhost:8081/home');
+    res.redirect('http://localhost:3001/home');
   }
 );
 
@@ -228,9 +227,13 @@ app.get('/metrics', async (req, res) => {
   res.end(await register.metrics());
 });
 
-app.use('*', (req, res) => {
-  res.status(404).send('Page not found.');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
+
+// app.use('*', (req, res) => {
+//   res.status(404).send('Page not found.');
+// });
 
 app.use((err, req, res, next) => {
   console.error(err);

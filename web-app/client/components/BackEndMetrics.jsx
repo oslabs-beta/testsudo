@@ -9,7 +9,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
   const [selectedPath, setSelectedPath] = useState('');
 
   const fetchBEMetrics = () => {
-    fetch(`http://localhost:3001/projects/${projectIDState}`)
+    fetch(`/projects/${projectIDState}`)
       .then((res) => res.json())
       .then((data) => {
         setBEMetrics(data.BEmetrics);
