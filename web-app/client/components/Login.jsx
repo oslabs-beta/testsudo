@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <div className='page-container'>
       <div className='login-center'>
-        <h2>testudo</h2>
+        <h2>testsudo</h2>
         <form onSubmit={handleSubmit} className='login-form'>
           <p>Email</p>
           <input
