@@ -2,8 +2,6 @@
 
 ## Product Description
 
-![logo](web-app/client/assets/logo.jpg)
-
 Welcome to Testsudo, a one-stop testing suite enabling you to test your project's frontend, backend, and security performance!
 
 With a simple CLI command, Testsudo will perform some testing magic and give you a range of metrics for your project on a compatible web application. Rather than searching for 3 separate performance optimization tools, Testsudo abstracts that away into a single command.

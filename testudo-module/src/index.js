@@ -3,7 +3,7 @@ const { handleMeasuredRequestFactory } = require('./core/measured.js');
 const runLighthouse = require('./core/lighthouse.js');
 const runBearerScript = require('./core/bearerScriptJson.js')
 
-function initializeTestudo (expressApp, options = {}) {
+function initializeTestsudo (expressApp, options = {}) {
     dotenv.config();
     if (options.frontEndUrl && options.enableFrontEndScan) {
         runLighthouse(options.frontEndUrl, options.projectID);
@@ -17,4 +17,4 @@ function initializeTestudo (expressApp, options = {}) {
     }
 }
 
-module.exports = { initializeTestudo };
+module.exports = { initializeTestsudo };
