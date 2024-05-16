@@ -51,9 +51,7 @@ passport.deserializeUser(function (id, done) {
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', (req, res) => {
-  // res.sendFile(path.join(__dirname, '../index.html'));
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
-
 });
 
 app.get('/action/getUser', userController.getUser, (req, res) => {
@@ -114,13 +112,16 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 
 // GOOGLE OAUTH
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
+const GOOGLE_CALLBACK_URL =
+  process.env.GOOGLE_CALLBACK_URL ||
+  'http://localhost:3001/auth/google/callback';
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3001/auth/google/callback',
+      callbackURL: GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
@@ -159,7 +160,7 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('http://localhost:8081/home');
+    res.redirect('/home');
   }
 );
 
@@ -168,13 +169,16 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+const GITHUB_CALLBACK_URL =
+  process.env.GITHUB_CALLBACK_URL ||
+  'http://localhost:3001/auth/github/callback';
 
 passport.use(
   new GitHubStrategy(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3001/auth/github/callback',
+      callbackURL: GITHUB_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
@@ -217,7 +221,7 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('http://localhost:8081/home');
+    res.redirect('/home');
   }
 );
 
@@ -228,8 +232,8 @@ app.get('/metrics', async (req, res) => {
   res.end(await register.metrics());
 });
 
-app.use('*', (req, res) => {
-  res.status(404).send('Page not found.');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 app.use((err, req, res, next) => {

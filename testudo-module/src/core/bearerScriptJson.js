@@ -3,7 +3,7 @@ const axios = require('axios');
 const path = require('path');
 
 const runBearerScript = (projectID) => {
-  console.log('runbearerscript project ID is ', projectID)
+  console.log('runbearerscript project ID is ', projectID);
   try {
     const absolutePath = process.cwd();
     console.log(`Running Bearer scan on path: ${absolutePath}`);
@@ -23,15 +23,19 @@ const runBearerScript = (projectID) => {
         console.log('Processing output...');
         try {
           const scanResults = JSON.parse(stdout);
-          console.log('First item of Bearer scan results:', scanResults.high[0]);
+          console.log(
+            'First item of Bearer scan results:',
+            scanResults.high[0]
+          );
           const transformedData = transformData(scanResults);
           await postSecurityDataMongo(projectID, transformedData);
-
         } catch (parseError) {
           console.error('Error parsing bearer output:', parseError);
         }
       } else {
-        console.log('No output to process. Check for errors or issues in the scan command.');
+        console.log(
+          'No output to process. Check for errors or issues in the scan command.'
+        );
       }
     });
   } catch (error) {
@@ -59,7 +63,10 @@ const transformData = (inputObj) => {
 
 const postSecurityDataMongo = async (projectID, data) => {
   try {
-    const response = await axios.post(`http://localhost:3001/projects/security/${projectID}`, data);
+    const response = await axios.post(
+      `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/security/${projectID}`,
+      data
+    );
     console.log('Data successfully posted to MongoDB:');
   } catch (err) {
     console.error('Error posting data to MongoDB:', err);
