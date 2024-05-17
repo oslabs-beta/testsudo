@@ -64,7 +64,7 @@ const transformData = (inputObj) => {
 const postSecurityDataMongo = async (projectID, data) => {
   try {
     const response = await axios.post(
-      `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/security/${projectID}`,
+      `http://testsudo.com/projects/security/${projectID}`,
       data
     );
     console.log('Data successfully posted to MongoDB:');

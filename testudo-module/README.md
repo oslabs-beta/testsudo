@@ -93,38 +93,21 @@ Some examples of Accessiblity Metrics:
 
 ## Backend Testing
 
-Different types of backend testing:
-Load
+Backend testing is an essential practice in software development that tests the server-side components of applications. This process ensures that the backend functions effectively under various conditions, supporting stability, performance, and security. It verifies server-side logic, database operations, API interactions, and other backend services. Implementing comprehensive backend testing with Testsudo, which utilizes the Measured module, allows developers to detect and address potential issues related to performance bottlenecks, errors, and inefficiencies.
 
-- Benchmarking test
-- Should be the first test you run.
-- To assess current performance of concurrent users/request per second.
-  - Performance of system under typical and peak load
-  - To have a barometer to compare against for the future.
-  - Great for CI/CD.
-  - Use the load test to test against other test i.e. spike and stress.
+Testsudo leverages the Measured module to provide detailed insights into backend operations through real-time metrics collection. Here are the key metrics tracked by the module:
 
-Spike (strength training)
+<li><b>Total Requests</b>: Monitors the total number of requests that the server processes.
+<li><b>Average Response Time</b>: Measures the mean time taken by the server to respond, highlighting the responsiveness of the application.
+<li><b>Payload Size</b>: Observes the size of incoming data in requests to evaluate its impact on performance.
+<li><b>Concurrent Requests</b>: Tracks the number of simultaneous requests, assessing the server’s capacity to manage multiple interactions.
+Performance Score: Begins with an ideal score that adjusts based on criteria such as response time, error rates, and memory usage. This score provides an overall health indicator of the backend.
+<li><b>Resource Utilization</b>: Records memory usage metrics such as RSS, heap total, heap used, and external resources to help pinpoint potential resource overuse or memory leaks.
 
-- sSmilar to stress test but instead of ramping the test in steady increament over relatively long time, but 'spikes' it over a very short amount of time
+<br>
+The Measured module within Testsudo plays a crucial role in monitoring these metrics, ensuring that the backend maintains optimal performance levels and supports a seamless user experience. The data captured is also sent to a specified server endpoint for further analysis and proactive optimization efforts.
 
-Stress (endurance training)
 
-- Limits of the system (verify reliablity and stability)
-- How far can we push it under extreme condition
-- What is the max capacity of users/throughput
-- What is the breaking point and its failure mode
-- Will the system need a manual intervention to recover after the stress test is complete
-
-Soak (endurance training or maybe long term review)
-
-- Reliablity over long term, usually the longest test, usually hours
-  - Testing for bugs and memory leaks -\ can lead to crash/restarts
-  - Verify that expected application restarts don't lose requests
-  - Find bugs related to race-conditions that appear sporadically
-  - Makes sure the DB doesn't exhaust the alloted storage space and stops
-  - Makes sure your logs don't exhaust the alloted disk storage
-  - Makes sure the external services you depend on don't stop working after certain amount of request are executed.
 
 ## Security Testing
 

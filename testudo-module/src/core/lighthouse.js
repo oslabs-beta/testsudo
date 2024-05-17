@@ -54,7 +54,7 @@ const runLighthouse = async (address, projectID) => {
   console.log(metricsHolder);
 
   postData(
-    `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/FE/${projectID}`,
+    `http://testsudo.com/projects/FE/${projectID}`,
     metricsHolder
   );
 

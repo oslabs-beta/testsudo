@@ -58,7 +58,7 @@ const handleMeasuredRequestFactory = (projectID) => {
 
       axios
         .post(
-          `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/BE/${projectID}`,
+          `http://testsudo.com/projects/BE/${projectID}`,
           metricsData
         )
         .then(() =>
