@@ -2,6 +2,7 @@ const fs = require('fs');
 require('dotenv').config();
 const PROJECTID = process.env.PROJECTID;
 const URL = process.env.URL;
+const webAppURL = require('./config.js');
 
 const runLighthouse = async (address, projectID) => {
   const configPromise = require('./lighthouse-config');
@@ -54,7 +55,7 @@ const runLighthouse = async (address, projectID) => {
   console.log(metricsHolder);
 
   postData(
-    `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/FE/${projectID}`,
+    `${webAppURL}${projectID}`,
     metricsHolder
   );
 

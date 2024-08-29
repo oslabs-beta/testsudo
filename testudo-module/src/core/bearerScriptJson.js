@@ -1,6 +1,7 @@
 const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
+const webAppURL = require('./config.js');
 
 const runBearerScript = (projectID) => {
   console.log('runbearerscript project ID is ', projectID);
@@ -64,7 +65,7 @@ const transformData = (inputObj) => {
 const postSecurityDataMongo = async (projectID, data) => {
   try {
     const response = await axios.post(
-      `http://testsudo-prod.eba-3rruicnb.us-east-1.elasticbeanstalk.com/projects/security/${projectID}`,
+      `${webAppURL}${projectID}`,
       data
     );
     console.log('Data successfully posted to MongoDB:');
