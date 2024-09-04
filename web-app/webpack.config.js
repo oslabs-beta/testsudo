@@ -21,7 +21,7 @@ const config = {
     hot: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.scss'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss'],
   },
 
   module: {
@@ -38,6 +38,11 @@ const config = {
             ],
           },
         },
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
         test: /(\.css|\.scss)$/,

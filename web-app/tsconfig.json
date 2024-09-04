@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "NodeNext",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./build",
+        "moduleResolution": "NodeNext",
+        "allowJs": true,
+        "checkJs": false,
+        "noImplicitAny": true,
+    },
+    "include": [
+        "../testudo-module/**/*",
+        "../web-app/**/*.ts"
+    ],
+    "exclude": [
+        "build"
+    ]
+}
