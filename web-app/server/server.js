@@ -3,7 +3,7 @@ const path = require('path');
 const cors = require('cors');
 
 /** SUPABASE */
-const supabase = require('./models/sql.ts');
+const supabase = require('../build/web-app/server/models/sql.js');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -20,19 +20,6 @@ const passport = require('passport');
 const session = require('express-session');
 const { ObjectId } = require('mongodb');
 const { User } = require('./models/mongodb.js');
-
-/** START TESTING SUPABASE CONNECTION */
-async function fetchData() {
-  const { data, error } = await supabase.from('user').select('*');
-  if (error) {
-    console.error('Error fetching Supabase data:', error);
-  } else {
-    console.log('Fetched Supabase data:', data);
-  }
-}
-
-fetchData();
-/** END TESTING SUPABASE CONNECTION */
 
 app.use(express.json());
 app.use(cookieParser());
