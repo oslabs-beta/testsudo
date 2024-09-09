@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+
+/** SUPABASE */
+const supabase = require('../build/web-app/server/models/sql.js');
+
 const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
