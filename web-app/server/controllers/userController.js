@@ -1,5 +1,6 @@
 const { User, Project } = require('../models/mongodb.js');
 const bcrypt = require('bcryptjs');
+const supabase = require('../../build/web-app/server/models/supa.js');
 
 const userController = {};
 
@@ -7,12 +8,23 @@ userController.createUser = async (req, res, next) => {
   const { email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 12);
   try {
-    const newUser = await User.create({
-      email,
-      password: hashedPassword,
-    });
-    res.locals.user = newUser;
-    res.locals.userID = newUser._id;
+
+    console.log('testing start');
+    const { data, error } = await supabase
+      .from('user')
+      .insert({ user_email: email, user_password: hashedPassword })
+      .select('*');
+
+    console.log('testing ends');
+
+    console.log(data, '<---- data');
+    // const newUser = await User.create({
+    //   email,
+    //   password: hashedPassword,
+    // });
+    res.locals.user = data[0];
+    res.locals.userID = data[0].id;
+
     return next();
   } catch (error) {
     return next({
@@ -25,15 +37,30 @@ userController.createUser = async (req, res, next) => {
 
 userController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
+
+  // const { data , error } = await supabase
+  // .from('user')
+  // .select('*')
+  // .eq('user_email', email )
+
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+
+    const { data, error } = await supabase
+      .from('user')
+      .select('*')
+      .eq('user_email', email)
+
+    const userID = data[0].id;
+    const userPassword = data[0].user_password;
+
+
+    if (!data.length) {
       res.locals.authenticate = false;
       return next();
     } else {
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, userPassword);
       res.locals.authenticate = isMatch;
-      res.locals.userID = user._id.toString();
+      res.locals.userID = userID;
       return next();
     }
   } catch (error) {
@@ -46,16 +73,24 @@ userController.verifyUser = async (req, res, next) => {
 };
 
 userController.getUser = async (req, res, next) => {
-  const userID = req.cookies.ssid;
+  const userid = req.cookies.ssid;
+
   try {
-    const user = await User.findOne({ _id: userID });
+    // const user = await user.findone({ _id: userid });
+    const { data, error } = supabase
+      .from('user')
+      .select()
+      .eq('id', userid)
+
+    const user = data;
     res.locals.user = user;
     return next();
+
   } catch (error) {
     return next({
-      log: 'Error in userController.getUser',
+      log: 'error in usercontroller.getuser',
       status: 400,
-      message: { err: 'Error getting user' },
+      message: { err: 'error getting user' },
     });
   }
 };
@@ -63,8 +98,14 @@ userController.getUser = async (req, res, next) => {
 userController.checkDuplicate = async (req, res, next) => {
   const { email } = req.params;
   try {
-    const user = await User.findOne({ email });
-    if (user) {
+    // const user = await User.findOne({ email });
+
+    const { data, error } = await supabase
+      .from('user')
+      .select()
+      .eq('user_email', email);
+
+    if (!data.length) {
       res.locals.duplicate = true;
     } else {
       res.locals.duplicate = false;
@@ -84,15 +125,25 @@ userController.addProject = async (req, res, next) => {
   const userID = req.cookies.ssid;
 
   try {
-    const newProject = await Project.create({ name });
+    // const newProject = await Project.create({ name });
+    //
+    // const user = await User.findOne({ _id: userID });
+    //
+    const { data, error } = await supabase
+      .from('project')
+      .insert({ user_id: userID, project_name: name })
+      .select();
 
-    const user = await User.findOne({ _id: userID });
+    const newProjectID = data[0].id;
 
-    if (!user.projects) user.projects = [];
-    user.projects.push(newProject);
-    res.locals.user = await user.save();
-    res.locals.projectID = newProject._id;
+    // if (!user.projects) user.projects = [];
+    // user.projects.push(newProject);
+
+    // res.locals.user = await user.save();
+    res.locals.user = data;
+    res.locals.projectID = newProjectID;
     return next();
+
   } catch (error) {
     return next({
       log: 'Error in userController.addProject',
@@ -108,18 +159,24 @@ userController.deleteProject = async (req, res, next) => {
   const userID = req.cookies.ssid;
 
   try {
-    const user = await User.findOne({ _id: userID });
-    const newProjects = user.projects.filter(project => project._id.toString() !== projectID);
-    const newUser = await User.updateOne({ _id: userID }, { projects: newProjects });
-    res.locals.user = newUser;
+    // const user = await User.findOne({ _id: userID });
+    // const newProjects = user.projects.filter(project => project._id.toString() !== projectID);
+    // const newUser = await User.updateOne({ _id: userID }, { projects: newProjects });
+    //
+    const { data, user } = supabase
+      .from('project')
+      .delete()
+      .eq('id', projectID)
+
+    // res.locals.user = newUser;
     console.log('new user is ' + newUser);
-    await Project.findOneAndDelete({ _id: projectID });
+    // await Project.findOneAndDelete({ _id: projectID });
     return next();
   } catch (error) {
     return next({
       log: 'Error in userController.deleteProject',
       status: 400,
-      message: { err: 'Error adding project:' + error.message }, 
+      message: { err: 'Error adding project:' + error.message },
     })
   }
 }

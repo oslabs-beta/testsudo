@@ -9,24 +9,216 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      user: {
+      femeterics: {
+        Row: {
+          accessibility: number | null
+          bestpractices: number | null
+          cumulativelayoutshift: number | null
+          endpoint: string | null
+          firstcontentfulpaint: number | null
+          largestcontentfulpaint: number | null
+          performance: number | null
+          projectid: number
+          speedindex: number | null
+          timestamp: string
+          timetointeractive: number | null
+          totalblockingtime: number | null
+          totalbyteweight: number | null
+          user_id: number
+        }
+        Insert: {
+          accessibility?: number | null
+          bestpractices?: number | null
+          cumulativelayoutshift?: number | null
+          endpoint?: string | null
+          firstcontentfulpaint?: number | null
+          largestcontentfulpaint?: number | null
+          performance?: number | null
+          projectid?: number
+          speedindex?: number | null
+          timestamp?: string
+          timetointeractive?: number | null
+          totalblockingtime?: number | null
+          totalbyteweight?: number | null
+          user_id: number
+        }
+        Update: {
+          accessibility?: number | null
+          bestpractices?: number | null
+          cumulativelayoutshift?: number | null
+          endpoint?: string | null
+          firstcontentfulpaint?: number | null
+          largestcontentfulpaint?: number | null
+          performance?: number | null
+          projectid?: number
+          speedindex?: number | null
+          timestamp?: string
+          timetointeractive?: number | null
+          totalblockingtime?: number | null
+          totalbyteweight?: number | null
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "femeterics_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      metrics: {
+        Row: {
+          average_payload_size: number | null
+          average_response_time: number | null
+          concurrent_requests: number | null
+          cumulativelayoutshift: number | null
+          cwe_id: string | null
+          description: string | null
+          duration: number | null
+          errors: number | null
+          external: number | null
+          filename: number | null
+          firstcontentfulpaint: number | null
+          heap_total: number | null
+          heap_used: number | null
+          largestcontentfulpaint: number | null
+          line_number: number | null
+          path: string | null
+          performance: number | null
+          performance_score: number | null
+          projectid: number
+          request_body_size: number | null
+          rss: number | null
+          severity: string | null
+          speedindex: number | null
+          timestamp: string
+          title: string | null
+          total_requests: number | null
+          totalblockingtime: number | null
+          user_id: number | null
+          userid: string | null
+        }
+        Insert: {
+          average_payload_size?: number | null
+          average_response_time?: number | null
+          concurrent_requests?: number | null
+          cumulativelayoutshift?: number | null
+          cwe_id?: string | null
+          description?: string | null
+          duration?: number | null
+          errors?: number | null
+          external?: number | null
+          filename?: number | null
+          firstcontentfulpaint?: number | null
+          heap_total?: number | null
+          heap_used?: number | null
+          largestcontentfulpaint?: number | null
+          line_number?: number | null
+          path?: string | null
+          performance?: number | null
+          performance_score?: number | null
+          projectid?: number
+          request_body_size?: number | null
+          rss?: number | null
+          severity?: string | null
+          speedindex?: number | null
+          timestamp?: string
+          title?: string | null
+          total_requests?: number | null
+          totalblockingtime?: number | null
+          user_id?: number | null
+          userid?: string | null
+        }
+        Update: {
+          average_payload_size?: number | null
+          average_response_time?: number | null
+          concurrent_requests?: number | null
+          cumulativelayoutshift?: number | null
+          cwe_id?: string | null
+          description?: string | null
+          duration?: number | null
+          errors?: number | null
+          external?: number | null
+          filename?: number | null
+          firstcontentfulpaint?: number | null
+          heap_total?: number | null
+          heap_used?: number | null
+          largestcontentfulpaint?: number | null
+          line_number?: number | null
+          path?: string | null
+          performance?: number | null
+          performance_score?: number | null
+          projectid?: number
+          request_body_size?: number | null
+          rss?: number | null
+          severity?: string | null
+          speedindex?: number | null
+          timestamp?: string
+          title?: string | null
+          total_requests?: number | null
+          totalblockingtime?: number | null
+          user_id?: number | null
+          userid?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "metrics_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project: {
         Row: {
           created_at: string
           id: number
-          usr_email: string
-          usr_pw: string
+          project_name: string
+          user_id: number
         }
         Insert: {
           created_at?: string
           id?: number
-          usr_email: string
-          usr_pw: string
+          project_name: string
+          user_id: number
         }
         Update: {
           created_at?: string
           id?: number
-          usr_email?: string
-          usr_pw?: string
+          project_name?: string
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user: {
+        Row: {
+          created_at: string
+          id: number
+          user_email: string
+          user_password: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          user_email: string
+          user_password: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          user_email?: string
+          user_password?: string
         }
         Relationships: []
       }

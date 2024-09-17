@@ -3,13 +3,15 @@ const path = require('path');
 const cors = require('cors');
 
 /** SUPABASE */
-const supabase = require('../build/web-app/server/models/sql.js');
+// const supabase = require('../build/web-app/server/models/sql.js');
 
 const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
 
 const userController = require('./controllers/userController.js');
+// const userController = require('../build/web-app/server/controllers/userController.js');
+
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
 const metricsRouter = require('./routes/metricsRouter.js');
@@ -37,20 +39,20 @@ app.use(passport.session());
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  const objectId = new ObjectId(id);
-  User.findById(objectId)
-    .then((user) => {
-      done(null, user);
-    })
-    .catch((err) => {
-      done(err, null);
-    });
-});
+// passport.serializeUser(function (user, done) {
+//   done(null, user.id);
+// });
+//
+// passport.deserializeUser(function (id, done) {
+//   const objectId = new ObjectId(id);
+//   User.findById(objectId)
+//     .then((user) => {
+//       done(null, user);
+//     })
+//     .catch((err) => {
+//       done(err, null);
+//     });
+// });
 
 app.use(express.static(path.join(__dirname, '../build')));
 
@@ -58,12 +60,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
-app.get('/action/getUser', userController.getUser, (req, res) => {
-  res.json(res.locals.user);
-});
-app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
-  res.json(res.locals.user);
-});
+// app.get('/action/getUser', userController.getUser, (req, res) => {
+//   res.json(res.locals.user);
+// });
+// app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
+//   res.json(res.locals.user);
+// });
 
 app.post(
   '/action/login',
