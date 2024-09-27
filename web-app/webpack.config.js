@@ -6,7 +6,7 @@ const config = {
   entry: '/client/index.js',
 
   output: {
-    path: path.join(__dirname, '/build'),
+    path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -17,7 +17,7 @@ const config = {
       '/auth': 'http://localhost:3001',
     },
     historyApiFallback: true,
-    static: '/build',
+    static: '../build/client',
     hot: true,
   },
   resolve: {

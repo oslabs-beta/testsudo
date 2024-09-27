@@ -9,8 +9,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
 
-const userController = require('./controllers/userController.js');
-// const userController = require('../build/web-app/server/controllers/userController.js');
+// const userController = require('./controllers/userController.js');
+const userController = require('../../dist/web-app/server/controllers/userController.js');
 
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
