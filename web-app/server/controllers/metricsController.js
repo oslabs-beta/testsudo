@@ -1,6 +1,5 @@
-
-const db = require('../models/sql.js');
-const { Security } = require('../models/mongodb.js');
+import db from '../models/sql.js';
+import { Security } from '../models/mongodb.js';
 
 const metricsController = {};
 
@@ -29,7 +28,7 @@ metricsController.getFEData = (req, res, next) => {
         );
       });
       res.locals.FEmetrics = filteredData;
-     
+
       const entries = Object.entries(filteredData);
 
       if (entries.length > 0) {
@@ -257,4 +256,4 @@ metricsController.postSecurityData = async (req, res, next) => {
   }
 }
 
-module.exports = metricsController;
+export default metricsController;

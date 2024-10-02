@@ -1,0 +1,3 @@
+describe('test supabase connection', () => {
+
+});

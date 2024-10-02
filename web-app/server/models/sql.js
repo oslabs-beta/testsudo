@@ -1,6 +1,8 @@
-const pg = require('pg');
+
+import pg from 'pg';
 const { Pool } = pg;
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const PG_URI = process.env.PG_URI;
 console.log('PG_URI in model is ', PG_URI);
@@ -17,4 +19,4 @@ const db = {
   },
 };
 
-module.exports = db;
+export default db;

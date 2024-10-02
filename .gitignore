@@ -3,3 +3,4 @@ node_modules
 testsudo-module/test/lhreport.html
 testsudo-module/test/lhreport.html
 web-app/build/*
+dist

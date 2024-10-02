@@ -1,12 +1,17 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config = {
   mode: process.env.NODE_ENV,
   entry: '/client/index.js',
 
   output: {
-    path: path.join(__dirname, '/build'),
+    path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -17,7 +22,7 @@ const config = {
       '/auth': 'http://localhost:3001',
     },
     historyApiFallback: true,
-    static: '/build',
+    static: '../build/client',
     hot: true,
   },
   resolve: {
@@ -66,4 +71,4 @@ const config = {
   ],
 };
 
-module.exports = config;
+export default config;

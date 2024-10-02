@@ -1,25 +1,27 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
+import express from 'express';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
 
-/** SUPABASE */
-const supabase = require('../build/web-app/server/models/sql.js');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
-const cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser';
 
-const userController = require('./controllers/userController.js');
-const cookieController = require('./controllers/cookieController.js');
-const sessionController = require('./controllers/sessionController.js');
-const metricsRouter = require('./routes/metricsRouter.js');
+import userController from './controllers/userController.js';
+import cookieController from './controllers/cookieController.js';
+import sessionController from './controllers/sessionController.js';
+import metricsController from './controllers/metricsController.js';
+import passport from 'passport';
+import session from 'express-session';
+import { ObjectId } from 'mongodb';
+import { User } from './models/mongodb.js';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const passport = require('passport');
-const session = require('express-session');
-const { ObjectId } = require('mongodb');
-const { User } = require('./models/mongodb.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -115,7 +117,7 @@ app.get('/action/logout', sessionController.endSession, (req, res) => {
 });
 
 // GOOGLE OAUTH
-const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 const GOOGLE_CALLBACK_URL =
   process.env.GOOGLE_CALLBACK_URL ||
   'http://localhost:3001/auth/google/callback';
@@ -169,8 +171,7 @@ app.get(
 );
 
 // GITHUB OAUTH
-const GitHubStrategy = require('passport-github').Strategy;
-
+import { Strategy as GitHubStrategy } from 'passport-github';
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const GITHUB_CALLBACK_URL =
@@ -229,7 +230,7 @@ app.get(
   }
 );
 
-app.use('/projects', metricsRouter);
+// app.use('/projects', metricsController);
 
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
@@ -249,4 +250,4 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
 
-module.exports = app;
+export default app;

@@ -1,4 +1,4 @@
-const { User, Session } = require('../models/mongodb.js');
+import { User, Session } from '../models/mongodb.js';
 
 const sessionController = {};
 
@@ -55,4 +55,4 @@ sessionController.endSession = async (req, res, next) => {
   }
 };
 
-module.exports = sessionController;
+export default sessionController;

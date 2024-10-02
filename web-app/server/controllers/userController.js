@@ -1,5 +1,5 @@
-const { User, Project } = require('../models/mongodb.js');
-const bcrypt = require('bcryptjs');
+import { User, Project } from '../models/mongodb.js';
+import bcrypt from 'bcryptjs';
 
 const userController = {};
 
@@ -119,9 +119,9 @@ userController.deleteProject = async (req, res, next) => {
     return next({
       log: 'Error in userController.deleteProject',
       status: 400,
-      message: { err: 'Error adding project:' + error.message }, 
+      message: { err: 'Error adding project:' + error.message },
     })
   }
 }
 
-module.exports = userController;
+export default userController;

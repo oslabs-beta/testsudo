@@ -2,9 +2,10 @@
   "name": "testsudo",
   "version": "1.0.0",
   "description": "Comprehensive development optimization tool for front-end, back-end and security",
+  "type": "module",
   "scripts": {
     "start": "NODE_ENV=production node server/server.js",
-    "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"webpack serve --open\" \"nodemon server/server.js\"",
+    "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"webpack serve --config webpack.config.mjs --open\" \"nodemon server/server.js\"",
     "build": "NODE_ENV=production webpack"
   },
   "keywords": [
