@@ -1,24 +1,28 @@
-import express from 'express';
-import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
+import express from "express";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import cors from "cors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 
-import userController from './controllers/userController.js';
-import cookieController from './controllers/cookieController.js';
-import sessionController from './controllers/sessionController.js';
-import metricsController from './controllers/metricsController.js';
-import passport from 'passport';
-import session from 'express-session';
-import { ObjectId } from 'mongodb';
-import { User } from './models/mongodb.js';
+import userController from "./controllers/userController.js";
+// JS cookieController
+// import cookieController from './controllers/cookieController.js';
+// testing TS cookieController
+import cookieController from "../backend-build/web-app/server/controllers/cookieController.js";
+
+import sessionController from "./controllers/sessionController.js";
+import metricsController from "./controllers/metricsController.js";
+import passport from "passport";
+import session from "express-session";
+import { ObjectId } from "mongodb";
+import { User } from "./models/mongodb.js";
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -31,7 +35,7 @@ app.use(
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: true,
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,73 +58,73 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, "../build")));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
 
-app.get('/action/getUser', userController.getUser, (req, res) => {
+app.get("/action/getUser", userController.getUser, (req, res) => {
   res.json(res.locals.user);
 });
-app.get('/action/getUser', sessionController.isLoggedIn, (req, res) => {
+app.get("/action/getUser", sessionController.isLoggedIn, (req, res) => {
   res.json(res.locals.user);
 });
 
 app.post(
-  '/action/login',
+  "/action/login",
   userController.verifyUser,
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
     res.json(res.locals.authenticate);
-  }
+  },
 );
 
 app.post(
-  '/action/signup',
+  "/action/signup",
   userController.createUser,
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
     res.json(res.locals.user);
-  }
+  },
 );
 
 app.get(
-  '/action/checkDuplicate/:email',
+  "/action/checkDuplicate/:email",
   userController.checkDuplicate,
   (req, res) => {
     res.json(res.locals.duplicate);
-  }
+  },
 );
 
-app.get('/action/auth', sessionController.isLoggedIn, (req, res) => {
+app.get("/action/auth", sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(true);
 });
 
-app.post('/action/addProject', userController.addProject, (req, res) => {
+app.post("/action/addProject", userController.addProject, (req, res) => {
   res.json(res.locals.projectID);
 });
 
 app.delete(
-  '/action/deleteProject/:projectID',
+  "/action/deleteProject/:projectID",
   userController.deleteProject,
   (req, res) => {
     res.json(res.locals.user);
-  }
+  },
 );
 
-app.get('/action/logout', sessionController.endSession, (req, res) => {
-  res.clearCookie('ssid');
-  res.redirect('/');
+app.get("/action/logout", sessionController.endSession, (req, res) => {
+  res.clearCookie("ssid");
+  res.redirect("/");
 });
 
 // GOOGLE OAUTH
-import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 const GOOGLE_CALLBACK_URL =
   process.env.GOOGLE_CALLBACK_URL ||
-  'http://localhost:3001/auth/google/callback';
+  "http://localhost:3001/auth/google/callback";
 
 passport.use(
   new GoogleStrategy(
@@ -136,7 +140,7 @@ passport.use(
           user = await User.create({
             email: profile.emails[0].value,
             tokens: {
-              provider: 'Google',
+              provider: "Google",
               profileID: profile.id,
               accessToken,
               refreshToken,
@@ -147,18 +151,18 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    }
-  )
+    },
+  ),
 );
 
 app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
 );
 
 app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/error' }),
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/error" }),
   function (req, res, next) {
     res.locals.userID = req.user.id;
     next();
@@ -166,17 +170,17 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('/home');
-  }
+    res.redirect("/home");
+  },
 );
 
 // GITHUB OAUTH
-import { Strategy as GitHubStrategy } from 'passport-github';
+import { Strategy as GitHubStrategy } from "passport-github";
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const GITHUB_CALLBACK_URL =
   process.env.GITHUB_CALLBACK_URL ||
-  'http://localhost:3001/auth/github/callback';
+  "http://localhost:3001/auth/github/callback";
 
 passport.use(
   new GitHubStrategy(
@@ -196,7 +200,7 @@ passport.use(
                 ? profile.emails[0].value
                 : undefined,
             tokens: {
-              provider: 'Github',
+              provider: "Github",
               profileID: profile.id,
               accessToken,
               refreshToken,
@@ -207,18 +211,18 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    }
-  )
+    },
+  ),
 );
 
 app.get(
-  '/auth/github',
-  passport.authenticate('github', { scope: ['read:user'] })
+  "/auth/github",
+  passport.authenticate("github", { scope: ["read:user"] }),
 );
 
 app.get(
-  '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/error' }),
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/error" }),
   function (req, res, next) {
     res.locals.userID = req.user.id;
     next();
@@ -226,19 +230,19 @@ app.get(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   function (req, res) {
-    res.redirect('/home');
-  }
+    res.redirect("/home");
+  },
 );
 
 // app.use('/projects', metricsController);
 
-app.get('/metrics', async (req, res) => {
-  res.set('Content-Type', register.contentType);
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
 
 app.use((err, req, res, next) => {

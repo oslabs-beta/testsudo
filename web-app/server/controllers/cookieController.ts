@@ -1,11 +1,12 @@
-import { RequestHandler } from "express"
+import { Request, Response, NextFunction, RequestHandler } from "express"
 
 
-const cookieController = {
+const cookieController: { [key: string]: RequestHandler } = {
     
-    setSSIDCookie: ((req, res, next ) => {
+    setSSIDCookie: (req: Request, res: Response, next: NextFunction ) => {
         res.cookie('ssid', res.locals.userID, { httpOnly: true });
-    }) as RequestHandler
+        return next();
+    }
 
 };
 

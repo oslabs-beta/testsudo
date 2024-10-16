@@ -7,8 +7,8 @@ const __dirname = dirname(__filename);
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config = {
-  mode: process.env.NODE_ENV,
-  entry: '/client/index.js',
+  mode: process.env.NODE_ENV || 'development',
+  entry: path.join(__dirname, '/client/index.js'), // it was set to absolute path '/client/index.js'
 
   output: {
     path: path.join(__dirname, '../dist'),
@@ -22,7 +22,7 @@ const config = {
       '/auth': 'http://localhost:3001',
     },
     historyApiFallback: true,
-    static: '../build/client',
+    static: path.join(__dirname, '../dist'), // '../build/client'
     hot: true,
   },
   resolve: {
@@ -51,7 +51,7 @@ const config = {
       },
       {
         test: /(\.css|\.scss)$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', ], // added 'sass-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
