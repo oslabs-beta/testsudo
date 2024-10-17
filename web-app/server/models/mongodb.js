@@ -1,6 +1,7 @@
-const { Timestamp } = require('mongodb');
-const mongoose = require('mongoose');
-require('dotenv').config();
+import { Timestamp } from 'mongodb';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -81,4 +82,4 @@ const securitySchema = new Schema({
 
 const Security = mongoose.model('Security', securitySchema);
 
-module.exports = { User, Project, Session, Security };
+export { User, Project, Session, Security };
