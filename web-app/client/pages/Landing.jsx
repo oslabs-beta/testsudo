@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import LandingNav from './LandingNav.jsx';
+import React from 'react';
+import LandingNav from '../components/LandingNav.jsx';
 
 const Landing = () => {
   return (
