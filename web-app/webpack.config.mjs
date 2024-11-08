@@ -51,7 +51,7 @@ const config = {
       },
       {
         test: /(\.css|\.scss)$/,
-        use: ['style-loader', 'css-loader', ], // added 'sass-loader'
+        use: ['style-loader', 'css-loader'], // added 'sass-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -66,7 +66,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
-      favicon: './client/assets/favicon.png',
+      favicon: './client/assets/favicon-32x32.png',
     }),
   ],
 };
