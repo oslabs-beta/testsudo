@@ -61,6 +61,13 @@ const config = {
           },
         ],
       },
+      {
+        test: /\.(mp4|webm|ogg|avi|mov|wmv)$/,
+        type: 'asset/resource', // Use Webpack's built-in Asset Modules for Webpack 5
+        generator: {
+          filename: 'videos/[name][ext]', // Customize the output directory if needed
+        },
+      },
     ],
   },
   plugins: [
