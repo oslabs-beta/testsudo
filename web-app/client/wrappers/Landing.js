@@ -11,13 +11,14 @@ const Wrapper = styled.main`
     margin-top: 2rem;
     height: 475px;
     width: 75%;
-    max-width: 970px;
+    max-width: 1050px;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
   }
   .landing-text {
-    width: 250px;
+    width: 400px;
   }
   .landing-text h2 {
     color: var(--white);
@@ -32,6 +33,16 @@ const Wrapper = styled.main`
   }
   .landing-btn {
     padding: 10px 15px;
+    text-transform: none;
+  }
+  .started-chevron {
+    color: var(--white);
+    font-size: 1.5rem;
+  }
+  .get-started-container {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 `;
 

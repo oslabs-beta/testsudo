@@ -41,6 +41,7 @@
     "pg-pool": "^3.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.3.0",
     "react-modal": "^3.16.1",
     "react-router": "^6.21.1",
     "react-router-dom": "^6.21.2",
