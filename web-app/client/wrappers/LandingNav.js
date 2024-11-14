@@ -20,8 +20,10 @@ const Wrapper = styled.nav`
   .nav-btn-container {
     width: 9rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
+    gap: 1rem;
+    /* border: 1px solid red; */
   }
   .typewriter {
     height: 100%;
@@ -30,18 +32,22 @@ const Wrapper = styled.nav`
     align-items: center;
   }
   .logo {
-    height: 2.5rem;
+    height: 4rem;
     width: auto;
   }
+  .github-logo-landing {
+    color: var(--white);
+    font-size: 2rem;
+    margin-top: 5px;
+  }
   .typewriter h1 {
-    overflow: hidden; /* Ensures the content is not revealed until the animation */
-    border-right: 0.15em solid orange; /* The typewriter cursor */
-    white-space: nowrap; /* Keeps the content on a single line */
-    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-    letter-spacing: 0.15em; /* Adjust as needed */
+    overflow: hidden;
+    border-right: 0.15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.15em;
     animation: typing 3.5s steps(40, end) forwards,
       blink-caret 0.75s step-end 3 3.5s forwards;
-    /* The blink-caret animation will start after 3.5s and blink 3 times, then stay hidden */
     text-transform: lowercase;
     margin-left: 0.25rem;
     color: #f5b23e;
@@ -51,7 +57,6 @@ const Wrapper = styled.nav`
     align-items: center;
   }
 
-  /* The typing effect */
   @keyframes typing {
     from {
       width: 0;
@@ -61,7 +66,6 @@ const Wrapper = styled.nav`
     }
   }
 
-  /* The typewriter cursor effect */
   @keyframes blink-caret {
     0%,
     100% {

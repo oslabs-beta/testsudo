@@ -18,7 +18,7 @@ const Wrapper = styled.main`
     gap: 1rem;
   }
   .landing-text {
-    width: 400px;
+    width: 25rem;
   }
   .landing-text h2 {
     color: var(--white);
