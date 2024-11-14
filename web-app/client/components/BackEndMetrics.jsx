@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Container,
@@ -74,12 +74,12 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
 
     if (active && payload && payload.length) {
       return (
-        <div className='custom-tooltip'>
+        <div className="custom-tooltip">
           {payload.map((entry, index) => (
             <div>
-              <p key={index} className='data-point'>
+              <p key={index} className="data-point">
                 <span>{`${entry.name} on ${entry.payload.timestamp}: `}</span>
-                <span className='tooltip-value'>
+                <span className="tooltip-value">
                   {Math.round(entry.value, 2)}
                 </span>
               </p>
@@ -92,10 +92,10 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
   };
 
   return (
-    <div className='component-container'>
+    <div className="component-container">
       <Box>
         <Container
-          maxWidth='false'
+          maxWidth="false"
           sx={{
             justifyContent: 'center',
             marginTop: '0',
@@ -109,12 +109,12 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                 <Grid item xs={12}>
                   <Autocomplete
                     disablePortal
-                    id='paths'
+                    id="paths"
                     options={paths}
                     value={selectedPath}
                     onChange={handlePathChange}
                     renderInput={(params) => (
-                      <TextField {...params} label='Paths' />
+                      <TextField {...params} label="Paths" />
                     )}
                   />
                 </Grid>
@@ -132,13 +132,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>
+                        <div className="header">
                           Overall Server Performance Score
                         </div>
-                        <div className='metrics-description'>
+                        <div className="metrics-description">
                           Composite score out of 100
                         </div>
-                        <ResponsiveContainer height='120%'>
+                        <ResponsiveContainer height="120%">
                           <PieChart>
                             <Pie
                               data={[
@@ -153,18 +153,18 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                                   fill: '#ffffff',
                                 },
                               ]}
-                              dataKey='value'
-                              cx='50%'
-                              cy='50%'
+                              dataKey="value"
+                              cx="50%"
+                              cy="50%"
                               innerRadius={50}
                               outerRadius={70}
                               label={({ cx, cy }) => (
                                 <text
                                   x={cx}
                                   y={cy}
-                                  fill='#f25f4c'
-                                  textAnchor='middle'
-                                  dominantBaseline='central'
+                                  fill="#f25f4c"
+                                  textAnchor="middle"
+                                  dominantBaseline="central"
                                   style={{
                                     fontSize: '2rem',
                                     fontWeight: 'bold',
@@ -190,13 +190,13 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>Total Requests</div>
-                        <div className='metrics-description'>
+                        <div className="header">Total Requests</div>
+                        <div className="metrics-description">
                           Cumulative number of requests your server has
                           processed since it started or since the metric
                           trakcing began
                         </div>
-                        <div className='score large-score'>
+                        <div className="score large-score">
                           {Math.round(filteredLatest.total_requests)}
                         </div>
                       </Paper>
@@ -213,12 +213,12 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>Total Concurrent Requests</div>
-                        <div className='metrics-description'>
+                        <div className="header">Total Concurrent Requests</div>
+                        <div className="metrics-description">
                           Number of requests being handled concurrently at a
                           given moment
                         </div>
-                        <div className='score large-score'>
+                        <div className="score large-score">
                           {Math.round(filteredLatest.concurrent_requests)}
                         </div>
                       </Paper>
@@ -235,11 +235,11 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>No. of Errors</div>
-                        <div className='metrics-description'>
+                        <div className="header">No. of Errors</div>
+                        <div className="metrics-description">
                           Total number of requests that resulted in an error
                         </div>
-                        <div className='score large-score'>
+                        <div className="score large-score">
                           {Math.round(filteredLatest.errors)}
                         </div>
                       </Paper>
@@ -256,11 +256,11 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>Duration (ms)</div>
-                        <div className='metrics-description'>
+                        <div className="header">Duration (ms)</div>
+                        <div className="metrics-description">
                           Time taken for the processing of the request
                         </div>
-                        <div className='score large-score'>
+                        <div className="score large-score">
                           {Number(filteredLatest.duration).toFixed(1)}
                         </div>
                       </Paper>
@@ -277,12 +277,12 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         }}
                       >
                         {' '}
-                        <div className='header'>Heap Used</div>
-                        <div className='metrics-description'>
+                        <div className="header">Heap Used</div>
+                        <div className="metrics-description">
                           Amount of the heap that is currently being used by JS
                           objects (can help in identifying memory leaks)
                         </div>
-                        <ResponsiveContainer height='120%'>
+                        <ResponsiveContainer height="120%">
                           <PieChart>
                             <Pie
                               data={[
@@ -297,9 +297,9 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                                   fill: '#ffffff',
                                 },
                               ]}
-                              dataKey='value'
-                              cx='50%'
-                              cy='50%'
+                              dataKey="value"
+                              cx="50%"
+                              cy="50%"
                               innerRadius={50}
                               outerRadius={70}
                               label={({
@@ -325,9 +325,9 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                                     <text
                                       x={cx}
                                       y={cy}
-                                      fill='#f25f4c'
-                                      textAnchor='middle'
-                                      dominantBaseline='central'
+                                      fill="#f25f4c"
+                                      textAnchor="middle"
+                                      dominantBaseline="central"
                                       style={{
                                         fontSize: '2rem',
                                         fontWeight: 'bold',
@@ -353,10 +353,10 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           height: 400,
                         }}
                       >
-                        <div className='header'>
+                        <div className="header">
                           Request Duration and Response Time (ms)
                         </div>
-                        <div className='metrics-description'>
+                        <div className="metrics-description">
                           <b>Request duration:</b> Time taken for the processing
                           of the request.<br></br>
                           <b>Response time:</b> Average time taken to respond to
@@ -365,36 +365,36 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         <div style={{ marginTop: '50px' }}>
                           <ResponsiveContainer
                             height={225}
-                            width='100%'
+                            width="100%"
                             sx={{ mt: 2 }}
                           >
                             <LineChart data={formatData(filteredBE)}>
-                              <CartesianGrid strokeDasharray='3 3' />
+                              <CartesianGrid strokeDasharray="3 3" />
                               <XAxis
-                                dataKey='timestamp'
+                                dataKey="timestamp"
                                 tick={{ fontSize: 12 }}
                               />
-                              <YAxis yAxisId='left' />
+                              <YAxis yAxisId="left" />
                               <Tooltip
                                 content={<CustomTooltip />}
                                 wrapperStyle={{ top: 0, left: 25 }}
                               />
                               <Legend />
                               <Line
-                                type='monotone'
-                                dataKey='duration'
-                                name='Duration'
-                                stroke='#8884d8'
-                                yAxisId='left'
+                                type="monotone"
+                                dataKey="duration"
+                                name="Duration"
+                                stroke="#8884d8"
+                                yAxisId="left"
                                 dot={false}
                               />
 
                               <Line
-                                type='monotone'
-                                dataKey='average_response_time'
-                                name='Average Response Time'
-                                stroke='#3951C8'
-                                yAxisId='left'
+                                type="monotone"
+                                dataKey="average_response_time"
+                                name="Average Response Time"
+                                stroke="#3951C8"
+                                yAxisId="left"
                                 dot={false}
                               />
                             </LineChart>
@@ -411,10 +411,10 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           height: 400,
                         }}
                       >
-                        <div className='header'>
+                        <div className="header">
                           Request and Payload Size (bytes)
                         </div>
-                        <div className='metrics-description'>
+                        <div className="metrics-description">
                           <b>Request size:</b> Size of the request body (the
                           data load your server is handling per request)
                           <br></br>
@@ -422,14 +422,14 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           your server has been receiving
                         </div>
                         <div style={{ marginTop: '35px' }}>
-                          <ResponsiveContainer height={225} width='100%'>
+                          <ResponsiveContainer height={225} width="100%">
                             <LineChart data={formatData(filteredBE)}>
-                              <CartesianGrid strokeDasharray='3 3' />
+                              <CartesianGrid strokeDasharray="3 3" />
                               <XAxis
-                                dataKey='timestamp'
+                                dataKey="timestamp"
                                 tick={{ fontSize: 12 }}
                               />
-                              <YAxis yAxisId='left' />
+                              <YAxis yAxisId="left" />
                               <Tooltip
                                 content={<CustomTooltip />}
                                 wrapperStyle={{ top: 0, left: 25 }}
@@ -437,20 +437,20 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                               <Legend />
 
                               <Line
-                                type='monotone'
-                                dataKey='request_body_size'
-                                name='Request Body Size'
-                                stroke='#82ca9d'
-                                yAxisId='left'
+                                type="monotone"
+                                dataKey="request_body_size"
+                                name="Request Body Size"
+                                stroke="#82ca9d"
+                                yAxisId="left"
                                 dot={false}
                               />
 
                               <Line
-                                type='monotone'
-                                dataKey='average_payload_size'
-                                name='Average Payload Size'
-                                stroke='#31E5BB'
-                                yAxisId='left'
+                                type="monotone"
+                                dataKey="average_payload_size"
+                                name="Average Payload Size"
+                                stroke="#31E5BB"
+                                yAxisId="left"
                                 dot={false}
                               />
                             </LineChart>
@@ -467,8 +467,8 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           height: 400,
                         }}
                       >
-                        <div className='header'>Space Usage (MB)</div>
-                        <div className='metrics-description'>
+                        <div className="header">Space Usage (MB)</div>
+                        <div className="metrics-description">
                           <b>Resident set size:</b> Amount of space occupied in
                           the RAM for the process
                           <br></br>
@@ -480,14 +480,14 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                           <b>Memory used:</b> Memory used by external resources
                           managed by V8's garbage collector
                         </div>
-                        <ResponsiveContainer height='100%' width='100%'>
+                        <ResponsiveContainer height="100%" width="100%">
                           <LineChart data={formatData(filteredBE)}>
-                            <CartesianGrid strokeDasharray='3 3' />
+                            <CartesianGrid strokeDasharray="3 3" />
                             <XAxis
-                              dataKey='timestamp'
+                              dataKey="timestamp"
                               tick={{ fontSize: 12 }}
                             />
-                            <YAxis yAxisId='left' />
+                            <YAxis yAxisId="left" />
                             <Tooltip
                               content={<CustomTooltip />}
                               wrapperStyle={{ top: 0, left: 25 }}
@@ -495,35 +495,35 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                             <Legend />
 
                             <Line
-                              type='monotone'
-                              dataKey='rss'
-                              name='Resident Set Size'
-                              stroke='#ff7300'
-                              yAxisId='left'
+                              type="monotone"
+                              dataKey="rss"
+                              name="Resident Set Size"
+                              stroke="#ff7300"
+                              yAxisId="left"
                               dot={false}
                             />
                             <Line
-                              type='monotone'
-                              dataKey='heap_total'
-                              name='Total Heap'
-                              stroke='#a83232'
-                              yAxisId='left'
+                              type="monotone"
+                              dataKey="heap_total"
+                              name="Total Heap"
+                              stroke="#a83232"
+                              yAxisId="left"
                               dot={false}
                             />
                             <Line
-                              type='monotone'
-                              dataKey='heap_used'
-                              name='Heap Used'
-                              stroke='#003459'
-                              yAxisId='left'
+                              type="monotone"
+                              dataKey="heap_used"
+                              name="Heap Used"
+                              stroke="#003459"
+                              yAxisId="left"
                               dot={false}
                             />
                             <Line
-                              type='monotone'
-                              dataKey='external'
-                              name='Memory Used'
-                              stroke='#A436D4'
-                              yAxisId='left'
+                              type="monotone"
+                              dataKey="external"
+                              name="Memory Used"
+                              stroke="#A436D4"
+                              yAxisId="left"
                               dot={false}
                             />
                           </LineChart>
@@ -542,7 +542,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                         height: 275,
                       }}
                     >
-                      <div className='header'>Back End Metrics</div>
+                      <div className="header">Back End Metrics</div>
                       Select a path to start viewing your back end performance
                       metrics.
                     </Paper>
@@ -560,7 +560,7 @@ const BackEndMetrics = ({ projectIDState, formatData }) => {
                     height: 275,
                   }}
                 >
-                  <div className='header'>Back End Metrics</div>
+                  <div className="header">Back End Metrics</div>
                   Run your first back end test.
                 </Paper>
               </Grid>

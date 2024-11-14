@@ -158,9 +158,7 @@ h4 {
   width: 95vw;
   font-size: 1.25rem;
 }
-.nav-center a:hover{
-  color: var(--btnColor);
-}
+
 .projects-page{
   display: grid;
   color: white;

@@ -1,11 +1,9 @@
-import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const SecurityPieChart = ({ securityData, handleClick }) => {
-  
   const calculateSeverityCount = () => {
     console.log('tis is props data ->', securityData);
-    if (!securityData) return {}; // 
+    if (!securityData) return {}; //
 
     const severityCount = {
       CRITICAL: 0,
@@ -41,7 +39,7 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
     { name: 'MEDIUM', value: severityCount.MEDIUM },
     { name: 'LOW', value: severityCount.LOW },
     { name: 'WARNING', value: severityCount.WARNING },
-  ].filter((item) => item.value !== 0); 
+  ].filter((item) => item.value !== 0);
 
   const COLORS = {
     CRITICAL: '#FF0000',
@@ -72,9 +70,9 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
           y={y}
           fill={COLORS[data[index].name]}
           textAnchor={x > cx ? 'start' : 'end'}
-          dominantBaseline='central'
+          dominantBaseline="central"
           style={{
-            fontSize: '16px', 
+            fontSize: '16px',
             fontWeight: 'bold',
           }}
         >
@@ -87,20 +85,24 @@ const SecurityPieChart = ({ securityData, handleClick }) => {
   };
 
   return (
-    <ResponsiveContainer width='100%' height='100%'>
+    <ResponsiveContainer width="100%" height="100%">
       <PieChart width={400} height={400}>
         <Pie
           data={data}
-          cx='50%'
-          cy='50%'
+          cx="50%"
+          cy="50%"
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={125}
-          fill='#8884d8'
-          dataKey='value'
+          fill="#8884d8"
+          dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[data[index].name]} onClick={() => handleClick(data[index].name)}/>
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[data[index].name]}
+              onClick={() => handleClick(data[index].name)}
+            />
           ))}
         </Pie>
       </PieChart>

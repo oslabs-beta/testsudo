@@ -1,4 +1,3 @@
-import React from 'react';
 import LandingVid from '../assets/landing-vid.mp4';
 const LandingCenter = () => {
   return (
@@ -9,9 +8,13 @@ const LandingCenter = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
           perferendis velit cumque quasi, odio veritatis!
         </p>
-        <button type="button" className="btn landing-btn">
+        <a
+          href="https://www.npmjs.com/package/@testsudo/testsudo"
+          className="btn landing-btn"
+          target="_blank"
+        >
           Install now
-        </button>
+        </a>
       </article>
       <video autoPlay muted loop playsInline>
         <source src={LandingVid} type="video/mp4" />

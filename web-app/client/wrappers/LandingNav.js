@@ -20,7 +20,7 @@ const Wrapper = styled.nav`
   .nav-btn-container {
     width: 9rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
   .typewriter {
@@ -30,7 +30,8 @@ const Wrapper = styled.nav`
     align-items: center;
   }
   .logo {
-    height: 75%;
+    height: 2.5rem;
+    width: auto;
   }
   .typewriter h1 {
     overflow: hidden; /* Ensures the content is not revealed until the animation */
@@ -44,6 +45,10 @@ const Wrapper = styled.nav`
     text-transform: lowercase;
     margin-left: 0.25rem;
     color: #f5b23e;
+  }
+  .logo-link {
+    display: flex;
+    align-items: center;
   }
 
   /* The typing effect */

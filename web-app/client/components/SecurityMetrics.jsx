@@ -1,4 +1,4 @@
-import React, { useState, useEffect, PureComponent } from 'react';
+import { useState, useEffect, PureComponent } from 'react';
 import { Box, Container, Grid, Paper } from '@mui/material/';
 import {
   LineChart,
@@ -82,7 +82,7 @@ const SecurityMetrics = ({ projectIDState }) => {
   });
 
   return (
-    <div className='component-container'>
+    <div className="component-container">
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
           <Paper
@@ -97,7 +97,7 @@ const SecurityMetrics = ({ projectIDState }) => {
             }}
           >
             {' '}
-            <div className='header'>
+            <div className="header">
               Security Metrics
               <br />
             </div>
@@ -120,24 +120,24 @@ const SecurityMetrics = ({ projectIDState }) => {
             }}
           >
             {' '}
-            <div className='header'>Security Vulnerabilities</div>
+            <div className="header">Security Vulnerabilities</div>
             <ResponsiveContainer
-              width='100%'
+              width="100%"
               height={500}
               margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
             >
               <BarChart height={100} data={titleChart}>
-                <Bar dataKey='count' fill='#e53170'>
+                <Bar dataKey="count" fill="#e53170">
                   {titleChart.map((entry, index) => (
-                    <Cell cursor='pointer' fill='#e53170' />
+                    <Cell cursor="pointer" fill="#e53170" />
                   ))}
                 </Bar>
                 <YAxis tick={{ fontSize: 12 }} />
                 <XAxis
-                  dataKey='title'
-                  type='category'
+                  dataKey="title"
+                  type="category"
                   angle={-90}
-                  textAnchor='end'
+                  textAnchor="end"
                   height={300}
                   tick={{ fontSize: 11 }}
                 />
@@ -156,15 +156,15 @@ const SecurityMetrics = ({ projectIDState }) => {
               textAlign: 'center',
               fontSize: '1.25rem',
             }}
-            className='file-log'
+            className="file-log"
           >
             {' '}
-            <div className='header'>
+            <div className="header">
               Location of Vulnerabilities
               <br />
             </div>
             {securityData.map((item) => (
-              <div className='security' key={item._id}>
+              <div className="security" key={item._id}>
                 <p>CWE ID: {item.cwe_id}</p>
                 <p>Title: {item.title}</p>
                 <p>

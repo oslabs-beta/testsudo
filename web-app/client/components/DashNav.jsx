@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router';
 const DashNav = ({ setActiveComponent, handleDelete, projectID }) => {
   const navigate = useNavigate();
@@ -31,12 +30,14 @@ const DashNav = ({ setActiveComponent, handleDelete, projectID }) => {
         </li>
         <li>
           <button
-            style={{ marginLeft: '0%'}}
+            style={{ marginLeft: '0%' }}
             onClick={() => {
               navigator.clipboard
-              .writeText(projectID)
-              .then(() => {alert('Project ID has been copied to clipboard')})
-              .catch((err) => console.log('Could not copy text: ', err));
+                .writeText(projectID)
+                .then(() => {
+                  alert('Project ID has been copied to clipboard');
+                })
+                .catch((err) => console.log('Could not copy text: ', err));
             }}
             className="btn dashboard-btn run-btn"
           >

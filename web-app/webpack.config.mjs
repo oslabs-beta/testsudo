@@ -1,6 +1,7 @@
 import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import webpack from 'webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -74,6 +75,9 @@ const config = {
     new HtmlWebpackPlugin({
       template: './index.html',
       favicon: './client/assets/favicon-32x32.png',
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
     }),
   ],
 };
