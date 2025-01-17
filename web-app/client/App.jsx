@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router';
-import Login from './Login.jsx';
-import SignUp from './SignUp.jsx';
-import BackEndMetrics from './BackEndMetrics.jsx';
-import Dashboard from './Dashboard.jsx';
-import Projects from './Projects.jsx';
-import ProtectedRoute from './ProtectedRoute.jsx';
-import Landing from './Landing.jsx'
+import Login from './pages/Login.jsx';
+import SignUp from './components/SignUp.jsx';
+import BackEndMetrics from './components/BackEndMetrics.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import Projects from './components/Projects.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Landing from './pages/Landing.jsx';
 
 function App() {
   const [projectIDState, setProjectIDState] = useState(() => {
@@ -14,7 +14,7 @@ function App() {
   });
 
   return (
-   <div>
+    <div>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />

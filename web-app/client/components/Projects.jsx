@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import NavBar from './NavBar.jsx';
+import { useState, useEffect } from 'react';
+import NavBar from './Navbar.jsx';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import DashNav from './DashNav.jsx';
 import FrontEndMetrics from './FrontEndMetrics.jsx';
 import BackEndMetrics from './BackEndMetrics.jsx';
 import SecurityMetrics from './SecurityMetrics.jsx';
-import NavBar from './NavBar.jsx';
+import NavBar from './Navbar.jsx';
 
 const Dashboard = ({ projectIDState, setProjectIDState }) => {
   const [activeComponent, setActiveComponent] = useState('frontend');
@@ -32,21 +32,25 @@ const Dashboard = ({ projectIDState, setProjectIDState }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       })
-        .then(res => {
+        .then((res) => {
           navigate('/home');
         })
         .catch((err) => console.log('App: delete project error ', err));
     } else {
       console.log('Deletion cancelled by user.');
     }
-  }
+  };
 
   return (
     <div>
       <NavBar />
-      <DashNav setActiveComponent={setActiveComponent} handleDelete={handleDelete} projectID={projectIDState}/>
+      <DashNav
+        setActiveComponent={setActiveComponent}
+        handleDelete={handleDelete}
+        projectID={projectIDState}
+      />
 
       {activeComponent === 'frontend' && (
         <FrontEndMetrics

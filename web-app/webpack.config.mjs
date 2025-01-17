@@ -1,6 +1,7 @@
 import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import webpack from 'webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,7 +52,7 @@ const config = {
       },
       {
         test: /(\.css|\.scss)$/,
-        use: ['style-loader', 'css-loader', ], // added 'sass-loader'
+        use: ['style-loader', 'css-loader'], // added 'sass-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -61,12 +62,22 @@ const config = {
           },
         ],
       },
+      {
+        test: /\.(mp4|webm|ogg|avi|mov|wmv)$/,
+        type: 'asset/resource', // Use Webpack's built-in Asset Modules for Webpack 5
+        generator: {
+          filename: 'videos/[name][ext]', // Customize the output directory if needed
+        },
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
-      favicon: './client/assets/favicon.png',
+      favicon: './client/assets/favicon-32x32.png',
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
     }),
   ],
 };
